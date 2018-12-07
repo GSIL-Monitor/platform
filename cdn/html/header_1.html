@@ -1,0 +1,160 @@
+<div id="header" class="w">
+	<style type="text/css">
+		/* -------------------通用样式----------------------- */
+		#header {
+			height: 50px;
+			background-color: #565656;
+		}
+
+		#h-b {
+			margin: 0 auto;
+			color: beige;
+			height: inherit;
+			line-height: 50px;
+			font-size: 39px;
+		}
+
+		#h-b .logo {
+			width: 150px;
+			float: left;
+			margin-left: 20px;
+		}
+
+		#h-b .user_info {
+			/* width: 500px;float: right;background-color: #55A532; */
+		}
+
+		/* 用户信息... */
+		#h-b .user {
+			float: right;
+			width: 220px;
+			font-size: 25px;
+			line-height: 35px;
+			margin-top: 5px;
+		}
+
+		/* 头像 */
+		#h-b .avatar {
+			border-radius: 50%;
+			overflow: hidden;
+			width: 40px;
+			height: 40px;
+			float: left;
+		}
+
+		/* 昵称 */
+		#h-b .nickname {
+			overflow: hidden;
+			float: left;
+			margin-left: 5px;
+			width: 170px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		
+		/* -------------------小于768px(手机)----------------------- */
+		@media screen and (max-width: 768px) {
+			#h-b {
+				position: absolute;
+				width: 768px;
+			}
+		}
+
+		/* -------------------大于768px(PC)----------------------- */
+		@media screen and (min-width: 768.0001px) {
+			#h-b {
+				max-width: 1190px;
+			}
+		}
+	</style>
+
+	<div id="h-b">
+		<!-- LOGO -->
+		<div class="logo">
+			<svg class="icon" aria-hidden="true">
+				<use xlink:href="#icon-logo" /></svg>
+			<span>Laeni</span>
+		</div>
+		<!-- 右边其他信息 -->
+		<div class="user_info">
+			<!-- 未登录 -->
+			<div class="user no_sign">
+				<div class="btn-group" role="group">
+					<button type="button" class="show_login_window btn btn-secondary">登录</button>
+					<button type="button" class="show_reg_window btn btn-secondary">免费注册</button>
+				</div>
+			</div>
+			<!-- 已登录 -->
+			<div>
+				<div class="user d-none sign">
+					<!-- 头像 -->
+					<div class="avatar"><img width="100%" height="100%"></div>
+					<div class="nickname"></div>
+				</div>
+				<!-- 下拉菜单 -->
+				<!-- <div class="list-group">
+					<button type="button" class="list-group-item list-group-item-action">退出登录</button>
+					<a href="#" class="list-group-item list-group-item-action disabled">个人中心</a>
+				</div> -->
+			</div>
+			
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var $UT = typeof UT == "object" ? UT : null,
+			$USER = typeof USER == "object" ? USER : null,
+			_CONF = typeof LAENI_CONFIG != "undefined" ? LAENI_CONFIG : undefined,
+			/* 用户已经登录时显示的部分 */
+			$sign = $(".sign"),
+			/* 用户未登录时显示的部分 */
+			$noSign = $(".no_sign")
+			/* 登录按钮 */
+			$showLoginWIndow = $(".show_login_window"),
+			/* 注册按钮 */
+			$showRegWindow = $(".show_reg_window"),
+			/* 登录后下拉选择框 */
+			$navDropdown = $("#nav_dropdown");
+
+		/* 自动初始化函数: 如果已经登录则显示用户信息,否则隐藏用户信息 */
+		function init() {
+			if (!$USER) return;
+
+			/* 使用$USER.islogin()检测用户是否已经登录 */
+			if ($USER.islogin()) { /* 已经登录 */
+				/* 将用户的信息替换为真实的信息 */
+				if ($UT && $UT.cookie.get("nickname")) {
+					$(".nickname").html($UT.cookie.get("nickname"));
+					$(".avatar").find("img").attr("src", $UT.cookie.get("avatar"));
+				}
+				/* 已经登录时显示用户信息 */
+				$noSign.addClass("d-none none"), $sign.removeClass("d-none none");
+			} else {
+				/* 未登录时隐藏用户信息(默认就是隐藏的) */
+				$sign.addClass("d-none"), $noSign.removeClass("d-none");
+			}
+		}
+
+		/* 将导航栏初始化函数传给用户工具,操作后(登录成功/登录失败/注销登录)将自动执行 */
+		$USER && $USER.addCallback(init); // 添加成功后会自动执行
+
+		/* 点击登录按钮事件 */
+		$showLoginWIndow.click(function(){
+			$USER ? $USER.login() : alert('未知错误,请刷新重试!');
+		});
+		
+		/* 点击免费注册按钮事件 */
+		$showRegWindow.click(function(){
+			// 新页面地址
+			var regUrl = _CONF ? (_CONF.URL.USER + _CONF.PATH.REG_HTML) : "//user.laeni.cn/reg.html";
+			// 将当前页附加到请求地址上,方便注册成功后调整回来
+			var redirect = "?redirect_uri=" + encodeURIComponent(document.location.toString());
+			// 打开新标签
+			open(regUrl+redirect, "_blank");
+		});
+		
+		
+	</script>
+
+</div>
+<input type="hidden" name="" id="" value="" />

@@ -1,0 +1,75 @@
+@charset "utf-8";
+
+.scrollBanner {/*宽高都为一张图片的高宽*/
+	width: 520px;
+	height: 300px;
+	position: relative;	/*相对定位*/
+	overflow: hidden;/*隐藏溢出*/
+	margin: 0 auto;/*居中*/
+}
+
+.scrollBanner .bannerBox {
+	position: absolute;/*绝对定位*/
+	height: 100%;
+}
+
+.scrollBanner .bannerBox li {
+	float: left;
+}
+
+/*左右箭头*/
+.scrollBanner .arr_left {
+    display: none;
+    position: absolute;
+    top: 128px;
+    left: 0;
+    width: 19px;
+    height: 39px;
+    line-height: 39px;
+    background: rgba(179, 179, 179, 0.4);
+    padding-left: 9px;
+}
+
+.scrollBanner .arr_right {
+    display: none;
+    position: absolute;
+    top: 128px;
+    right: 0;
+    width: 19px;
+    height: 39px;
+    line-height: 39px;
+    background: rgba(179, 179, 179, 0.4);
+    padding-right: 9px;
+}
+
+/*小圆点*/
+.scrollBanner .scroll_num {
+    margin: 0 auto;
+    left: 50%;
+    position: absolute;
+    background-color: rgba(225,225,225,.4);
+    bottom: 8%;
+    display: flex;
+    border-radius: 5px;
+}
+
+.scrollBanner .scroll_num li{
+    height: 10px;
+    width: 12px;
+}
+
+.scrollBanner .scroll_num li a {
+    display: block;
+    border-radius: 50%;
+    background-color: rgba(227, 227, 227, 0.7);
+    height: 8px;
+    width: 8px;
+    line-height: 8px;
+    margin-top: 1px;
+    margin-left: 2px;
+}
+
+/*当前小圆点的颜色*/
+.scrollBanner .scroll_num li .current {
+	background-color: #F00;
+}

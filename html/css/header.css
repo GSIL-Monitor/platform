@@ -1,0 +1,316 @@
+body {
+	/*background-color: #efefef;*/
+	background-color: #f7eded;
+}
+*{
+	font-family: "黑体";
+}
+
+/**
+ * 模拟块元素使用的标记颜色(测试专用类)
+ */
+.colorBox {
+	background-color: rgba(0,0,0,0.2);
+	color: #FFF;
+	text-align: center;
+}
+
+/**
+ * 主体色
+ */
+.colorBorder {/*边框色*/border-color: #c744c2;}
+.colorBackground {background-color: #c744c2;}
+.widthLeft {width: 180px;}
+
+/**
+ * 登录区域开始--------------------------------------------------------
+ */
+#login {
+	position: fixed;
+	height: 309px;
+	width: 500px;
+	background-color: #FFF;
+	z-index: 1000;
+	border-radius: 5px;
+	overflow:inherit;
+}
+#login .bor {
+	height: 30px;
+	cursor: move;
+}
+#login .bor div{
+	float: right;
+	line-height: 30px;
+	padding-right: 9px;
+	cursor: pointer;
+}
+#login form {
+	margin-top: 37px;
+}
+#login form input{
+	display: block;
+	width: 100%;
+	height: 30px;
+	margin: 10px 0;
+}
+#login form input[type="submit"]{
+	border: none;
+	outline: none;
+	margin-top: 20px;
+	margin-left: 5px;
+	cursor: pointer;
+}
+#login .forms {
+	width: 300px;
+	margin: 0 auto;
+}
+#login .forms span {
+	line-height: 20px;
+	float: left;
+}
+#login .forms svg {
+/*	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	margin: 0 2px;*/
+}
+#login .loginWhat {
+	float: right;
+}
+#login .loginWhat div{
+	display: -webkit-inline-box;/*inline-flex*/
+	margin: 5px 5px;
+	cursor: pointer;
+}
+#login .others {
+	margin-top: 15px;
+}
+/**
+ * 登录区域结束--------------------------------------------------------
+ */
+
+
+/**
+ * 导航开始--------------------------------------------------------
+ */
+#wizard {
+	height: 39px;
+	/*background-color: #dfdfdf;*/
+	background-color: #ff86fb;;
+}
+#wizard .h-box {
+	height: 39px;
+	margin: 0 auto;
+}
+#position {
+	margin-left: 197px;
+	line-height: 40px;
+}
+#position>div {
+	display: inline-block;
+	font-size: 16px;
+}
+/**
+ * 导航结束--------------------------------------------------------
+ */
+
+
+/**
+ * 头部开始(主要为logo和搜索栏)-----------------------------------------------------------------------------
+ */
+#header .w {
+	/*height: 111px;*/
+	margin: 0 auto;
+	display: flex;
+}
+#logo {
+	height: 150px;
+	top: 0;
+	/**logo样式*/
+	background-color: #FFF;
+	line-height: 130px;
+	text-align: center;
+	font-size: 50px;
+	color: #2f916f;
+	float: left;
+}
+/*搜索区*/
+#h_values {
+	/*float: right;*/
+	height: 75px;
+	overflow: hidden;
+	margin: auto;
+}
+#h_values form li {
+	display: inline-flex;
+	padding: 0 5px;
+	font-size: 14px;
+	line-height: 20px;
+}
+/*搜索框距离顶部的距离*/
+#h_values form {
+	overflow: hidden;
+	/*margin: 25px auto;*/
+}
+/*搜索类别*/
+#form_class {
+	height: 20px;
+	margin-left: 8px;
+}
+/*搜索框*/
+#form_box {
+	border-style: solid;
+	background-color: #FFF;
+	border-width: 2px;
+	height: 30px;
+	overflow:hidden;
+	border-radius: 8px;
+}
+#form_box .box {
+	display: inline-flex;
+	overflow:hidden;
+	height: 30px;
+	float: left;
+}
+#form_box #imgTitle {
+	font-size: 28px;
+	line-height: 30px;
+}
+#form_box [type=submit] {
+	padding: 0 12px;
+	float: right;
+}
+#form_box input {
+	border: none;
+	outline:none;/*隐藏轮廓*/
+}
+#form_rmd {
+	height: 20px;
+}
+/**个人信息*/
+#header .geren {
+	margin: auto 0;
+	float: right;
+	width: 100px;
+	height: 100px;
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+/**
+ * 头部结束(主要为logo和搜索栏)--------------------------------------------------------
+ */
+
+
+/**
+ * 分类导航开始---------------------------------------------------------
+ */
+/*高度*/
+.fsHeight {
+	height: 300px;
+	overflow: hidden;
+}
+#fs li {
+	display: inline-block;
+}
+#fs {
+	margin: 0 auto;
+	overflow: hidden;
+}
+#fs_l {
+	z-index: 1;
+	position: absolute;
+	background-color: rgba(255,134,251,1);
+	color: #000;
+	overflow: hidden;
+	border-radius: 6px;
+	transition:width 0.2s;
+	-moz-transition:width 0.2s; /* Firefox 4 */
+	-webkit-transition:width 0.2s; /* Safari and Chrome */
+	-o-transition:width 0.2s; /* Opera */
+}
+#fs_max {
+	text-align: center;
+}
+#fs_min {
+	margin-left: 20px;
+}
+.fs_lx {
+	float: left;
+}
+.fs_lx ul {
+	font-size: 18px;
+	line-height: 39px;
+}
+#fs_l_xrk:hover {
+	overflow-y: visible;
+}
+#fs_r {
+	float: right;
+	right: 0;
+}
+#fs_r>div {
+	display: inline-block;
+}
+#r_l {
+	float: left;
+	margin-right: 10px;
+}
+#r_l div {
+	float: left;
+}
+#r_l .r_lx1 {
+	float: right;
+    background-color: aquamarine;
+    width: 230px;
+    height: 300px;
+}
+/**
+ * 用户---------------------------------------------------------
+ */
+.user {
+	float: right;
+	width: 222px;
+	margin-top: 60px;
+}
+.user .user_avatar img{
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+}
+.user .user_data {
+	/*display: none;*/
+}
+.user .user_data *{
+	text-align: center;
+	margin: auto;
+}
+.user .nickname{
+	
+}
+.user .user_login {
+	background-color: #7FFFD4;
+	border-radius: 5px;
+	line-height: 30px;
+	width: 80px;
+	text-align: center;
+	font-size: 1.5em;
+}
+/**
+ * 分类导航结束---------------------------------------------------------
+ */
+
+
+/**
+ * 推荐
+ */
+#fbt_tj {
+	height: 400px;
+	margin: 10px auto;
+}
+
+/**
+ * 底部
+ */
+#footer {
+}
+

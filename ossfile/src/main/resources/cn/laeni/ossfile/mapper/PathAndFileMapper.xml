@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.laeni.ossfile.mapper.PathAndFileMapper">
+    <resultMap id="BaseResultMap" type="cn.laeni.ossfile.entity.PathAndFile">
+        <result column="path_id" jdbcType="INTEGER" property="pathId"/>
+        <result column="path_name" jdbcType="CHAR" property="pathName"/>
+        <result column="parent_path_id" jdbcType="INTEGER" property="parentPathId"/>
+        <result column="time" jdbcType="INTEGER" property="time"/>
+        <result column="directory" jdbcType="BIT" property="directory"/>
+        <result column="used" jdbcType="VARCHAR" property="used"/>
+        <result column="file_key" jdbcType="CHAR" property="fileKey"/>
+        <result column="file_size" jdbcType="BIGINT" property="fileSize"/>
+        <result column="file_type" jdbcType="CHAR" property="fileType"/>
+    </resultMap>
+</mapper>

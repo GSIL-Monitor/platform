@@ -1,0 +1,271 @@
+/* 重写SUI样式 */
+.sui-progress {
+	margin-bottom: 0;
+}
+.sui-modal {
+	background: none;
+    box-shadow: none;
+    border: none;
+}
+.modal-dialog {
+	margin: 0;
+}
+
+
+/* 重写Bootstrap样式 */
+.dropdown {
+	display: inline;
+}
+
+.dropdown-menu {
+	/* display: block; */
+	margin: 0.8rem 0 0;
+}
+
+/* 自定义样式 */
+#content-nav {
+	margin-left: 0;
+}
+
+#content-nav-1 {
+	margin: 0px 15px;
+	padding: 10px 0;
+}
+
+#sidebar-nav {
+	width: 380px;
+	top: 10px;
+}
+
+#sidebar_left {
+	width: 236px;
+}
+
+#sidebar {
+	margin: 20px;
+}
+
+#content_right {
+	background-color: #FFF;
+	margin-left: 236px;
+	height: 100%;
+}
+
+#space_title {
+	font-size: 16px;
+	font-weight: bold;
+	line-height: 32px;
+	padding-left: 5px;
+}
+
+#space_num {
+	float: right;
+	font-size: 15px;
+	padding-right: 5px;
+}
+
+#sidebar_left ul li a {
+	font-size: 18px;
+	padding-top: 13px;
+	padding-bottom: 13px;
+}
+
+/* 文件导航栏 */
+#show-type:active .dropdown-menu,
+/*活动元素*/
+#show-type:focus .dropdown-menu,
+/*具有焦点的元素*/
+#show-type:hover .dropdown-menu {
+	display: block;
+}
+
+
+.file:active .file-menu,
+/*活动元素*/
+.file:focus .file-menu,
+/*具有焦点的元素*/
+.file:hover .file-menu {
+	display: block;
+}
+
+.file-menu:active .file-menu-list,
+/*活动元素*/
+.file-menu:focus .file-menu-list,
+/*具有焦点的元素*/
+.file-menu:hover .file-menu-list {
+	display: block;
+}
+
+/* 搜索框按钮 */
+#search_button{
+	cursor: pointer;
+}
+
+/* 路径选择 */
+#path>div {
+	float: left;
+	margin: 0 10px;
+}
+
+#path button {
+	padding: 0;
+	border: 0;
+}
+
+/* 具体文件内容 */
+#pan_value {
+	float: left;
+	/* background-color: antiquewhite; */
+	/* height: 215px; */
+	width: 100%;
+}
+
+.file .next {
+	cursor: pointer;
+}
+
+.file .file-val {
+	position: absolute;
+	width: inherit;
+	height: inherit;
+}
+
+.file .file-menu-list ul li a {
+	padding: 0;
+	line-height: 16px;
+	text-align: center;
+}
+
+/* 整体样式 */
+.file {
+	float: left;
+	margin: 10px;
+}
+/* 小图标版整体尺寸 */
+.min {
+	width: 100px;
+	height: 100px;
+}
+/* 大图标版整体尺寸 */
+.max {
+	/* background-color: aliceblue; */
+	width: 200px;
+	height: 236px;
+}
+/* 整体显示图标尺寸 */
+.file .file-ico {
+	text-align: center;
+}
+/* 小图标版显示图标尺寸 */
+.min .file-ico {
+	font-size: 50px;
+}
+/* 大图标版显示图标尺寸 */
+.max .file-ico {
+	font-size: 121px;
+}
+/* 大图标版图片显示尺寸 */
+.max .file-ico img {
+	max-width: 200px;
+    max-height: 185px;
+    margin-top: -25px;
+}
+/* 整体标题字号 */
+.file .file-title {
+	line-height: 21px;
+	margin-top: 4px;
+	text-align: center;
+}
+/* 小图标版标题字号 */
+.min .file-title {
+	line-height: 16px
+}
+/* 大图标版标题字号 */
+.max .file-title {
+    font-size: 21px;
+}
+/* 整体操作菜单列表 */
+.file .file-menu-list {
+	background-color: rgba(168, 168, 168, 0.8);
+	color: #0a4dd4;
+	font-weight: bold;
+}
+/* 小图标版操作菜单列表 */
+.min .file-menu-list {
+	width: 100px;
+	height: 100px;
+	top: -84px;
+	left: -76px;
+}
+/* 大图标版操作菜单列表 */
+.max .file-menu-list {
+	width: 200px;
+    height: 236px;
+	top: -216px;
+    left: -165px;
+}
+/* 整体操作菜单 */
+.file .file-menu {
+	background-color: #a9a9a9a6;
+	border-radius: 2px;
+	cursor: pointer;
+	display: none;
+}
+/* 小图标版操作菜单 */
+.min .file-menu {
+	height: 12px;
+	width: 22px;
+	margin-top: 85px;
+	margin-left: 76px;
+}
+/* 大图标版操作菜单 */
+.max .file-menu {
+    height: 16px;
+    width: 31px;
+    margin-top: 216px;
+    margin-left: 165px;
+}
+/* 整体右下角小圆点菜单 */
+.file .file-menu span {
+	background-color: #6b6b6b;
+	display: block;
+	border-radius: 50%;
+	float: left;
+	margin: 2px;
+	/* 透明度 */
+	opacity: 0.5;
+}
+/* 小图标版右下角小圆点菜单 */
+.min .file-menu span {
+	width: 7px;
+	height: 7px;
+}
+/* 大图标版右下角小圆点菜单 */
+.max .file-menu span {
+	width: 11px;
+	height: 11px;
+}
+
+/* 新建文件夹的弹出框 */
+/* 标题 */
+#newDirectory .modal-title {
+	font-size: 20px
+}
+/* 输入框 */
+#newDirectory .modal-body form {
+	margin-top: 18px;
+}
+#newDirectory .modal-body form input {
+	height: 39px;
+    font-size: 18px;
+}
+
+/* 文件上传 */
+/* 进度条 */
+.file-loading {
+	position: absolute;
+    width: 100%;
+    padding: 0 10px;
+    padding-top: 2px;
+}
+

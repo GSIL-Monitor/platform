@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.laeni.ossfile.mapper.PathStructureMapper" >
+  <resultMap id="BaseResultMap" type="cn.laeni.ossfile.entity.PathStructure" >
+    <id column="path_id" property="pathId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="CHAR" />
+    <result column="path_name" property="pathName" jdbcType="CHAR" />
+    <result column="parent_path_id" property="parentPathId" jdbcType="INTEGER" />
+    <result column="time" property="time" jdbcType="INTEGER" />
+    <result column="directory" property="directory" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    path_id, user_id, path_name, parent_path_id, time, directory
+  </sql>
+  <insert id="insertSelective" parameterType="cn.laeni.ossfile.entity.PathStructure" >
+    insert into path_structure
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pathId != null" >
+        path_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="pathName != null" >
+        path_name,
+      </if>
+      <if test="parentPathId != null" >
+        parent_path_id,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="directory != null" >
+        directory,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pathId != null" >
+        #{pathId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=CHAR},
+      </if>
+      <if test="pathName != null" >
+        #{pathName,jdbcType=CHAR},
+      </if>
+      <if test="parentPathId != null" >
+        #{parentPathId,jdbcType=INTEGER},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=INTEGER},
+      </if>
+      <if test="directory != null" >
+        #{directory,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.laeni.ossfile.entity.PathStructure" >
+    update path_structure
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=CHAR},
+      </if>
+      <if test="pathName != null" >
+        path_name = #{pathName,jdbcType=CHAR},
+      </if>
+      <if test="parentPathId != null" >
+        parent_path_id = #{parentPathId,jdbcType=INTEGER},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=INTEGER},
+      </if>
+      <if test="directory != null" >
+        directory = #{directory,jdbcType=BIT},
+      </if>
+    </set>
+    where path_id = #{pathId,jdbcType=INTEGER}
+  </update>
+</mapper>

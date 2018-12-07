@@ -1,0 +1,23 @@
+server:
+  port: 7100
+
+spring:
+  application:
+    name: ossfile  #微服务的名称
+  #下面的配置表示从哪里下载配置文件(可以是本地、git、svn等)
+  profiles:
+    active: dev
+
+
+  cloud:
+    config:
+      #目前可选值有[dev,prod]，如果不设置则会以spring.profiles.active的值为准,设置后则只以该值为准
+      #profile: dev
+      #discovery:
+        #开启配置服务发现
+        #enabled: true
+        #配置服务实例名称
+        #service-id: config-server
+      uri: http://132.232.176.112:6001/
+      #分支
+      label: master

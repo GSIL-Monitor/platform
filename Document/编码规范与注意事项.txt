@@ -1,0 +1,20 @@
+规范
+1.框架配置文件不要单独修改,如果确实有需要则需要说明后更改
+2.所有类、接口需要添加注释，说明其作用（必要时需要说明其用法）
+
+注意事项
+1.跨域问题: 由于浏览器限制，跨域请求数据会报错或者请求成功后服务器设置的Cookie等无法保存
+	因此需要进行跨域请求时需要进行如下处理
+	1).需要使用登录时,由于登录操作会请求"user.laeni.cn",所以需要在共同的顶级域名"laeni.cn"下,否则登录成功后Cookie无法保存导致登录失败
+		解决方案:	在"C:\Windows\System32\drivers\etc\hosts"文件中添加一行"127.0.0.1    my.laeni.cn"
+					这里不一定是my.*,但是假如写的是my.laeni.cn,则使用时需要将localhost替换为my.laeni.cn
+	
+	2).ajax请求时可能会遇到每次请求时服务器都会为其分配新的SessionId或者ajax报错问题
+		解决方案:	步骤一: 在控制器上加上注解"@CrossOrigin"
+					步骤二: ajax请求中添加"xhrFields: {withCredentials:true,thCredentials: true}"
+							如: $.ajax({
+								xhrFields: {withCredentials:true,thCredentials: true},
+								url: "xxx.laeni.cn",
+								success: function(){},
+							})
+					步骤三: 如果还会报错则联系组长

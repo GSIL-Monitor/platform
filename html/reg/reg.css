@@ -1,0 +1,399 @@
+/* ---------------------公共样式----------------------------- */
+#reg a:link {
+	color: blue;
+}
+
+#reg a:visited {
+	color: blue;
+}
+
+#reg a:hover {
+	color: #F40;
+}
+
+#reg small{
+	color: red;
+	font-size: 18px;
+}
+
+
+/*注册程序（已经持行过的步骤）*/
+.ok1 {
+	color: #e80000
+}
+.ok1 ii {
+	background-color: #e80000;
+}
+
+/*正在执行的步骤*/
+.run {
+	border-bottom-color: #e80000;
+	border-bottom-style: solid;
+}
+ii {
+	display: inline-block;
+	margin-right: 5px;
+	width: 24px;
+	height: 24px;
+	font-style: normal;
+	line-height: 24px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #FFF;
+	background-color: #dddddd;
+	border-radius: 50%;
+}
+
+/* 按钮样式(可用/不可用) */
+.button-type-off {
+	color: #868686;
+	background-color: #dddddd;
+	cursor: no-drop;
+}
+.button-type-on {
+	color: #060606;
+	background-color: #ff5e00;
+	cursor: pointer;
+}
+
+/* 图标样式(可用/不可用) */
+
+.icon-type-off {
+	color: #b6b6b6;
+}
+
+.icon-type-on {
+	color: #00dc1d;
+}
+
+/* 输入框(可用/不可用) */
+.input-type-off {
+	cursor: no-drop;
+}
+.input-type-on {
+	cursor: auto;
+}
+
+/*输入框样式*/
+input[type="text"],
+input[type="password"],
+input[type="number"] {
+	border: none;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	background: none;
+	outline: none;
+}
+
+#reg input[type="submit"],
+#reg input[type="button"] {
+	padding: 0;
+	border: none;
+	outline: none;
+	border-radius: 5px;
+	font-size: 16px;
+	line-height: 32px;
+	width: inherit;
+}
+
+#reg {
+	margin-top: 100px;
+}
+
+#reg .reg-title {
+	font-size: 26px;
+	color: #6b6b6b;
+	margin-left: 30px;
+}
+
+#reg input {
+	width: inherit;
+}
+
+#reg .rt-1 {
+	height: 50px;
+	line-height: 50px;
+	border-bottom: 2px solid #e6e6e6;
+	font-size: 20px;
+	color: #868686;
+}
+
+#reg .rt-1 ol {
+	height: inherit;
+	width: 630px;
+	margin: 0 auto;
+}
+
+#reg .rt-1 ol li {
+	float: left;
+	width: 210px;
+	text-align: center;
+	height: inherit;
+}
+
+#reg .rt-1 ol li div {
+	float: left;
+}
+
+#reg .form1 {
+	width: 330px;
+	margin: 50px auto;
+	font-size: 18px;
+}
+
+#reg .form1 input {
+	width: inherit;
+	padding-left: 15px;
+	padding-right: 25px;
+	border-bottom-color: #989898;
+}
+
+#reg .form1 form ol li {
+	float: left;
+	line-height: 35px;
+}
+
+#reg .form1 form ol li {
+	float: left;
+}
+
+#reg .form1 .reg-d1 {
+	margin: 13px 0;
+	height: 60px;
+}
+
+#reg .form1 .reg-next {
+	width: 150px;
+	margin: 0 auto;
+}
+
+#reg .reg-error1 {
+	color: #d86420;
+	font-size: 16px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+#reg .form1 .reg-name1 {
+	width: 290px;
+	text-align: center;
+}
+
+#reg .form1 .reg-name2 {
+	width: 139px;
+	text-align: center;
+}
+
+#reg .form1 .reg-con {
+	margin-left: 20px;
+}
+
+#reg .form1 .reg-verify {
+	text-align: center;
+	width: 128px;
+	margin-left: 18px;
+	border-radius: 5px;
+	font-size: 16px;
+	padding: 0;
+	border: none;
+	outline: none;
+	line-height: 32px;
+}
+
+#reg .form2 form {
+	width: 500px;
+	margin: 50px auto;
+	font-size: 18px;
+}
+
+#reg .form2 form li {
+	margin: 35px auto;
+	height: 30px;
+	opacity: 0.8;
+}
+
+#reg .form2 .f2_name {
+	float: left;
+	width: 150px;
+	text-align: center;
+	font-size: 22px;
+}
+
+#reg .form2 #ts_small {
+	margin-top: 50px;
+	margin-bottom: 10px;
+	font-size: 20px;
+	text-align: center;
+	color: #e60000;
+}
+
+#reg .form2 .reg-next {
+	width: 150px;
+	margin: 0 auto;
+}
+
+#reg .form2 .f2_value {
+	width: 345px;
+	float: left;
+}
+
+#reg .form2 .f2_value input {
+	width: inherit;
+	padding: 0 10px;
+	font-size: 21px;
+}
+
+#reg .ok {
+	text-align: center;
+	margin: 50px auto;
+}
+
+#reg .o1 {
+	font-size: 50px;
+}
+
+#reg .o2 {
+	font-size: 30px;
+}
+
+#reg .ok .tm {
+    width: 450px;
+    height: 100px;
+    line-height: 100px;
+    margin: 0 auto;
+    font-size: 20px;
+}
+
+#reg .ok .tm .tm_le {
+	float: left;
+}
+
+#reg .ok .tm .tm_ri {
+	float: right;
+	color: #00f;
+	cursor: pointer;
+}
+
+#reg .ok .tz {
+	font-size: 27px;
+	color: #00f;
+}
+
+#reg .ok .tz a {
+	cursor: pointer;
+	margin: 0 10px;
+}
+
+#ts {
+	background-color: ivory;
+	width: 600px;
+	z-index: 999999;
+	border-radius: 5px;
+}
+
+#ts .ts1 {
+	width: 450px;
+	margin: 0 auto;
+	margin-top: 20px;
+	margin-bottom: 40px;
+}
+
+#ts .ts1_1 {
+	font-size: 20px;
+	color: #e60000;
+}
+
+#ts .ts1_2 {
+	font-size: 15px;
+	padding-left: 2em;
+}
+
+#ts .ts1_2_l {
+	color: #CF0000;
+	width: 10px;
+	height: 29px;
+	float: left;
+}
+
+#ts .close {
+	height: 36px;
+}
+
+#ts .close svg {
+	margin-top: 3px;
+	margin-right: 7px;
+	float: right;
+	font-size: 31px;
+}
+
+#ts .close svg use {
+	cursor: pointer;
+}
+
+#ts .basic {
+	width: 463px;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+
+#ts .basic .avatar {
+	width: 99px;
+	height: 99px;
+	border-radius: 50%;
+	overflow: hidden;
+	float: left;
+}
+
+#ts .basic .deta {
+	float: left;
+	margin-left: 38px;
+	margin-top: 10px;
+	font-size: 20px;
+	width: 320px;
+	overflow: hidden;
+}
+
+#ts .tests {
+	text-align: center;
+	font-size: 20px;
+	margin: 30px 0;
+}
+
+#ts .oper {
+	width: 210px;
+	margin: 0 auto;
+	font-size: 20px;
+}
+
+#ts .oper .login_button {
+	width: 133px;
+	text-align: center;
+	background-color: #ffbc00;
+	margin: 0 auto;
+	border-radius: 3px;
+	cursor: pointer;
+}
+
+#ts .oper .oper_1 {
+	margin-top: 15px;
+}
+
+#ts .oper .oper_1 .li1 {
+	float: left;
+}
+
+#ts .oper .oper_1 .li2 {
+	float: right;
+}
+
+#ts .oper .oper_1 .li3 {
+	text-align: center;
+	display: block;
+}
+
+#ts .oper .oper_1 .li4 {
+	text-align: center;
+	display: block;
+}
+

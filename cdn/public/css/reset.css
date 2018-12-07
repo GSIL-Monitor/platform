@@ -1,0 +1,312 @@
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-family: tahoma, "microsoft yahei", "\5FAE\8F6F\96C5\9ED1"!important;
+}
+
+/** 清除内外边距 **/
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+
+/* structural elements 结构元素 */
+
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+
+/* list elements 列表元素 */
+
+pre,
+
+/* text formatting elements 文本格式元素 */
+
+form,
+fieldset,
+legend,
+button,
+input,
+textarea,
+
+/* form elements 表单元素 */
+
+th,
+td
+/* table elements 表格元素 */
+
+{
+	margin: 0;
+	padding: 0;
+}
+
+
+/** 设置默认字体 **/
+
+body,
+button,
+input,
+select,
+textarea {
+	font: 12px/1.5 tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53', sans-serif
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: 100%;
+}
+
+address,
+cite,
+dfn,
+em,
+var {
+	font-style: normal;
+}
+
+
+/* 将斜体扶正 */
+
+code,
+kbd,
+pre,
+samp {
+	font-family: courier new, courier, monospace;
+}
+
+
+/* 统一等宽字体 */
+
+small {
+	font-size: 12px;
+}
+
+
+/* 小于 12px 的中文很难阅读，让 small 正常化 */
+
+
+/** 重置列表元素 **/
+
+ul,
+ol {
+	list-style: none;
+}
+
+
+/** 重置文本格式元素 **/
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+
+/** 重置表单元素 **/
+
+legend {
+	color: #000;
+}
+
+
+/* for ie6 */
+
+fieldset,
+img {
+	border: 0;
+}
+
+
+/* img 搭车：让链接里的 img 无边框 */
+
+button,
+input,
+select,
+textarea {
+	font-size: 100%;
+}
+
+
+/* 使得表单元素在 ie 下能继承字体大小 */
+
+
+/* 注：optgroup 无法扶正 */
+
+
+/** 重置表格元素 **/
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+pre {
+	background: #fff;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-size: 100%
+}
+
+address,
+cite,
+dfn,
+em,
+var {
+	font-style: normal
+}
+
+code,
+kbd,
+pre,
+samp {
+	font-family: courier new, courier, monospace
+}
+
+small {
+	font-size: 12px
+}
+
+ol,
+ul {
+	list-style: none
+}
+
+a {
+	text-decoration: none;
+	cursor: pointer
+}
+
+a:hover {
+	color: #F40;
+	text-decoration: none
+}
+
+a:focus {
+	outline: 0
+}
+
+sup {
+	vertical-align: text-top
+}
+
+sub {
+	vertical-align: text-bottom
+}
+
+legend {
+	color: #000
+}
+
+fieldset,
+img {
+	border: 0
+}
+
+button,
+input,
+select,
+textarea {
+	font-size: 100%
+}
+
+body,
+html {
+	overflow-x: hidden
+}
+
+body {
+	color: #3C3C3C;
+	-webkit-font-smoothing: antialiased;
+	background-color: #f4f4f4
+}
+
+body.disable-hover {
+	pointer-events: none
+}
+
+area {
+	outline: 0
+}
+
+
+/* 清除浮动 */
+.clear:after {
+	content: '\20';
+	display: block;
+	height: 0;
+	clear: both;
+	*zoom: 1;
+}
+
+/* 按钮不可用样式 */
+.disabled {
+	cursor: no-drop;
+}
+
+
+/*隐藏的元素*/
+.none {
+	display: none;
+}
+
+
+/*图标字体样式*/
+.icon {
+	height: 1em;
+	width: 1em;
+	vertical-align: -0.15em;
+	fill: currentColor;
+	overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+	/* 使宽度100% */
+	.w {
+		/* 小于500像素后就会显示不正常 */
+		width: 768px;
+	}
+}
+
+@media screen and (min-width: 768.0001px) {
+	/* 使宽度100% */
+	.w {
+		width: 100%;
+	}
+}
+
+/* start 带自定义删除按钮的输入框 */
+/* 有按钮的样式 */
+.input-have-button {width: 78%;}
+/* 没有按钮的样式 */
+.input-no-button {display: flex;}
+
+.input-close-icon input {padding-right: 1.5rem;}
+
+.input-close-icon>div {width: 0;font-size: 0.8rem;/*color: blue;*/cursor: pointer;z-index: 3;}
+
+.input-close-icon>div>svg {margin-left: -1.3rem;height: 1rem;width: 1rem;}
+/* end 带自定义删除按钮的输入框 */
+

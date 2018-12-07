@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.laeni.ossfile.mapper.FilesMapper" >
+  <resultMap id="BaseResultMap" type="cn.laeni.ossfile.entity.Files" >
+    <id column="file_key" property="fileKey" jdbcType="CHAR" />
+    <result column="user_id" property="userId" jdbcType="CHAR" />
+    <result column="file_size" property="fileSize" jdbcType="BIGINT" />
+    <result column="md5" property="md5" jdbcType="CHAR" />
+    <result column="file_type" property="fileType" jdbcType="CHAR" />
+    <result column="time" property="time" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    file_key, user_id, file_size, md5, file_type, time
+  </sql>
+  <insert id="insertSelective" parameterType="cn.laeni.ossfile.entity.Files" >
+    insert into files
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fileKey != null" >
+        file_key,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="fileSize != null" >
+        file_size,
+      </if>
+      <if test="md5 != null" >
+        md5,
+      </if>
+      <if test="fileType != null" >
+        file_type,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fileKey != null" >
+        #{fileKey,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=CHAR},
+      </if>
+      <if test="fileSize != null" >
+        #{fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="md5 != null" >
+        #{md5,jdbcType=CHAR},
+      </if>
+      <if test="fileType != null" >
+        #{fileType,jdbcType=CHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.laeni.ossfile.entity.Files" >
+    update files
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=CHAR},
+      </if>
+      <if test="fileSize != null" >
+        file_size = #{fileSize,jdbcType=BIGINT},
+      </if>
+      <if test="md5 != null" >
+        md5 = #{md5,jdbcType=CHAR},
+      </if>
+      <if test="fileType != null" >
+        file_type = #{fileType,jdbcType=CHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=INTEGER},
+      </if>
+    </set>
+    where file_key = #{fileKey,jdbcType=CHAR}
+  </update>
+</mapper>

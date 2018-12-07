@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script src="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn.laeni.cn/public/js/jquery-3.3.1.min.js" type="text/javascript"
+		charset="utf-8"></script>
+		<title></title>
+	</head>
+	<body>
+		<form action="/upFile" method="post" enctype="multipart/form-data">
+			<input id="file1" type="file" name="upFile">
+			<input type="submit" name="提交">
+			<input id="upload" type="button" value="AJAX提交">
+		</form>
+
+		<script>
+			$(function() {
+				var $ajax;
+				$("#upload").click(function() {
+					var formData = new FormData();
+					/* upFile 为键名,需要后台以同样的名字才能获取到该文件 */
+					formData.append("upFile", document.getElementById("file1").files[0]);
+					
+					console.log(document.getElementById("file1").files[0]);
+					
+					$ajax = $.ajax({
+						url: "/localFile",
+						type: "POST",
+						data: formData,
+						/**
+						 *必须false才会自动加上正确的Content-Type
+						 */
+						contentType: false,
+						/**
+						 * 必须false才会避开jQuery对 formdata 的默认处理
+						 * XMLHttpRequest会对 formdata 进行正确的处理
+						 */
+						processData: false,
+						success: function(data) {
+							console.log(data)
+						},
+						error: function(data) {
+							console.log(data)
+						}
+					});
+					
+					// $ajax.abort()
+					console.log($ajax.abort())
+				});
+			});
+			
+		</script>
+	</body>
+</html>

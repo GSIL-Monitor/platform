@@ -1,0 +1,234 @@
+<!-- 可将之看成是user.js的一部分 -->
+<!-- html -->
+<div id="login" style="position: fixed;left: 541px;top: 111.5px;">
+	<div class="mobile bor colorBackground" style="cursor: move;">
+		<div id="close_loginwindow">
+			<div class="icon" title="关闭">
+				<svg class="icon" aria-hidden="true">
+					<use xlink:href="#icon-buoumaotubiao20"></use>
+				</svg>
+			</div>
+		</div>
+	</div>
+	<div class="forms">
+		<form id="login_form" class="input" action="/api/login" method="post">
+			<!-- 用户名框 -->
+			<div class="login_name_pass input-close-icon input-no-button">
+				<input id="username" name="username" type="text" class="form-control" aria-describedby="email_small" placeholder="登录名/邮箱/电话号码"
+				 maxlength="64">
+				<div class="clean-icon align-self-center d-none">
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#icon-buoumaotubiao20"></use>
+					</svg>
+				</div>
+			</div>
+			<!-- 密码框 -->
+			<div class="login_name_pass input-close-icon input-no-button">
+				<input type="password" id="password" name="password" class="form-control" aria-describedby="email_small"
+				 placeholder="登录密码" maxlength="128">
+				<div class="clean-icon align-self-center d-none">
+					<svg class="icon" aria-hidden="true">
+						<use xlink:href="#icon-buoumaotubiao20"></use>
+					</svg>
+				</div>
+			</div>
+			<div id="danger" style="color: firebrick;font-size: 18px;margin: 5px;height: 23px;"></div>
+			<!-- 提交按钮 -->
+			<button type="submit" title="登录" class="btn btn-block colorBackground">登录</button>
+		</form>
+		<div class="clear" style="margin-top: 5px;">
+			<div class="loginWhat">
+				<div title="注册新账号">
+					<a href="javascript:void(0)" class="show_reg_window">免费注册</a>
+				</div>
+				<div title="忘记密码或忘记账号">
+					<a href="javascript:void(0)" onclick="javascript:{alert('该功能带完善,如有问题请邮箱联系:m@laeni.cn')}">登录遇到问题?</a>
+				</div>
+			</div>
+			<div class="others">
+				<!--使用QQ登录-->
+				<span>
+					<!-- 加入QQ登录图标 -->
+					<svg class="icon qqLoginBtn" aria-hidden="true">
+						<use xlink:href="#icon-social-qq"></use>
+					</svg>
+					<!-- 为QQ图标增加点击事件,并增加相关功能 qc-btn-class为点击该class元素则自动跳起QQ登录 -->
+					<script src="http://cdn.laeni.cn/public/js/lc_qq_sdk.js?v=092401" type="text/javascript" charset="utf-8" qc-appid="101481333"
+					 qc-redirecturi="https://laeni.cn/callback/qq" qc-btn-class="qqLoginBtn"></script>
+				</span>
+				<!--<span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-weixin"></use></svg></span><span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-baidu"></use></svg></span><span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-taobao"></use></svg></span>-->
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- CSS and Javascript -->
+<style type="text/css">
+	* {
+		font-family: "黑体"
+	}
+
+	.colorBorder {
+		border-color: #c744c2
+	}
+
+	.colorBackground {
+		background-color: #c744c2
+	}
+
+	#login {
+		width: 500px;
+		background-color: #fff;
+		z-index: 1000;
+		border-radius: 5px;
+		overflow: inherit
+	}
+
+	#login a {
+		text-decoration: none
+	}
+
+	#login .forms {
+		width: 336px;
+		margin: 30px auto
+	}
+
+	#login .bor {
+		height: 30px
+	}
+
+	#close_loginwindow {
+		float: right;
+		line-height: 0;
+		width: 23px;
+		padding-left: 10px;
+		height: 23px;
+		margin-right: 5px;
+		margin-top: 4px;
+		font-size: 22px;
+		cursor: pointer;
+	}
+
+	#close_loginwindow>.icon {
+		margin-left: -10px;
+	}
+
+	#login form {
+		width: inherit;
+	}
+
+	.login_name_pass {}
+
+	#login form input {
+		margin: 10px 0
+	}
+
+	#login form input[type=submit] {
+		border: none;
+		outline: 0;
+		margin-top: 20px;
+		margin-left: 5px;
+		cursor: pointer
+	}
+
+	#login .loginWhat {
+		float: right
+	}
+
+	#login .loginWhat div {
+		display: -webkit-inline-box;
+		margin: 5px 5px;
+		cursor: pointer
+	}
+
+	#login .others {
+		margin-top: 15px;
+		font-size: 1.5rem;
+	}
+</style>
+
+<script type="text/javascript">
+	$(function(){
+		var
+			/* 自定义工具库 */
+			$ut = typeof UT == "object" ? UT : null,
+			/* 用户操作工具函数 */
+			$user = typeof USER == "object" ? USER : null,
+			/* 登录窗口 */
+			$loginWindw = $("#login"),
+			/* 登录窗关闭按钮 */
+			$closeLoginWindow = $("#close_loginwindow"),
+			/* 登录表单 */
+			$loginForm = $("#login_form"),
+			/* 唯一的错误提示框 */
+			$danger = $("#danger"),
+			/* 注册按钮 */
+			$showRegWindow = $(".show_reg_window");
+
+		/* 智能输入框 */
+		$ut && $ut.check.checkInputCleanIcon();
+
+		/* 使登录窗口可移动 */
+		$ut && $ut.mobile($loginWindw.find(".mobile"), $loginWindw);
+
+		/* 使得用户名输入框获得焦点 */
+		$loginWindw && $loginWindw.find("input[name='name']").focus();
+		/* 当文本框获得焦点时选中输入框中的内容 */
+		$loginWindw && $loginWindw.find("input").focus(function() {
+			this.select();
+		});
+
+		/* 关闭登录窗口按钮 */
+		$closeLoginWindow.click(function() {
+			$user && $user.loginWindowOut();
+		});
+		
+		/* 输入框内容变动时清空提示信息 */
+		$("input").bind('input propertychange', function () {
+			$danger.html(null);
+		});
+
+		/* 登录按钮事件 */
+		$loginForm.bind("submit", function() {
+			/* 阻止默认事件 */
+			event.preventDefault();
+			
+			var $this = $(this);
+			if ($this.find("#username").val() != "" && $this.find("#password").val() != "") {
+				$.ajax({
+					url: (typeof LAENI_CONFIG != "undefined" && LAENI_CONFIG.URL.USER + $this.attr("action")) || "//user.laeni.cn"+$this.attr("action"),
+					data: $this.serializeArray(),
+					xhrFields: {
+						withCredentials: true,
+						thCredentials: true
+					},
+					success: function(result) {
+						if (result && result.code == "000") {
+							// 关闭登录窗口并自动执行初始化方法
+							$user && $user.loginWindowOut();
+						} else {
+							$danger.html(result.msg);
+						}
+					},
+					error: function() {
+						alert("网络错误,请稍候再试!")
+					}
+				});
+			} else {
+				$danger.html("用户名密码不能为空");
+			}
+
+		});
+		
+		/* 注册按钮事件 */
+		$showRegWindow.click(function(){
+			// 新页面地址
+			var regUrl = _CONF ? (_CONF.URL.USER + _CONF.PATH.REG_HTML) : "//user.laeni.cn/reg.html";
+			// 将当前页附加到请求地址上,方便注册成功后调整回来
+			var redirect = "?redirect_uri=" + encodeURIComponent(document.location.toString());
+			// 打开新标签
+			open(regUrl+redirect, "_blank");
+		});
+	});
+</script>

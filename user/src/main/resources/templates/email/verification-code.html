@@ -1,0 +1,57 @@
+<div id="qm_con_body">
+	<style type="text/css">
+		.qmbox .body {
+			margin: 50px;
+			border-style: solid;
+			border-width: 1px;
+			border-color: #bdbdbd;
+			padding: 20px;
+		}
+
+		.qmbox .boot {
+			height: 100px;
+		}
+
+		.qmbox .boot .b1 {
+			margin-top: 50px;
+			float: right;
+		}
+
+		.qmbox .boot .b1 div {
+			line-height: 25px;
+			text-align: center;
+			color: #989898;
+		}
+
+		.qmbox div {
+			line-height: 20px;
+		}
+	</style>
+	<div id="mailContentContainer" class="qmbox qm_con_body_content qqmail_webmail_only" style="">
+		<div class="body">
+			<div style="line-height: 50px; font-weight: bold;">尊敬的用户：</div>
+			<div>
+				<div>您好！您正在进行邮箱验证，本次请求的验证码为：</div>
+				<div>
+					<span style="color: #D86420;">${code}</span> <span style="color: #989898;">(为保障您的安全，验证码有效期为5分钟，建议您尽快认证)</span>
+				</div>
+				<div class="boot">
+					<div class="b1">
+						<div>Laeni</div>
+						<div><span style="border-bottom:1px dashed #ccc;">${time}</span></div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<style type="text/css">
+			.qmbox style,
+			.qmbox script,
+			.qmbox head,
+			.qmbox link,
+			.qmbox meta {
+				display: none !important;
+			}
+		</style>
+	</div>
+</div>

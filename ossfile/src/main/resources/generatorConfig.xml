@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+		"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<!-- 数据库驱动 -->
+	<classPathEntry location="D:\OneinStack\dev\repository\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar"/>
+
+	<context id="context1">
+		<commentGenerator>
+			<property name="suppressDate" value="true"/>
+			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+			<property name="suppressAllComments" value="true"/>
+		</commentGenerator>
+
+		<!-- 在这写上你的数据库链接信息 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+						connectionURL="jdbc:mysql://sql.laeni.cn/ossfile?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false"
+						userId="ossfile" password="ossfile"/>
+
+		<!-- 这写上你要把数据表映射的Bean生成在哪 -->
+		<javaModelGenerator targetPackage="cn.laeni.ossfile.entity" targetProject="src/main/java"/>
+
+		<!-- 这写上你要把查询映射的XML生成在哪 -->
+		<sqlMapGenerator targetPackage="cn.laeni.ossfile.mapper" targetProject="src/main/resources" />
+
+		<!-- 这写上你要把查询映射的接口生成在哪
+		        type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象
+		        type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
+		        type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
+		 -->
+		<javaClientGenerator type="MIXEDMAPPER" targetPackage="cn.laeni.ossfile.mapper" targetProject="src/main/java"/>
+
+		<table tableName="user_space"
+			   enableCountByExample="false" enableUpdateByExample="false"
+			   enableDeleteByExample="false" enableSelectByExample="false"
+			   selectByExampleQueryId="false"/>
+		<table tableName="path_structure"
+			   enableCountByExample="false" enableUpdateByExample="false"
+			   enableDeleteByExample="false" enableSelectByExample="false"
+			   selectByExampleQueryId="false"/>
+		<table tableName="files"
+			   enableCountByExample="false" enableUpdateByExample="false"
+			   enableDeleteByExample="false" enableSelectByExample="false"
+			   selectByExampleQueryId="false"/>
+		<table tableName="file_link"
+			   enableCountByExample="false" enableUpdateByExample="false"
+			   enableDeleteByExample="false" enableSelectByExample="false"
+			   selectByExampleQueryId="false"/>
+
+	</context>
+
+</generatorConfiguration>

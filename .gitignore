@@ -1,0 +1,37 @@
+#该文件用于设置忽略提交的文件或目录
+#其他高级用法可参考:https://www.cnblogs.com/wangmo/p/7737109.html
+
+# maven ignore
+target/
+#*.jar
+#*.war
+!.mvn/wrapper/*
+*.zip
+*.tar
+*.tar.gz
+
+# eclipse ignore
+.settings/
+.project
+.classpath
+
+# idea ignore
+.idea/
+*.ipr
+*.iml
+*.iws
+
+# temp ignore
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+
+# system ignore
+.DS_Store
+Thumbs.db
+*.orig
+
+# svn ignore
+.svn

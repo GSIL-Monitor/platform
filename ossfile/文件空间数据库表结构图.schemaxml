@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="utf8" collation="utf8_general_ci">ossfile</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="file_link" view="standard">
+<left>398</left>
+<top>3</top>
+<width>178</width>
+<height>146</height>
+<sql_create_table>CREATE TABLE `file_link` (
+  `path_id` int(11) NOT NULL COMMENT '位置ID(该ID唯一标识一个文件或目录)',
+  `file_key` char(128) NOT NULL COMMENT '对应存储桶中的key,一旦生成就不可改变',
+  `used` varchar(255) DEFAULT NULL COMMENT '正在引用该文件的使用者以及引用数量',
+  PRIMARY KEY (`path_id`,`file_key`),
+  KEY `file_link_ibfk_3` (`file_key`),
+  CONSTRAINT `file_link_ibfk_1` FOREIGN KEY (`path_id`) REFERENCES `path_structure` (`path_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `file_link_ibfk_3` FOREIGN KEY (`file_key`) REFERENCES `files` (`file_key`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户文件引用统计表'</sql_create_table>
+</table>
+<table name="files" view="standard">
+<left>14</left>
+<top>20</top>
+<width>165</width>
+<height>180</height>
+<sql_create_table>CREATE TABLE `files` (
+  `file_key` char(128) NOT NULL COMMENT '对应存储桶中的key,一旦生成就不可改变',
+  `user_id` char(16) DEFAULT NULL COMMENT '用户ID',
+  `file_size` bigint(20) DEFAULT NULL COMMENT '文件大小',
+  `md5` char(32) DEFAULT NULL COMMENT 'md5值',
+  `file_type` char(8) DEFAULT NULL COMMENT '文件类型(规定有限的几种,可以使用枚举)',
+  `time` int(11) DEFAULT NULL COMMENT '添加时间(时间戳)',
+  PRIMARY KEY (`file_key`),
+  KEY `files_ibfk_1` (`user_id`),
+  CONSTRAINT `files_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user_space` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='所有用户的文件记录表'</sql_create_table>
+</table>
+<table name="path_structure" view="standard">
+<left>599</left>
+<top>90</top>
+<width>198</width>
+<height>180</height>
+<sql_create_table>CREATE TABLE `path_structure` (
+  `path_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '位置ID(该ID唯一标识一个文件或目录)',
+  `user_id` char(16) NOT NULL COMMENT '用户ID',
+  `path_name` char(16) NOT NULL COMMENT '文件或目录名',
+  `parent_path_id` int(11) DEFAULT NULL COMMENT '父路径的id',
+  `time` int(11) DEFAULT NULL COMMENT '文件或目录创建的时间',
+  `directory` tinyint(1) DEFAULT '1' COMMENT '是否是目录(不是目录就是文件)',
+  PRIMARY KEY (`path_id`),
+  KEY `parent_path_id` (`parent_path_id`),
+  KEY `path_structure_ibfk_1` (`user_id`),
+  CONSTRAINT `path_structure_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user_space` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='用户文件目录结构表'</sql_create_table>
+</table>
+<table name="user_space" view="standard">
+<left>202</left>
+<top>107</top>
+<width>184</width>
+<height>129</height>
+<sql_create_table>CREATE TABLE `user_space` (
+  `user_id` char(16) NOT NULL COMMENT '用户ID',
+  `sum_space` bigint(20) DEFAULT '0' COMMENT '总空间',
+  `used_space` bigint(20) DEFAULT '0' COMMENT '已用空间',
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户空间使用情况'</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
