@@ -1,0 +1,214 @@
+######################################
+## zookeper客户端获取配置文件的路径结构
+## CompositePropertySource {
+##     name='zookeeper',
+##     propertySources=[
+##         ZookeeperPropertySource {
+##             name='config/application-prod'
+##         },
+##         ZookeeperPropertySource {
+##             name='config/application'
+##         },
+##         ZookeeperPropertySource {
+##             name='config/root-prod'
+##         },
+##         ZookeeperPropertySource {
+##             name='config/root'
+##         }
+##     ]
+## }
+## root:         所有应用的公共配置(可配置)
+## root-prod:    公共配置的分支版本(可配置)
+## application:       应用本身的配置
+## application-prod:  应用本身配置的分支版本
+######################################
+
+## 配置层次级别("!"表示该路径不是配置的一部分,只表示在zookeeper中的层级关系)
+!公共配置分支
+  !默认[示例 => /config/platform](一般为所有配置的公共部分)
+  !开发[示例 => /config/platform-dev]
+  !测试[示例 => /config/platform-test](保留)
+  !生产[示例 => /config/platform-prod]
+!模块配置
+  !默认[示例 => /config/user](一般为所有配置的公共部分)
+  !开发[示例 => /config/user-dev]
+  !测试[示例 => /config/user-test](保留)
+  !生产[示例 => /config/user-prod]
+
+## 项目公共配置(platform分支)
+!platform:
+  !default:
+    spring:
+      ## 默认数据源配置
+      datasource:
+        url: jdbc:mysql://sql.laeni.cn/test?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+        username: root
+        password: pianai0_0
+      ########################################################
+      ### Redis配置
+      ### Redis必须有,默认会连接127.0.0.1:6379,如果设置了其他则覆盖默认
+      ########################################################
+      redis:
+        database: 0         # 连接工厂使用的数据库索引。
+        ## 连接URL，将覆盖主机，端口和密码（用户将被忽略），例如：redis://user:password@example.com:6379
+        ## url:
+        host: 132.232.176.112       # Redis服务器主机。
+        password: redis_password_hello            # 登录redis服务器的密码。
+        #    ssl: false            # 启用SSL支持。
+        port: 6377            # Redis服务器端口。
+        #  timeout: 0            # 以毫秒为单位的连接超时。
+        #  jedis:
+        #    pool:
+        #      max-active: 10    # 池在给定时间可以分配的最大连接数。使用负值无限制。
+        #      max-idle: 10      # 池中“空闲”连接的最大数量。使用负值表示无限数量的空闲连接。
+        #      max-wait: -1      # 连接分配在池被耗尽时抛出异常之前应该阻塞的最长时间量（以毫秒为单位）。使用负值可以无限期地阻止。
+        #      min-idle: 0       # 目标为保持在池中的最小空闲连接数。这个设置只有在正面的情况下才有效果。
+        #  sentinel:
+        #    master:             # （哨兵模式，不使用则不用开启）Redis服务器的名称。
+        #    nodes:              # （哨兵模式，不使用则不用开启）主机：端口对的逗号分隔列表。
+    end spring!
+    
+    ## 自定义数据源配置(结构可自定义,只要在DataSource 的 Bean中 使用@ConfigurationProperties注解申明即可)
+    datasource:
+      druid:
+        url: jdbc:mysql://sql.laeni.cn/op_user?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+        username: root
+        password: pianai0_0
+        initialSize: 1
+        minIdle: 1
+        maxActive: 20
+        maxWait: 6000                         #配置获取连接等待超时的时间
+        timeBetweenEvictionRunsMillis: 100000 #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+        minEvictableIdleTimeMillis: 50000     #配置一个连接在池中最小生存的时间，单位是毫秒
+        filters: stat,log4j                   #配置监控统计拦截的filters
+    end datasource!
+    
+    ## mybatis配置信息
+    mybatis:
+      configuration:
+        ## 开启MyBatis自动驼峰命名转换
+        map-underscore-to-camel-case: true
+    end mybatis!
+    
+    
+  !dev:
+    ## druid数据源配置
+    druid:
+      log:
+        stmt:
+          ## 打印SQL语句
+          executableSql: true
+    logging:
+      level:
+        com:
+          looedu:
+            mapper: debug
+  !prod:
+    spring:
+      redis:
+        cluster:
+          #max-redirects: 2   # （普通集群，不使用则不用开启）在群集中执行命令时要遵循的最大重定向数目。
+          # （普通集群，不使用则不用开启）以逗号分隔的“主机：端口”对列表进行引导。
+          nodes: 10.0.0.5:6379,10.0.0.7:6379
+    datasource:
+      druid:
+        url: jdbc:mysql://10.0.0.7/op_user?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+        username: root
+        password: pianai0_0
+end platform!
+
+## User模块配置
+!user:
+  ## User模块的公共配置
+  !default:
+    spring:
+      ###########################################################################################
+      ## Email
+      ###########################################################################################
+      mail:
+        host: smtp.qq.com
+        username: m@laeni.cn
+        password: vblmduabzqlrbbbe
+        ## (自定义配置)发件人地址
+        from: m@laeni.cn
+        ## 默认编码UTF-8
+        defaultEncoding: UTF-8
+        ## 端口，这里添加587即可
+        port: 587
+    end spring!
+    
+    ###########################################################################################
+    ## 腾讯-QQ互联等配置信息
+    ###########################################################################################
+    connect:
+      qq:
+        #回调地址(通过配置文件读取的已经编码的URL可能会被自动还原,目前只能通过硬编码配置)
+        #cn.laeni.user.feign.getAccessToken
+        redirect_uri: https://laeni.cn/callback/qq
+        redirect_uri_encode: https%3A%2F%2Flaeni.cn%2Fcallback%2Fqq
+        #appid(应用的唯一标识)
+        appid: 101481333
+        #appkey(appid对应的密钥)
+        appkey: e8ef40ccf26cd1d1971aa49a10745e8b
+    end connect!
+    
+    ########################################################
+    ### 通用配置信息
+    ########################################################
+    system:
+      url_home: https://laeni.cn    #首页地址(一般用于默认跳转)
+    end system!
+    
+    ########################################################
+    ### 自动生成 userId 配置信息
+    ########################################################
+    useridfactory:
+      min-idle: 10000   #小于 10000 开始生产id
+      single: 10 #每次生成多少ID(默认10)
+    end useridfactory!
+    
+    user:
+      inactive: 2592000   #用户登录后过期时间(单位:秒  | 默认1个月)
+    end user!
+    
+    ########################################################
+    ### 验证码
+    ########################################################
+    verificationCode:
+      validityPeriod: 600 #验证码有效期(单位:秒  | 默认300秒)
+      maxCode: 3           #每个帐号下最多保留几个有效验证码
+      maxFailures: 5      #输错几次后验证码失效
+      intervals: 60       #两个验证码发送最小间隔时间(单位:秒)
+end user!
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------
+########################################################
+### 通用配置信息
+########################################################
+system:
+  url_home: https://laeni.cn    #首页地址(一般用于默认跳转)
+
+########################################################
+### 自动生成 userId 配置信息
+########################################################
+useridfactory:
+  min-idle: 10000   #小于 10000 开始生产id
+  single: 10 #每次生成多少ID(默认10)
+
+user:
+  inactive: 2592000   #用户登录后过期时间(单位:秒  | 默认1个月)
+
+
+########################################################
+### 验证码
+########################################################
+verificationCode:
+  validityPeriod: 600 #验证码有效期(单位:秒  | 默认300秒)
+  maxCode: 3           #每个帐号下最多保留几个有效验证码
+  maxFailures: 5      #输错几次后验证码失效
+  intervals: 60       #两个验证码发送最小间隔时间(单位:秒)

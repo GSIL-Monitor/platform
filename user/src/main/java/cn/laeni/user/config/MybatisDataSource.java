@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 public class MybatisDataSource {
 	@Qualifier(value = "dataSource")
 	@Bean("dataSource")
-	@ConfigurationProperties(prefix = "spring.druid.opuser") // 配置结构
+	@ConfigurationProperties(prefix = "datasource.druid") // 配置结构
 	@Primary // 主数据源
 	public DataSource dataSource() {
 		return DataSourceBuilder.create().type(com.alibaba.druid.pool.DruidDataSource.class).build();
