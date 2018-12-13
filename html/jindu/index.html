@@ -35,6 +35,9 @@
 			.ooo {
 				margin: 60px auto;
 			}
+			.ooo .o-body {
+				font-size: 1.5rem;
+			}
 
 			.bo {
 				margin: 10px 0;
@@ -43,6 +46,15 @@
 
 			.bb {
 				display: none;
+				border-style: solid;
+				border-width: 1px;
+				border-color: #868686;
+			}
+			
+			.ooo .slideToggle {
+				color: #0000FF;
+				cursor: pointer;
+				font-size: 2rem;
 			}
 		</style>
 	</head>
@@ -54,67 +66,171 @@
 			<h1>宠物信息服务平台</h1>
 			<br>
 			<hr>
-			<div class="ooo">
-				<h2>网站源码地址</h2>
-				最新svn资源地址(svn://svn.laeni.cn/ooo)
-				<div style="color: #0000FF;cursor: pointer;">
-					<div onclick="javasript:{$(this).parent().find('.bb').slideToggle();}">
-						<b><u>源码更新日志(源码地址)</u></b>
-					</div>
 
-					<!-- 列表 -->
-					<div class="bb" style="border-style: solid;border-width: 1px;border-color: #868686;">
-						<div class="bo">
-							时间: 2018/09/19
-							<a class="d-block" href="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/file/ooo-18-09-19.zip">源码地址(点击下载)</a>
+			<!-- 项目源码地址 -->
+			<div class="ooo">
+				<div>
+					<h3>
+						项目源码地址
+					</h3>
+				</div>
+				<div class="o-body">
+					<div>
+						<a href="https://github.com/laeni/platform" target="_blank">
+							github项目地址(https://github.com/laeni/platform.git)
+						</a>
+					</div>
+					<div>拉取项目命令: git clone https://github.com/laeni/platform.git</div>
+				</div>
+			</div>
+
+			<!-- 项目进度日志 -->
+			<div class="ooo">
+				<div class="slideToggle">
+					<u>项目进度日志</u>
+				</div>
+
+				<!-- 列表 -->
+				<div class="bb o-body">
+					<div class="bo">
+						时间: 2018/12/11
+						<div>
+							基于
+							<a href="https://github.com/apache/incubator-skywalking" target="_blank">SkyWalking</a>
+							的分布式日志跟踪系统搭建完成。
+						</div>
+						<div>
 							<!-- 可选的说明 -->
 						</div>
-						<div class="bo">
-							时间: 2018/09/16
+					</div>
+					<div class="bo">
+						时间: 2018/11/15
+						<div>
+							完成MySQL集群,Redis集群的搭建工作
+						</div>
+						<div>
+							<!-- 可选的说明 -->
+						</div>
+					</div>
+					<div class="bo">
+						时间: 2018/10/1
+						<div>
+							将所有源码从SVN云仓库迁移到github上
+						</div>
+						<div style="color: red;">注意: 从现在开始将不在提供源码下载，如需源码请从github上获取（可以获取全部分支甚至是每一次提交）。</div>
+					</div>
+					<div class="bo">
+						时间: 2018/09/19
+						<div>
+							<a class="d-block" href="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/file/ooo-18-09-19.zip">源码地址(点击下载)</a>
+						</div>
+						<div>
+							<!-- 可选的说明 -->
+						</div>
+					</div>
+					<div class="bo">
+						时间: 2018/09/16
+						<div>
 							<a class="d-block" href="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/file/%E5%90%8E%E5%8F%B0%E5%8F%8A%E9%83%A8%E5%88%86%E5%89%8D%E5%8F%B0%E6%BA%90%E7%A0%81.zip">源码地址(点击下载)</a>
+						</div>
+						<div>
 							<!-- 可选的说明 -->
 						</div>
 					</div>
 				</div>
 			</div>
 
+			<!-- 项目模块 -->
+			<div class="ooo">
+				<div class="slideToggle">
+					<u>
+						项目模块
+					</u>
+				</div>
 
-			<div class="ooo">
-				<h2>网站部署设计稿(2018-09-14)</h2>
-				<img style="border: solid;" width="100%" src="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/%E9%83%A8%E7%BD%B2%E5%9B%BE.jpg">
+				<!-- 列表 -->
+				<div class="bb o-body">
+					<div class="bo">
+						数据监控后台
+						<div>
+							url: <a href="https://monitor.laeni.cn/">https://monitor.laeni.cn/</a>
+						</div>
+						<div>
+							<div>
+								用户名密码: laeni/laeni
+							</div>
+							<div>
+								通过日志对各个服务进行各项指标的监控
+								<img width="100%" src="https://camo.githubusercontent.com/167eeba0432158012c1a550364729551b010dfa9/68747470733a2f2f736b7977616c6b696e67746573742e6769746875622e696f2f706167652d7265736f75726365732f362d626574612d6f766572766965772e706e67" >
+							</div>
+						</div>
+					</div>
+					<div class="bo">
+						时间: 2018/09/19
+						<div>
+							<a class="d-block" href="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/file/ooo-18-09-19.zip">源码地址(点击下载)</a>
+						</div>
+						<div>
+							<!-- 可选的说明 -->
+						</div>
+					</div>
+					<div class="bo">
+						.........
+					</div>
+				</div>
 			</div>
+
+			<!-- 网站部署设计稿 -->
 			<div class="ooo">
-				<h2>服务器搭建并安装调试相关软件(正在进行)</h2>
-				我们会在空余时间进行编码以及在Linux服务器上安装相关软件，由于像数据库集群与读写分离操作曾经从未实际使用过，所以可能会在这些地方多耗费一些时间，预计在下月月初完成相关服务的搭建。
+				<div class="slideToggle">
+					<u>
+						网站部署设计稿(2018-09-14)
+					</u>
+				</div>
+				<div class="bb o-body">
+					<img width="100%" src="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/%E9%83%A8%E7%BD%B2%E5%9B%BE.jpg">
+				</div>
 			</div>
+
+			<!-- 成员列表及联系方式 -->
 			<div class="ooo">
-				<h2>成员列表及联系方式</h2>
-				如果您看到这里，说明您已经看了我们的设计及部署思路，如果您有更好的建议或意见，还望您通过电话或邮件的形式反馈给我们。
-				<br />
-				小组成员列表
-				<ul>
-					<li>
-						陈代旺
-						<div>电话:17608776656</div>
-						<div>邮箱:mr@laeni.cn</div>
-					</li>
-					<li>
-						迟邱磊
-						<div>电话:18869713983</div>
-					</li>
-					<li>
-						乐华锋
-						<div>电话:18849844585</div>
-					</li>
-					<li>
-						杨德永
-						<div>邮箱:1305117831@qq.com</div>
-					</li>
-				</ul>
+				<div>
+					<h3>
+						成员列表及联系方式
+					</h3>
+				</div>
+				
+				<div class="o-body">
+					<ul>
+						<li>
+							陈代旺
+							<div>电话:17608776656</div>
+							<div>邮箱:m@laeni.cn</div>
+						</li>
+						<li>
+							迟邱磊
+							<div>电话:18869713983</div>
+						</li>
+						<li>
+							乐华锋
+							<div>电话:18849844585</div>
+						</li>
+						<li>
+							杨德永
+							<div>邮箱:1305117831@qq.com</div>
+						</li>
+					</ul>
+				</div>
 
 			</div>
 
 		</div>
 	</body>
-
+	<script type="text/javascript">
+		$(function() {
+			$(".slideToggle").click(function() {
+				$(this).parent().find('.bb').slideToggle();
+			});
+		});
+	</script>
 </html>
