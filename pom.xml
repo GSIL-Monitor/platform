@@ -25,9 +25,25 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <spring-cloud.version>Greenwich.M3</spring-cloud.version>
+        <dubbo-version>0.2.1-SNAPSHOT</dubbo-version>
     </properties>
 
+    <!-- 阿里云私服配置, 当部署到私服的时候使用 -->
+    <distributionManagement>
+        <repository>
+            <id>rdc-releases</id>
+            <name>29461-release-UOYUhD</name>
+            <url>https://repo.rdc.aliyun.com/repository/29461-release-UOYUhD</url>
+        </repository>
+        <snapshotRepository>
+            <id>rdc-snapshots</id>
+            <name>Internal Snapshot Repository</name>
+            <url>https://repo.rdc.aliyun.com/repository/29461-snapshot-LeRipn</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <dependencies>
+        <!-- start 自定义依赖区==================================================================================================== -->
         <!-- 自定义工具类 -->
         <dependency>
             <groupId>cn.laeni</groupId>
@@ -40,9 +56,19 @@
             <artifactId>entity-interface</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <!-- end 自定义依赖区==================================================================================================== -->
+
+        <!-- start 非必须依赖区==================================================================================================== -->
+        <!-- apm-toolkit-trace(监控) -->
+        <dependency>
+            <groupId>org.apache.skywalking</groupId>
+            <artifactId>apm-toolkit-trace</artifactId>
+            <version>6.0.0-alpha</version>
+        </dependency>
+        <!-- end 非必须依赖区==================================================================================================== -->
 
 
-        <!-- 阿里巴巴JSON框架(修改BUG) -->
+        <!-- 阿里巴巴JSON框架 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
@@ -90,6 +116,7 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
+        <!-- start SpringBoot -->
         <!-- Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -100,6 +127,15 @@
             <artifactId>spring-boot-starter-tomcat</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!-- end SpringBoot -->
+
+        <!-- start Dubbo -->
+        <dependency>
+            <groupId>com.alibaba.boot</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+            <version>${dubbo-version}</version>
+        </dependency>
+        <!-- end Dubbo -->
 
         <!-- start Zookeeper -->
         <dependency>
