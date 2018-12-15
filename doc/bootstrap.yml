@@ -69,6 +69,103 @@ end!
         #    nodes:              # （哨兵模式，不使用则不用开启）主机：端口对的逗号分隔列表。
     end spring!
     
+    ## dubbo配置,id一般可缺省,用于多配置区分
+    dubbo:
+      scan:
+        ## 扫描Dubbo组件的基础包,主要扫描该注解@com.alibaba.dubbo.config.annotation.Service
+        ## 功能等同于启动类加上注解: @DubboComponentScan(basePackages = "cn.laeni.dubbo")
+        basePackages: cn.laeni
+      end scan!
+      
+      # Dubbo Config properties
+      ## 应用信息配置 Bean -> com.alibaba.dubbo.config.ApplicationConfig
+      application:
+        ## [可选,服务发现,默认:"0.0.0"] 服务版本，建议使用两位数字版本，如：1.0，通常在接口不兼容时版本号才需要升级
+        version: 0.0.0
+      end application!
+    
+      ## 协议配置 Bean -> com.alibaba.dubbo.config.ProtocolConfig
+      protocol:
+        ## [可选,缺省值和"name"相同]用于配置关联,可以在<dubbo:service protocol="">中引用此ID，如果ID不填，缺省和name属性值一样，重复则为name后加序号
+        #id: dubbo
+        ## 协议名称
+        name: dubbo
+        ## 协议端口(-1，自动分配)
+        port: -1
+        ## 务主机名，多网卡选择或指定VIP及域名时使用，为空则自动查找本机IP，-建议不要配置，让Dubbo自动获取本机IP
+        #host: 127.0.0.1
+        status: server
+      end protocol!
+    
+      ## 注册中心配置 Bean -> com.alibaba.dubbo.config.RegistryConfig
+      registry:
+        ## [可选,配置关联] 注册中心引用BeanId，可以在<dubbo:service registry="">或<dubbo:reference registry="">中引用此ID
+        #id: my-registry
+        ## [必填] 注册中心服务器地址,同一集群内的多个地址在"backup="后面用逗号分隔,"N/A"表示不使用注册中心
+        address: zookeeper://132.232.176.112:2181?backup=119.27.181.229:2181
+        client: zkclient
+        ## 注册中心不存在时，是否报错
+        check: true
+        ## 是否向此注册中心注册服务，如果设为false，将只订阅，不注册
+        register: true
+        ## 是否向此注册中心订阅服务，如果设为false，将只注册，不订阅
+        subscribe: true
+      end registry!
+    
+      service:
+        ## [可选,自定义配置,服务发现]缺省值为"0.0.0",建议使用两位,且一般在接口类型不兼容时使用
+        version: 0.0.0
+      end service!
+    end dubbo!
+    
+    ## SpringBoot监控设置
+    management:
+      endpoint:
+        ## Enables Dubbo All Endpoints
+        ## 启用Dubbo所有端点
+        dubbo:
+          enabled: true
+        dubbo-shutdown:
+          enabled: true
+        dubbo-configs:
+          enabled: true
+        dubbo-services:
+          enabled: true
+        dubbo-references:
+          enabled: true
+        dubbo-properties:
+          enabled: true
+      end endpoint!
+    
+      ## 公开所有Web端点
+      server:
+        web:
+          exposure:
+            include: "*"
+      end server!
+    
+      # Dubbo 健康
+      ## StatusChecker Name defaults (default : "memory", "load" )
+      health:
+        dubbo:
+          status:
+            defaults: memory
+            ## StatusChecker Name extras (default : empty )
+            extras: load,threadpool
+      end health!
+      
+      security:
+        ## 关闭安全控制
+        enabled: false
+      end security!
+    end management!
+    
+    # Dubbo Endpoint（默认状态为禁用）
+    endpoints:
+      dubbo:
+        enabled: true
+    end endpoints!
+    
     ## 自定义数据源配置(结构可自定义,只要在DataSource 的 Bean中 使用@ConfigurationProperties注解申明即可)
     datasource:
       druid:
@@ -90,8 +187,8 @@ end!
         ## 开启MyBatis自动驼峰命名转换
         map-underscore-to-camel-case: true
     end mybatis!
-    
-    
+  end default!
+
   !dev:
     ## druid数据源配置
     druid:
@@ -104,6 +201,8 @@ end!
         com:
           looedu:
             mapper: debug
+  end dev!
+  
   !prod:
     spring:
       redis:
@@ -111,11 +210,15 @@ end!
           #max-redirects: 2   # （普通集群，不使用则不用开启）在群集中执行命令时要遵循的最大重定向数目。
           # （普通集群，不使用则不用开启）以逗号分隔的“主机：端口”对列表进行引导。
           nodes: 10.0.0.5:6379,10.0.0.7:6379
+    end spring!
+    
     datasource:
       druid:
         url: jdbc:mysql://10.0.0.7/op_user?useSSL=false&useUnicode=true&characterEncoding=UTF-8
         username: root
         password: pianai0_0
+    end datasource!
+  end prod!
 end platform!
 
 ## User模块配置
@@ -143,7 +246,12 @@ end platform!
       port: 7000
     end server!
     
+    ## SpringBoot监控设置
     management:
+      ## 健康监控端口
+      server:
+        port: 7001
+
       security:
         ## 关闭安全控制
         enabled: false
@@ -191,4 +299,46 @@ end platform!
       maxCode: 3           #每个帐号下最多保留几个有效验证码
       maxFailures: 5      #输错几次后验证码失效
       intervals: 60       #两个验证码发送最小间隔时间(单位:秒)
+    end verificationCode!
+    
+    ## dubbo配置,id一般可缺省,用于多配置区分
+    dubbo:
+      scan:
+        ## 扫描Dubbo组件的基础包,主要扫描该注解@com.alibaba.dubbo.config.annotation.Service
+        ## 功能等同于启动类加上注解: @DubboComponentScan(basePackages = "com.alibaba.dubbo.test.service.impl")
+        basePackages : cn.laeni.user
+      end scan!
+    
+      # Dubbo Config properties
+      ## 应用信息配置 Bean -> com.alibaba.dubbo.config.ApplicationConfig
+      application:
+        ## 配置多应用时使用
+        #id: user
+        ## 当前应用名称，用于注册中心计算应用间依赖关系
+        name: user
+      end application!
+    
+      ## 协议配置 Bean -> com.alibaba.dubbo.config.ProtocolConfig
+      protocol:
+        ## [可选,缺省值和"name"相同]用于配置关联,可以在<dubbo:service protocol="">中引用此ID，如果ID不填，缺省和name属性值一样，重复则为name后加序号
+        #id: dubbo
+        ## 协议名称(默认)
+        #name: dubbo
+        ## 主机名，多网卡选择或指定VIP及域名时使用，为空则自动查找本机IP，-建议不要配置，让Dubbo自动获取本机IP
+        #host: 127.0.0.1
+      end protocol!
+    
+      ## 注册中心配置 Bean -> com.alibaba.dubbo.config.RegistryConfig
+      registry:
+        ## [可选,配置关联] 注册中心引用BeanId，可以在<dubbo:service registry="">或<dubbo:reference registry="">中引用此ID
+        #id: registry1
+        ## [必填] 注册中心服务器地址,同一集群内的多个地址用逗号分隔,"N/A"表示不使用注册中心
+        #address: N/A
+      end registry!
+    end dubbo!
+  end default!
+  
+  ## 生产配置
+  !prod:
+  end prod!
 end user!

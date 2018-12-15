@@ -18,10 +18,18 @@ import freemarker.template.Template;
 
 @RestController
 public class MailController {
+
+	/**
+	 * 邮件支持
+	 */
 	@Autowired
-	JavaMailSender mailSender; // 邮件支持
+	JavaMailSender mailSender;
+
+	/**
+	 * 模板引擎
+	 */
 	@Autowired
-	FreeMarkerConfigurer freeMarkerConfigurer; // 模板引擎
+	FreeMarkerConfigurer freeMarkerConfigurer;
 
 	@RequestMapping("sendemail")
 	public String sendEmail() {
@@ -33,7 +41,7 @@ public class MailController {
 			message.setSubject("测试邮件主题");
 
 			// 发送模板邮件，支持 freemaker
-			Map<String, String> model = new HashMap<String, String>();
+			Map<String, String> model = new HashMap<>(1000);
 			model.put("user", "zggdczfr");
 			// 修改 application.properties 文件中的读取路径
 			freeMarkerConfigurer.setTemplateLoaderPath("classpath:templates.email");

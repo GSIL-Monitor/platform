@@ -18,5 +18,3 @@ spring:
         defaultContext: platform
         ## 配置profile分隔符
         profileSeparator: "-"
-
-

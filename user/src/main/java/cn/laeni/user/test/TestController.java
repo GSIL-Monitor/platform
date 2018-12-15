@@ -3,7 +3,9 @@ package cn.laeni.user.test;
 import cn.laeni.user.dao.mapper.LoginPhoneMapper;
 import cn.laeni.user.feign.ConnectQQFeign;
 import cn.laeni.user.other.entity.UserQQInfo;
+import cn.laeni.user.service.DubboServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +21,12 @@ public class TestController {
 
     @Autowired
     ConnectQQFeign connectQQFeign;
+
+    /**
+     * 登录手机号表
+     */
     @Autowired
-    private LoginPhoneMapper loginPhoneMapper; // 登录手机号表
+    private LoginPhoneMapper loginPhoneMapper;
 
     @Autowired
     private ServletContext application;
@@ -78,6 +84,23 @@ public class TestController {
             return "请使用'?key=xxx'方式设置需要或者的Sessionkey";
         }
         return "【获取成功】=> " + key + ":" + request.getSession().getAttribute(key);
+    }
+
+    // 测试Dubbo
+
+    @com.alibaba.dubbo.config.annotation.Reference
+    DubboServiceInterface serviceDemo;
+
+    @RequestMapping("/testdubbo")
+    @ResponseBody
+    public String testdubbo() {
+        return serviceDemo.getUser();
+    }
+
+    @RequestMapping("dubboConfig")
+    @ResponseBody
+    public String dubboConfig(@Value("${dubbo.registry.address}") String address) {
+        return address;
     }
 
 }
