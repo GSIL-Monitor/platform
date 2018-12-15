@@ -2,19 +2,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!--
+        注意:
+            本POM文件文件为多项目的父POM，因此请不要随意改动，
+            如果需要加其他依赖请添加在该项目的POM内，
+            如果父POM的依赖无法满足自己的要求请自行在项目POM内添加所需依赖，会自动覆盖POM的依赖
+    -->
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.1.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>cn.laeni.platform</groupId>
     <artifactId>platform</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
     <modules>
+        <module>ossfile</module>
         <module>user</module>
     </modules>
+
     <name>platform</name>
     <description>Demo project for Spring Boot</description>
     <!-- FIXME change it to the project's website -->
@@ -95,6 +104,29 @@
             <version>5.1.47</version>
         </dependency>
         <!--  end MyBatis-->
+
+        <!-- start Redis依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <!-- Session存入Rdis依赖【加入此配置后，如果SpringBoot无法正确与Redis连接将导致无法启动(确定需要Redis时可检查Redis配置是否正确且Redis服务器是否启动)】 -->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
+        <!-- end Redis依赖 -->
+
+        <!-- start 模板引擎 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <!-- end 模板引擎 -->
 
         <!-- 热部署模块 -->
         <dependency>

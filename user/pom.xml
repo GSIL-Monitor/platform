@@ -7,7 +7,8 @@
         <groupId>cn.laeni.platform</groupId>
         <artifactId>platform</artifactId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <!-- 父POM路径 -->
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>user</artifactId>
