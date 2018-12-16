@@ -5,6 +5,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -69,19 +70,28 @@ public class MyBatisConfig {
      */
     @Qualifier(value = "dataSource")
     @Bean("ossdataSource")
-    @ConfigurationProperties(prefix = "spring.druid.ossfile") // 配置结构
+    @ConfigurationProperties(prefix = "datasource.druid") // 配置结构
     @Primary // 主数据源
     public DataSource dataSource() {
         return DataSourceBuilder.create().type(com.alibaba.druid.pool.DruidDataSource.class).build();
     }
 
+    /**
+     * MyBatis映射文件和映射接口扫描： (当全部采用注解配置Mapper时可以省略)采用XML配置Mapper时，必须同时指明以下两个Bean
+     * @param dataSource
+     * @return
+     * @throws IOException
+     */
     @Bean(name = "dbmybatisSqlSessionFactory")
     @Primary
     public SqlSessionFactory testSqlSessionFactory(@Qualifier("ossdataSource") DataSource dataSource)
             throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+        // 设置数据源
         bean.setDataSource(dataSource);
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:cn/laeni/ossfile/mapper/*.xml"));
+        // 映射文件路径(可以使用通配符)
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:cn.laeni.ossfile.mapper/*.xml"));
         return bean.getObject();
     }
 
@@ -99,35 +109,18 @@ public class MyBatisConfig {
     }
 
     /**
-     * MyBatis映射文件和映射接口扫描： (当全部采用注解配置Mapper时可以省略)采用XML配置Mapper时，必须同时指明以下两个Bean
-     * @param dataSource
-     * @return
-     * @throws IOException
-     */
-    /*@Bean("sqlSessionFactory")
-    public SqlSessionFactoryBean getSqlSessionFactoryBean(@Qualifier("dataSource") DataSource dataSource) throws IOException {
-        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        // 设置数据源
-        sqlSessionFactoryBean.setDataSource(dataSource);
-        // 映射文件路径(可以使用通配符)
-        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:cn/laeni/ossfile/mapper/*.xml"));
-
-        return sqlSessionFactoryBean;
-    }*/
-
-    /**
      * 自动映射接口扫描器：自动识别这些映射接口,如果有注解的直接生成相关的Mapper,如果没有注解的还会与上面扫到的xml进行适配
      * @return
      */
-    /*@Bean
+    @Bean
     public MapperScannerConfigurer getMapperScannerConfigurer(){
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
         // 扫描映射接口所在位置
         mapperScannerConfigurer.setBasePackage("cn.laeni.ossfile.mapper");
         // 告诉Spring扫描到的接口交给哪个SqlSessionFactory使用
-        mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
+        mapperScannerConfigurer.setSqlSessionFactoryBeanName("dbmybatisSqlSessionFactory");
 
         return mapperScannerConfigurer;
-    }*/
+    }
 
 }
