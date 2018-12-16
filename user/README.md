@@ -8,10 +8,10 @@
 
 > ### 动态SQL语句
 > #### 自定义动态SQL语句
-> 	class: cn.laeni.user.dao.mapper.UserIdWarehouseMapper
+> 	class: UserIdWarehouseMapper
 > 	function: int insertUserIdWarehouse()
 > #### 标准动态SQL语句
-> 	class: cn.laeni.user.dao.mapper.AppDomainMapper
+> 	class: AppDomainMapper
 > 	function: List<AppDomain> findByDomainsAll()
 > #### 注意
 > * 动态SQL方法的形参只能是Map类型

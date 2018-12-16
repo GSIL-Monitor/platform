@@ -31,29 +31,6 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
-        <!-- start Redis依赖 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <!-- Session存入Rdis依赖【加入此配置后，如果SpringBoot无法正确与Redis连接将导致无法启动(确定需要Redis时可检查Redis配置是否正确且Redis服务器是否启动)】 -->
-        <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-data-redis</artifactId>
-        </dependency>
-        <!-- end Redis依赖 -->
-
-        <!-- start 模板引擎 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-freemarker</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <!-- end 模板引擎 -->
-
     </dependencies>
 
 </project>
