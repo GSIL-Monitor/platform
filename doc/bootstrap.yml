@@ -169,7 +169,6 @@ end!
     ## 自定义数据源配置(结构可自定义,只要在DataSource 的 Bean中 使用@ConfigurationProperties注解申明即可)
     datasource:
       druid:
-        url: jdbc:mysql://sql.laeni.cn/op_user?useSSL=false&useUnicode=true&characterEncoding=UTF-8
         username: root
         password: pianai0_0
         initialSize: 1
@@ -211,13 +210,6 @@ end!
           # （普通集群，不使用则不用开启）以逗号分隔的“主机：端口”对列表进行引导。
           nodes: 10.0.0.5:6379,10.0.0.7:6379
     end spring!
-    
-    datasource:
-      druid:
-        url: jdbc:mysql://10.0.0.7/op_user?useSSL=false&useUnicode=true&characterEncoding=UTF-8
-        username: root
-        password: pianai0_0
-    end datasource!
   end prod!
 end platform!
 
@@ -338,7 +330,117 @@ end platform!
     end dubbo!
   end default!
   
+  ## 开发环境
+  !dev:
+    ## 自定义数据源配置(结构可自定义,只要在DataSource 的 Bean中 使用@ConfigurationProperties注解申明即可)
+    datasource:
+      druid:
+        url: jdbc:mysql://sql.laeni.cn/op_user?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    end datasource!
+    
+  end dev!
+  
   ## 生产配置
   !prod:
+    ## 自定义数据源配置(结构可自定义,只要在DataSource 的 Bean中 使用@ConfigurationProperties注解申明即可)
+    datasource:
+      druid:
+        url: jdbc:mysql://10.0.0.7/op_user?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    end datasource!
+    
+  end prod!
+end user!
+
+## User模块配置
+!ossfile:
+  ## User模块的公共配置
+  !default:
+    server:
+      ## 配置服务端口
+      port: 7100
+    end server!
+    
+    ## SpringBoot监控设置
+    management:
+      ## 健康监控端口
+      server:
+        port: 7199
+
+      security:
+        ## 关闭安全控制
+        enabled: false
+    end management!
+    
+    ## dubbo配置,id一般可缺省,用于多配置区分
+    dubbo:
+      scan:
+        ## 扫描Dubbo组件的基础包,主要扫描该注解@com.alibaba.dubbo.config.annotation.Service
+        ## 功能等同于启动类加上注解: @DubboComponentScan(basePackages = "com.alibaba.dubbo.test.service.impl")
+        basePackages : cn.laeni
+      end scan!
+    
+      # Dubbo Config properties
+      ## 应用信息配置 Bean -> com.alibaba.dubbo.config.ApplicationConfig
+      application:
+        ## 配置多应用时使用
+        #id: user
+        ## 当前应用名称，用于注册中心计算应用间依赖关系
+        name: ossfile
+      end application!
+    
+      ## 协议配置 Bean -> com.alibaba.dubbo.config.ProtocolConfig
+      #protocol:
+        ## [可选,缺省值和"name"相同]用于配置关联,可以在<dubbo:service protocol="">中引用此ID，如果ID不填，缺省和name属性值一样，重复则为name后加序号
+        #id: dubbo
+        ## 协议名称(默认)
+        #name: dubbo
+        ## 主机名，多网卡选择或指定VIP及域名时使用，为空则自动查找本机IP，-建议不要配置，让Dubbo自动获取本机IP
+        #host: 127.0.0.1
+      #end protocol!
+    
+      ## 注册中心配置 Bean -> com.alibaba.dubbo.config.RegistryConfig
+      #registry:
+        ## [可选,配置关联] 注册中心引用BeanId，可以在<dubbo:service registry="">或<dubbo:reference registry="">中引用此ID
+        #id: registry1
+        ## [必填] 注册中心服务器地址,同一集群内的多个地址用逗号分隔,"N/A"表示不使用注册中心
+        #address: N/A
+      #end registry!
+    end dubbo!
+    
+    ########################################################
+    ### 对象存储配置信息(自定义配置)
+    ########################################################
+    oss:
+      #腾讯配置信息
+      qcloud:
+        appid: 1252266447
+        secretId: AKID31oPo3q2nMjutgoF1ricfvElKtS0s5cs
+        secretKey: Y6woicVMCoU9c8Z1SMnXLA1rgUH3ZH2n
+        oss:
+          #COS地域的简称,参照 https://cloud.tencent.com/document/product/436/6224
+          regionName: ap-chengdu
+          #存储桶名称
+          bucketName: ossfile-1252266447
+    end oss!
+  end default!
+  
+  ## 开发环境
+  !dev:
+    ## 自定义数据源配置(结构可自定义,只要在DataSource 的 Bean中 使用@ConfigurationProperties注解申明即可)
+    datasource:
+      druid:
+        url: jdbc:mysql://sql.laeni.cn/ossfile?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    end datasource!
+    
+  end dev!
+  
+  ## 生产配置
+  !prod:
+    ## 自定义数据源配置(结构可自定义,只要在DataSource 的 Bean中 使用@ConfigurationProperties注解申明即可)
+    datasource:
+      druid:
+        url: jdbc:mysql://10.0.0.7/ossfile?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+    end datasource!
+    
   end prod!
 end user!
