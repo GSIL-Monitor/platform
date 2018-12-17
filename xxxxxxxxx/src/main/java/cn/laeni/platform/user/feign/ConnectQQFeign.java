@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.feign;
+package cn.laeni.platform.user.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import cn.laeni.platform.goods.other.entity.UserQQInfo;
+import cn.laeni.platform.user.other.entity.UserQQInfo;
 
 /**
  * QQ互联信http请求

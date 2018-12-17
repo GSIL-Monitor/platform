@@ -1,6 +1,6 @@
-package cn.laeni.platform.goods.mapper;
+package cn.laeni.platform.user.mapper;
 
-import cn.laeni.platform.goods.entity.Password;
+import cn.laeni.platform.user.entity.Password;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;

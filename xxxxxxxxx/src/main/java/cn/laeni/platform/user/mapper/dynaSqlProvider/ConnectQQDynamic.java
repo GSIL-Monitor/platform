@@ -1,8 +1,8 @@
-package cn.laeni.platform.goods.mapper.dynaSqlProvider;
+package cn.laeni.platform.user.mapper.dynaSqlProvider;
 
 import org.apache.ibatis.jdbc.SQL;
 
-import cn.laeni.platform.goods.entity.ConnectQQ;
+import cn.laeni.platform.user.entity.ConnectQQ;
 
 public class ConnectQQDynamic {
 	public static void main(String[] args) {

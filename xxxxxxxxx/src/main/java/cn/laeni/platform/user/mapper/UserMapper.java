@@ -1,7 +1,7 @@
-package cn.laeni.platform.goods.mapper;
+package cn.laeni.platform.user.mapper;
 
-import cn.laeni.platform.goods.entity.User;
-import cn.laeni.platform.goods.mapper.dynaSqlProvider.UserDynamic;
+import cn.laeni.platform.user.entity.User;
+import cn.laeni.platform.user.mapper.dynaSqlProvider.UserDynamic;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Select;

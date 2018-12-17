@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.utils;
+package cn.laeni.platform.user.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

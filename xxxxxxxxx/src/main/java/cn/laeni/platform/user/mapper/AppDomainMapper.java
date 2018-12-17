@@ -1,9 +1,9 @@
-package cn.laeni.platform.goods.mapper;
+package cn.laeni.platform.user.mapper;
 
 import java.util.List;
 
-import cn.laeni.platform.goods.entity.AppDomain;
-import cn.laeni.platform.goods.mapper.dynaSqlProvider.AppDomainDynamic;
+import cn.laeni.platform.user.entity.AppDomain;
+import cn.laeni.platform.user.mapper.dynaSqlProvider.AppDomainDynamic;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;

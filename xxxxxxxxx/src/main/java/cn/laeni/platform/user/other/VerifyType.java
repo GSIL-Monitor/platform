@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.other;
+package cn.laeni.platform.user.other;
 
 /**
  * 用于设置验证码的类型

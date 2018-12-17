@@ -1,13 +1,13 @@
-package cn.laeni.platform.goods.controller;
+package cn.laeni.platform.user.controller;
 
-import cn.laeni.platform.goods.service.ConnectService;
-import cn.laeni.platform.goods.service.RegService;
-import cn.laeni.platform.goods.service.UserService;
-import cn.laeni.platform.goods.entity.ConnectQQ;
-import cn.laeni.platform.goods.entity.User;
-import cn.laeni.platform.goods.mapper.ConnectQQMapper;
-import cn.laeni.platform.goods.mapper.UserMapper;
-import cn.laeni.platform.goods.exception.LoginQQException;
+import cn.laeni.platform.user.service.ConnectService;
+import cn.laeni.platform.user.service.RegService;
+import cn.laeni.platform.user.service.UserService;
+import cn.laeni.platform.user.entity.ConnectQQ;
+import cn.laeni.platform.user.entity.User;
+import cn.laeni.platform.user.mapper.ConnectQQMapper;
+import cn.laeni.platform.user.mapper.UserMapper;
+import cn.laeni.platform.user.exception.LoginQQException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

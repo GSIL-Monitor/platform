@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.other.entity;
+package cn.laeni.platform.user.other.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 

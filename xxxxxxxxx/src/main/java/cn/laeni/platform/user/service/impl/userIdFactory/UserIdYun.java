@@ -1,7 +1,7 @@
-package cn.laeni.platform.goods.service.impl.userIdFactory;
+package cn.laeni.platform.user.service.impl.userIdFactory;
 
-import cn.laeni.platform.goods.entity.UserIdWarehouse;
-import cn.laeni.platform.goods.mapper.UserIdWarehouseMapper;
+import cn.laeni.platform.user.entity.UserIdWarehouse;
+import cn.laeni.platform.user.mapper.UserIdWarehouseMapper;
 import cn.laeni.utils.string.CharacterUtils;
 
 import java.util.ArrayList;

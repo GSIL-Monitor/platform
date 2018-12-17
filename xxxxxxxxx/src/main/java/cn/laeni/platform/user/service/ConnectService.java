@@ -1,6 +1,6 @@
-package cn.laeni.platform.goods.service;
+package cn.laeni.platform.user.service;
 
-import cn.laeni.platform.goods.entity.ConnectQQ;
+import cn.laeni.platform.user.entity.ConnectQQ;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

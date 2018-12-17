@@ -1,7 +1,7 @@
-package cn.laeni.platform.goods.mapper;
+package cn.laeni.platform.user.mapper;
 
-import cn.laeni.platform.goods.entity.ConnectQQ;
-import cn.laeni.platform.goods.mapper.dynaSqlProvider.ConnectQQDynamic;
+import cn.laeni.platform.user.entity.ConnectQQ;
+import cn.laeni.platform.user.mapper.dynaSqlProvider.ConnectQQDynamic;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;

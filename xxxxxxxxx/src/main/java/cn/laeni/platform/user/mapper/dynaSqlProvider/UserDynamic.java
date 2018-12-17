@@ -1,8 +1,8 @@
-package cn.laeni.platform.goods.mapper.dynaSqlProvider;
+package cn.laeni.platform.user.mapper.dynaSqlProvider;
 
 import org.apache.ibatis.jdbc.SQL;
 
-import cn.laeni.platform.goods.entity.User;
+import cn.laeni.platform.user.entity.User;
 
 public class UserDynamic {
 	public String updataUser(User user) {

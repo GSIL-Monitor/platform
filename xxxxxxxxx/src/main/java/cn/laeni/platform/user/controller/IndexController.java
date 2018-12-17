@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.controller;
+package cn.laeni.platform.user.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

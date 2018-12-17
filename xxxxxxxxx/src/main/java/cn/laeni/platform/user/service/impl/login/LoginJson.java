@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.service.impl.login;
+package cn.laeni.platform.user.service.impl.login;
 
 
 public class LoginJson {

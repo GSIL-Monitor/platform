@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.other;
+package cn.laeni.platform.user.other;
 
 /**
  * Session中的key值

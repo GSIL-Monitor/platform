@@ -1,10 +1,10 @@
-package cn.laeni.platform.goods.service.impl;
+package cn.laeni.platform.user.service.impl;
 
-import cn.laeni.platform.goods.feign.ConnectQQFeign;
-import cn.laeni.platform.goods.service.ConnectService;
-import cn.laeni.platform.goods.utils.CookieAndSessionUtli;
-import cn.laeni.platform.goods.entity.ConnectQQ;
-import cn.laeni.platform.goods.exception.LoginQQException;
+import cn.laeni.platform.user.feign.ConnectQQFeign;
+import cn.laeni.platform.user.service.ConnectService;
+import cn.laeni.platform.user.utils.CookieAndSessionUtli;
+import cn.laeni.platform.user.entity.ConnectQQ;
+import cn.laeni.platform.user.exception.LoginQQException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

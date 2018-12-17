@@ -1,8 +1,8 @@
-package cn.laeni.platform.goods.controller;
+package cn.laeni.platform.user.controller;
 
-import cn.laeni.platform.goods.other.code.SystemCode;
-import cn.laeni.platform.goods.other.entity.ApiJson;
-import cn.laeni.platform.goods.service.UserService;
+import cn.laeni.platform.user.other.code.SystemCode;
+import cn.laeni.platform.user.other.entity.ApiJson;
+import cn.laeni.platform.user.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

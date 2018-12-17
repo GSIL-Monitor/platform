@@ -1,11 +1,11 @@
-package cn.laeni.platform.goods.utils;
+package cn.laeni.platform.user.utils;
 
-import cn.laeni.platform.goods.other.AccountTypeEnum;
-import cn.laeni.platform.goods.other.VerifyType;
-import cn.laeni.platform.goods.other.code.UserCode;
-import cn.laeni.platform.goods.other.code.SystemCode;
-import cn.laeni.platform.goods.other.entity.ApiJson;
-import cn.laeni.platform.goods.service.VerifyCodeService;
+import cn.laeni.platform.user.other.AccountTypeEnum;
+import cn.laeni.platform.user.other.VerifyType;
+import cn.laeni.platform.user.other.code.UserCode;
+import cn.laeni.platform.user.other.code.SystemCode;
+import cn.laeni.platform.user.other.entity.ApiJson;
+import cn.laeni.platform.user.service.VerifyCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

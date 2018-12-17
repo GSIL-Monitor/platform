@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.config;
+package cn.laeni.platform.user.config;
 
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods;
+package cn.laeni.platform.user;
 
 import com.alibaba.dubbo.config.spring.context.annotation.DubboComponentScan;
 import org.springframework.boot.SpringApplication;

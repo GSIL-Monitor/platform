@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.utils;
+package cn.laeni.platform.user.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.service;
+package cn.laeni.platform.user.service;
 
 public interface DubboServiceInterface {
     String getUser();

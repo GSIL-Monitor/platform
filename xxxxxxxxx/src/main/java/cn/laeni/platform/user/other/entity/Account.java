@@ -1,7 +1,7 @@
-package cn.laeni.platform.goods.other.entity;
+package cn.laeni.platform.user.other.entity;
 
-import cn.laeni.platform.goods.other.AccountTypeEnum;
-import cn.laeni.platform.goods.utils.AccountTool;
+import cn.laeni.platform.user.other.AccountTypeEnum;
+import cn.laeni.platform.user.utils.AccountTool;
 
 /**
  * 帐号,即可能代表手机号/邮箱号/登录名等

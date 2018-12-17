@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.exception;
+package cn.laeni.platform.user.exception;
 
 /**
  * 捕捉到该异常后将跳转到登陆前页面或者将登录创建关闭

@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.other.code;
+package cn.laeni.platform.user.other.code;
 
 /**
  * 系统状态

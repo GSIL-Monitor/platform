@@ -1,7 +1,7 @@
-package cn.laeni.platform.goods.controller;
+package cn.laeni.platform.user.controller;
 
-import cn.laeni.platform.goods.service.UserService;
-import cn.laeni.platform.goods.entity.User;
+import cn.laeni.platform.user.service.UserService;
+import cn.laeni.platform.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

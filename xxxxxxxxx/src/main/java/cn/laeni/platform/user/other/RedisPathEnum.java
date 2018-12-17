@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.other;
+package cn.laeni.platform.user.other;
 
 /**
  * 指定非默认数据在Redis中的存放路径

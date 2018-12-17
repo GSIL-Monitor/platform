@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.other.entity;
+package cn.laeni.platform.user.other.entity;
 
 import java.io.Serializable;
 import java.util.HashMap;

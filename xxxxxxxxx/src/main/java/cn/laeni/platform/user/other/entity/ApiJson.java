@@ -1,7 +1,7 @@
-package cn.laeni.platform.goods.other.entity;
+package cn.laeni.platform.user.other.entity;
 
-import cn.laeni.platform.goods.other.code.SystemCode;
-import cn.laeni.platform.goods.other.code.UserCode;
+import cn.laeni.platform.user.other.code.SystemCode;
+import cn.laeni.platform.user.other.code.UserCode;
 import com.alibaba.fastjson.annotation.JSONField;
 
 import java.io.Serializable;

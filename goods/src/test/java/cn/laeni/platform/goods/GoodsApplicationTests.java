@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods;
+package cn.laeni.platform.user;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

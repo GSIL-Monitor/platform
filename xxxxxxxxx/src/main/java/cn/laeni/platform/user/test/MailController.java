@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.test;
+package cn.laeni.platform.user.test;
 
 import java.util.HashMap;
 import java.util.Map;

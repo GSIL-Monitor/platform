@@ -1,8 +1,8 @@
-package cn.laeni.platform.goods.service;
+package cn.laeni.platform.user.service;
 
-import cn.laeni.platform.goods.other.entity.Account;
-import cn.laeni.platform.goods.other.entity.ApiJson;
-import cn.laeni.platform.goods.entity.User;
+import cn.laeni.platform.user.other.entity.Account;
+import cn.laeni.platform.user.other.entity.ApiJson;
+import cn.laeni.platform.user.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.entity;
+package cn.laeni.platform.user.entity;
 
 public class UserIdWarehouse {
 

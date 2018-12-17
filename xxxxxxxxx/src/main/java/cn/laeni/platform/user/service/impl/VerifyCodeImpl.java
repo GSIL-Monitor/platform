@@ -1,15 +1,15 @@
-package cn.laeni.platform.goods.service.impl;
+package cn.laeni.platform.user.service.impl;
 
-import cn.laeni.platform.goods.other.AccountTypeEnum;
-import cn.laeni.platform.goods.other.VerifyType;
-import cn.laeni.platform.goods.other.code.SystemCode;
-import cn.laeni.platform.goods.other.code.UserCode;
-import cn.laeni.platform.goods.other.entity.Account;
-import cn.laeni.platform.goods.other.entity.ApiJson;
-import cn.laeni.platform.goods.other.entity.RegVerifCode;
-import cn.laeni.platform.goods.other.entity.VerifCode;
+import cn.laeni.platform.user.other.AccountTypeEnum;
+import cn.laeni.platform.user.other.VerifyType;
+import cn.laeni.platform.user.other.code.SystemCode;
+import cn.laeni.platform.user.other.code.UserCode;
+import cn.laeni.platform.user.other.entity.Account;
+import cn.laeni.platform.user.other.entity.ApiJson;
+import cn.laeni.platform.user.other.entity.RegVerifCode;
+import cn.laeni.platform.user.other.entity.VerifCode;
 import cn.laeni.sms.SmsAbs;
-import cn.laeni.platform.goods.service.VerifyCodeService;
+import cn.laeni.platform.user.service.VerifyCodeService;
 import cn.laeni.utils.string.CharacterUtils;
 import com.aliyuncs.exceptions.ClientException;
 import freemarker.template.Configuration;

@@ -1,9 +1,9 @@
-package cn.laeni.platform.goods.test;
+package cn.laeni.platform.user.test;
 
-import cn.laeni.platform.goods.mapper.LoginPhoneMapper;
-import cn.laeni.platform.goods.feign.ConnectQQFeign;
-import cn.laeni.platform.goods.other.entity.UserQQInfo;
-import cn.laeni.platform.goods.service.DubboServiceInterface;
+import cn.laeni.platform.user.mapper.LoginPhoneMapper;
+import cn.laeni.platform.user.feign.ConnectQQFeign;
+import cn.laeni.platform.user.other.entity.UserQQInfo;
+import cn.laeni.platform.user.service.DubboServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

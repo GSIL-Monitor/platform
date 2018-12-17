@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.entity.otherdao;
+package cn.laeni.platform.user.entity.otherdao;
 
 import java.io.Serializable;
 

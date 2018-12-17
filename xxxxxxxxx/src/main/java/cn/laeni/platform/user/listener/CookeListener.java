@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.listener;
+package cn.laeni.platform.user.listener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

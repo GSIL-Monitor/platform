@@ -1,10 +1,10 @@
-package cn.laeni.platform.goods.entity;
+package cn.laeni.platform.user.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.laeni.platform.goods.other.entity.HisPass;
+import cn.laeni.platform.user.other.entity.HisPass;
 import com.alibaba.fastjson.JSON;
 
 public class Password implements Serializable{

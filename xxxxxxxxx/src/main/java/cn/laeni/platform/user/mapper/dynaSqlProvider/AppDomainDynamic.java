@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.mapper.dynaSqlProvider;
+package cn.laeni.platform.user.mapper.dynaSqlProvider;
 
 import java.util.Map;
 

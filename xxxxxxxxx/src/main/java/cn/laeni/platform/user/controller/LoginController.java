@@ -1,9 +1,9 @@
-package cn.laeni.platform.goods.controller;
+package cn.laeni.platform.user.controller;
 
-import cn.laeni.platform.goods.other.code.SystemCode;
-import cn.laeni.platform.goods.other.entity.Account;
-import cn.laeni.platform.goods.other.entity.ApiJson;
-import cn.laeni.platform.goods.service.LoginService;
+import cn.laeni.platform.user.other.code.SystemCode;
+import cn.laeni.platform.user.other.entity.Account;
+import cn.laeni.platform.user.other.entity.ApiJson;
+import cn.laeni.platform.user.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;

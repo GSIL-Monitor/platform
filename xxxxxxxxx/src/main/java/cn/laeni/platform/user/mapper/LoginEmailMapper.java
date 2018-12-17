@@ -1,6 +1,6 @@
-package cn.laeni.platform.goods.mapper;
+package cn.laeni.platform.user.mapper;
 
-import cn.laeni.platform.goods.entity.LoginEmail;
+import cn.laeni.platform.user.entity.LoginEmail;
 import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;

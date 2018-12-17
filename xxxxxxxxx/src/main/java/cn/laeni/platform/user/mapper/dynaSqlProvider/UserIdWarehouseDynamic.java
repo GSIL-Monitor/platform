@@ -1,10 +1,10 @@
-package cn.laeni.platform.goods.mapper.dynaSqlProvider;
+package cn.laeni.platform.user.mapper.dynaSqlProvider;
 
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
 
-import cn.laeni.platform.goods.entity.UserIdWarehouse;
+import cn.laeni.platform.user.entity.UserIdWarehouse;
 
 public class UserIdWarehouseDynamic {
 

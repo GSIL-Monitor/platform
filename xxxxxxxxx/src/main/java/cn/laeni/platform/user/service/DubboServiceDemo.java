@@ -1,6 +1,6 @@
-package cn.laeni.platform.goods.service;
+package cn.laeni.platform.user.service;
 
-import cn.laeni.platform.goods.mapper.UserMapper;
+import cn.laeni.platform.user.mapper.UserMapper;
 import com.alibaba.dubbo.config.annotation.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 

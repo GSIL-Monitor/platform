@@ -1,12 +1,12 @@
-package cn.laeni.platform.goods.service.impl;
+package cn.laeni.platform.user.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import cn.laeni.platform.goods.mapper.UserIdWarehouseMapper;
-import cn.laeni.platform.goods.service.UserIdFactory;
-import cn.laeni.platform.goods.service.impl.userIdFactory.UserIdYun;
+import cn.laeni.platform.user.mapper.UserIdWarehouseMapper;
+import cn.laeni.platform.user.service.UserIdFactory;
+import cn.laeni.platform.user.service.impl.userIdFactory.UserIdYun;
 import cn.laeni.utils.string.CharacterUtils;
 
 import java.util.HashMap;
