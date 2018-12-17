@@ -20,6 +20,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>goods</module>
         <module>ossfile</module>
         <module>user</module>
     </modules>

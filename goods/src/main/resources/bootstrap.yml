@@ -1,0 +1,20 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    ## 配置应用名称
+    name: user
+  cloud:
+    zookeeper:
+      ## 配置zookeeper地址
+      connect-string: 132.232.176.112:2181,119.27.181.229:2181
+      discovery:
+        ## false:禁用Zookeeper Discovery Client, 反之为启用, 默认为true
+        enabled: true
+      config:
+        ## 配置根路径
+        root: config
+        ## 配置默认上下文
+        defaultContext: platform
+        ## 配置profile分隔符
+        profileSeparator: "-"

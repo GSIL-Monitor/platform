@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="w">
+
+<head>
+	<!-- 下面3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<!-- 让http自动转转为https协议 -->
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+	<!-- 关闭自动将连串数字识别为电话号码 -->
+	<meta name="format-detection" content="telephone=no">
+	<!-- Bootstrap -->
+	<link href="//cdn.laeni.cn/public/bootstrap-4.0.0-dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
+	<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+	<script src="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn.laeni.cn/public/js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="//cdn.laeni.cn/public/js/jquery.form.min.js" type="text/javascript" charset="utf-8"></script>
+	<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+	<script src="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn.laeni.cn/public/bootstrap-4.0.0-dist/js/bootstrap.min.js"
+			type="text/javascript" charset="utf-8"></script>
+	<!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+	<!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+	<!--[if lt IE 9]>
+	<script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+
+	<!-- ------------------以下内容一般需要根据页面本身进行修改------------------- -->
+	<title>绑定用户帐号模块</title>
+	<!-- 声明此网页同时适用于PC和移动端(一般使用了CSS3的媒体查询,能根据各种屏幕尺寸自适应的网站) -->
+	<meta name="applicable-device" content="pc,mobile">
+	<!-- <meta name="keywords" content="以逗号分隔的关键字"> -->
+	<!-- <meta name="description" content="这里是页面描述"> -->
+
+	<!-- IconFont -->
+	<script src="//cdn.laeni.cn/public/iconfont/iconfont.js"></script>
+	<link rel="stylesheet" type="text/css" href="//cdn.laeni.cn/public/iconfont/iconfont.css" />
+
+	<!-- 自定义JavaScript工具 -->
+	<script src="//cdn.laeni.cn/public/js/utlis.js" type="text/javascript" charset="utf-8"></script>
+
+	<!-- 重置一些浏览器默认样式 -->
+	<link rel="stylesheet" type="text/css" href="//cdn.laeni.cn/public/css/reset.css" />
+
+	<!-- 如需使用登录功能,则引入该js文件即可 -->
+	<script src="//cdn.laeni.cn/public/js/user.js" type="text/javascript" charset="utf-8"></script>
+
+	<!-- 本页面的CSS样式表 -->
+	<style type="text/css">
+		.form-group {
+			margin-bottom: 0.6rem;
+		}
+
+		small {
+			min-height: 1rem;
+		}
+
+		.ti {
+			font-size: 28px;
+			line-height: 100px;
+		}
+
+		.tm {
+			color: #e99503;
+			font-size: 16px;
+			width: 560px;
+		}
+
+		.tm1 {
+			color: #c83f3f;
+			font-size: 16px;
+			line-height: 25px;
+			text-align: center;
+			margin-bottom: 10px;
+		}
+
+		.tn {
+			width: 390px;
+		}
+
+		.tn1 {
+			height: 3.5rem;
+		}
+
+		.login_name {
+			width: 13rem;
+		}
+
+		.nickname {
+			width: 11rem;
+		}
+
+		.acc {
+			width: 17rem;
+		}
+
+		.acc_code {
+			width: 7rem;
+		}
+
+		.password {
+			width: 12rem;
+		}
+
+		.passwords {
+			width: 12rem;
+		}
+
+		.modal-body {
+			font-size: 16px;
+			margin-top: 22px;
+		}
+
+		.error-title {
+			color: #FF0000;
+			font-size: 20px;
+		}
+
+		.error-body {
+			font-size: 18px;
+		}
+
+		/* 带自定义删除按钮的输入框 */
+		.input-have-button {
+			width: 67%;
+		}
+
+		.button-w1 {
+			width: 32%;
+		}
+
+		.button-w1 button {
+			width: -webkit-fill-available;
+		}
+
+		.input-no-button {
+			display: flex;
+		}
+
+		.input-close-icon input {
+			padding-right: 1.5rem;
+		}
+
+		.input-close-icon>div {
+			width: 0;
+			font-size: 0.8rem;
+			cursor: pointer;
+			z-index: 3;
+		}
+
+		.input-close-icon>div>svg {
+			margin-left: -1.3rem;
+			height: 1rem;
+			width: 1rem;
+		}
+
+		/* end 带自定义删除按钮的输入框 */
+	</style>
+
+</head>
+<body>
+
+<div class="mx-auto" style="width: 750px;">
+
+	<div class="ti text-center">首次登陆时完善用户信息(<span class="btn-link" style="cursor:pointer" data-toggle="modal"
+												  data-target="#exampleModal">可跳过</span>)</div>
+	<form method="post">
+		<div class="tm mx-auto clear">
+			<div class="tm_1 float-left">温馨提示：</div>
+			<div class="float-left">
+				<div>以下信息仅作为您登录本站的凭证，仅您本人可见，请放心填写。</div>
+				<div>如果您已经有本站帐号，可以选择绑定为原来的帐号。</div>
+			</div>
+		</div>
+		<div class="tn mx-auto">
+			<!-- 用户名/昵称 -->
+			<div class="tn1 clear form-group">
+				<div class="login_name float-left input-close-icon input-no-button">
+					<input type="text" name="loginName" class="form-control" aria-describedby="login_name_small" placeholder="用户名(仅用于登录)" maxlength="32"
+						   check='[{rule:"^\\S{5,32}$",error:"用户名长度要求5~32位非空字符"},]'>
+					<div class="clean-icon align-self-center d-none">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-buoumaotubiao20"></use>
+						</svg>
+					</div>
+				</div>
+
+				<div class="nickname float-right input-close-icon input-no-button">
+					<input type="text" name="nickname" class="form-control" placeholder="昵称" maxlength="16" value="<#if user?? >${user.nickname}</#if>">
+					<div class="clean-icon align-self-center d-none">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-buoumaotubiao20"></use>
+						</svg>
+					</div>
+				</div>
+				<small id="login_name_small" class="form-text"></small>
+			</div>
+
+			<!-- 登录手机号 -->
+			<div class="tn1 clear form-group">
+				<div class="phone acc input-group float-left">
+					<div class="input-close-icon input-have-button input-group">
+						<input type="text" name="loginPhone" class="form-control" aria-describedby="phone_small" placeholder="用于登录的手机号" maxlength="20"
+							   check='[{rule:"^\\d{11}$",error:"手机号格式输入错误(暂只支持大陆11位手机号)"},]'>
+						<div class="clean-icon align-self-center d-none">
+							<svg class="icon" aria-hidden="true">
+								<use xlink:href="#icon-buoumaotubiao20"></use>
+							</svg>
+						</div>
+					</div>
+					<div class="input-group-append button-w1">
+						<button id="send-phone-code" class="btn btn-outline-primary disabled" type="button" disabled>发送</button>
+					</div>
+				</div>
+				<div class="acc_code float-right input-close-icon input-no-button">
+					<input type="text" name="loginPhoneCode" id="phone_code" class="form-control disabled" placeholder="验证码" maxlength="6" check='[{rule:"^\\d{6}$"}]'
+						   disabled>
+					<div class="clean-icon align-self-center d-none">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-buoumaotubiao20"></use>
+						</svg>
+					</div>
+				</div>
+				<small id="phone_small" class="form-text"></small>
+			</div>
+
+			<!-- 登录邮箱 -->
+			<div class="tn1 clear form-group">
+				<div class="email input-group float-left acc">
+					<div class="input-close-icon input-have-button input-group">
+						<input type="email" name="loginEmail" class="form-control" aria-describedby="email_small" placeholder="用于登录的邮箱号" maxlength="32"
+							   check='[{rule:"^\\S+@\\S+\\.\\S+$",error:"电子邮箱格式输入错误"},]'>
+						<div class="clean-icon align-self-center d-none">
+							<svg class="icon" aria-hidden="true">
+								<use xlink:href="#icon-buoumaotubiao20"></use>
+							</svg>
+						</div>
+					</div>
+
+					<div class="input-group-append button-w1">
+						<button id="send-email-code" class="btn btn-outline-primary disabled" type="button" disabled>发送</button>
+					</div>
+				</div>
+				<div class="acc_code float-right input-close-icon input-no-button">
+					<input type="text" name="loginEmailCode" id="email_code" class="form-control disabled" aria-describedby="email_small" placeholder="验证码"
+						   maxlength="6" check='[{rule:"^\\d{6}$"}]' disabled>
+					<div class="clean-icon align-self-center d-none">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-buoumaotubiao20"></use>
+						</svg>
+					</div>
+				</div>
+				<small id="email_small" class="form-text"></small>
+			</div>
+
+			<!-- 登录密码和确认密码 -->
+			<div class="tn1 clear form-group">
+				<div class="float-left input-close-icon input-no-button">
+					<input type="password" id="password" name="password" class="password form-control float-left" aria-describedby="password_small"
+						   placeholder="登录密码" maxlength="32" check='[{rule:"^\\S{5,32}$",error:"密码长度错误"},]'>
+					<div class="clean-icon align-self-center d-none">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-buoumaotubiao20"></use>
+						</svg>
+					</div>
+				</div>
+
+				<div class="float-right input-close-icon input-no-button">
+					<input type="password" id="passwords" class="password float-right form-control" placeholder="确认登录密码" maxlength="32">
+					<div class="clean-icon align-self-center d-none">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-buoumaotubiao20"></use>
+						</svg>
+					</div>
+				</div>
+				<small id="password_small" class="form-text"></small>
+			</div>
+		</div>
+		<div class="tm1" id="fail_small"></div>
+		<div class="tn mx-auto"><button type="submit" class="btn btn-block btn-outline-primary submit disabled" disabled>提交资料</button></div>
+		<div class="tn float-right">
+			<button type="button" id="bind_before_account" class="btn btn-link">绑定已有帐号</button>
+			<button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">跳过本步骤</button>
+		</div>
+	</form>
+
+	<!-- Modal: 跳过提示 -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<svg class="icon" aria-hidden="true" style="color: #f7cd00;font-size: 33px;">
+						<use xlink:href="#icon-jinggao"></use>
+					</svg>
+					您当前尚未设置其他登录方式，如果继续跳过设置，则下次将只能通过第三方合作帐号进行登录。
+					并且后期可前往个人中心进行个人信息的修改和完善。
+					如果继续跳过请点击“继续”，否则可返回继续完善您的个人信息。
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary continue" onclick="window.close();">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal: 出错提示 -->
+	<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<div class="modal-body">
+					<div class="error-title">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-error"></use>
+						</svg>
+						错误提示
+					</div>
+					<div class="error-body"></div>
+				</div>
+				<!-- 关闭按钮: $('#errorModal').modal() -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
+<!-- 本页面JS操作 -->
+<script type="text/javascript">
+	(function() {
+		// $("body").addClass("modal-open");
+		var $UT = typeof UT != "undefined" ? UT : null, // 自定义工具库
+			_URL = {
+				url_home: "//laeni.cn",
+				check_login_account: "/api/checkLoginAccount", // 检测用户名是否存在(?account&type)
+				send_verify_code: "/api/sendVerifyCode", // 发送验证码(?account&verifyType)
+				chek_verify_code: "/api/chekVerifyCode", // 判断验证码是否正确(?account&verifyCode)
+				save_or_update_user_infor: "/api/saveOrUpdateUserInfor", // 更新已经登录的用户信息(?nickname&password&...)
+			},
+			// 用户名
+			$loginNameInput = $(".login_name input"),
+			// 用户名错误提示框
+			$loginNameSmall = $("#login_name_small"),
+			// 昵称
+			$nicknameInput = $(".nickname input"),
+			// 登录手机号
+			$phoneInput = $(".phone input"),
+			// 手机验证码
+			$phoneCodeInput = $("#phone_code"),
+			// 登录手机号错误提示框
+			$phoneSmall = $("#phone_small"),
+			// 登录邮箱
+			$emailInput = $(".email input"),
+			// 邮箱验证码
+			$emailCodeInput = $("#email_code"),
+			// 登录邮箱错误提示框
+			$emailSmall = $("#email_small"),
+			// 登录密码
+			$passwordInput = $("#password"),
+			// 确认密码
+			$passwordsInput = $("#passwords"),
+			// 登录密码提示框
+			$passwordSmall = $("#password_small"),
+			// 最终提示框
+			$failSmall = $("#fail_small"),
+			// 出错提示模态框
+			$errorModal = $('#errorModal'),
+			// 发送手机验证码按钮
+			$sendPhoneCode = $("#send-phone-code"),
+			// 发送邮箱验证码按钮
+			$sendEmailCode = $("#send-email-code"),
+			// 提交资料按钮
+			$submit = $(".submit"),
+			// 绑定其他帐号按钮
+			$bindBeforeAccount = $("#bind_before_account"),
+			// 模态框中继续跳过按钮
+			$continue = $("#exampleModal .continue"),
+			// 定时器1(发送手机验证码倒计时)
+			cycle1,
+			// 定时器2(发送邮箱验证码倒计时)
+			cycle2,
+			// 所有需要检查的元素的合法状况
+			checkStatus = {
+				// 登录名
+				loginName: true,
+				/* 手机号 */
+				phone: true,
+				/* 手机验证码 */
+				phoneCode: true,
+				/* 邮箱 */
+				email: true,
+				/* 邮箱验证码 */
+				emailCode: true,
+				/* 登录密码,包括确认密码 */
+				password: true,
+
+				/* 检查这些元素的合法状态
+				 * 合法: {success:true,msg:"SUCCESS"}
+				 * 如果有不合法则{success:false,msg:"ERROR"}
+				 */
+				check: function() {
+					var a = checkStatus.loginName && checkStatus.phone && checkStatus.phoneCode && checkStatus.email && checkStatus
+						.emailCode && checkStatus.password;
+					return {
+						success: a,
+						msg: a ? "SUCCESS" : "ERROR"
+					};
+				}
+			};
+
+		// 使所有输入框自动检查该输入框的内容是否符合要求
+		$UT && $UT.check.checkInputCleanIcon();
+
+		// 对单独的输入框进行检查
+		(function() {
+			// start loginName
+			// 当内容改变时判断内容是否符合规范(判断后标记)
+			$loginNameInput.bind("input propertychange", function() {
+				checkStatus.loginName = false;
+
+				// 输入框可以为空
+				if ($loginNameInput.val() == "") {
+					checkStatus.loginName = true;
+					$loginNameSmall.html(null);
+				}
+
+				updataCheck();
+			});
+			// 输入完成后判断该用户名是否存在
+			$loginNameInput.bind("change", function() {
+
+				// 只有填写规范后才请求服务器检查
+				if ($loginNameInput.val() == "" || $loginNameSmall.html() != "") {
+					updataCheck();
+					return;
+				}
+
+				$.ajax({
+					url: _URL.url_home + _URL.check_login_account,
+					xhrFields: {
+						withCredentials: true,
+						thCredentials: true
+					},
+					type: "POST",
+					dataType: "JSON",
+					data: {
+						account: $loginNameInput.val(),
+						type: "loginName"
+					},
+					success: function(result) {
+						console.log(result)
+						if (result.code == "105") {
+							checkStatus.loginName = true;
+						} else if (result.code != "105" && result.code != 0) {
+							// 出现其他未知错误
+							throwException(result.msg);
+						}
+						updataCheck();
+					},
+					error: function() {
+						throwException("网络连接失败，请检查网络或稍后再试!");
+					}
+				});
+			});
+			// end loginName
+
+			// start 昵称
+			$nicknameInput.bind("input propertychange change", function() {
+				updataCheck();
+			});
+			// end 昵称
+
+			// start loginPhone
+			// 当内容改变时判断内容是否符合规范(判断后标记)
+			$phoneInput.bind("input propertychange", function() {
+				checkStatus.phone = false;
+				checkStatus.phoneCode = false;
+				// 清空验证码框
+				$phoneCodeInput.val(null);
+				// 验证码框不可用
+				$UT && $UT.input.changeButton($phoneCodeInput, "off");
+				// 发送手机验证码的按钮不可用 phone
+				$UT && $UT.input.changeButton($sendPhoneCode, "off");
+				// 结束倒计时
+				clearInterval(cycle1);
+				// 复原按钮文字
+				$sendPhoneCode.text("发送");
+
+				// 检查手机号是否合法并判断是否已经被使用
+				if ($phoneInput.val() == "") {
+					// 输入框可以为空
+					checkStatus.phone = true;
+					checkStatus.phoneCode = true;
+					$phoneSmall.html(null);
+				} else if ($UT && $UT.check.checkInput($phoneInput).success) {
+					// 符合要求时判断手机号是否存在
+					$.ajax({
+						url: _URL.url_home + _URL.check_login_account,
+						xhrFields: {
+							withCredentials: true,
+							thCredentials: true
+						},
+						type: "POST",
+						dataType: "JSON",
+						data: {
+							account: $phoneInput.val(),
+							type: "loginPhone"
+						},
+						success: function(result) {
+							if (result.code == "105" || result.code == "104") {
+								checkStatus.phone = true;
+								$UT && $UT.input.changeButton($sendPhoneCode, "on");
+								if (result.code == "104") {
+									$phoneSmall.html("该手机号已和其他帐号绑定，如果继续操作则自动和原帐号解除绑定");
+								}
+							} else {
+								// 出现其他未知错误
+								throwException(result.msg);
+							}
+							updataCheck();
+						},
+						error: function() {
+							throwException("网络连接失败，请检查网络或稍后再试!");
+						}
+					});
+				}
+
+				updataCheck();
+			});
+			$phoneInput.bind("change", function() {
+				// 验证码框不可用
+				$UT && $UT.input.changeButton($phoneCodeInput, "off");
+				// 清空验证码框
+				$phoneCodeInput.val(null);
+
+				if ($phoneInput.val() == "") {
+					checkStatus.phone = true;
+					checkStatus.phoneCode = true;
+					// 发送手机验证码的按钮不可用 phone
+					$UT && $UT.input.changeButton($sendPhoneCode, "off");
+				}
+
+				updataCheck();
+			});
+			// 验证码框事件
+			$phoneCodeInput.bind("input propertychange", function() {
+				checkStatus.phoneCode = false;
+
+				if ($UT && $UT.check.checkInput($phoneCodeInput).success) {
+					$.ajax({
+						url: _URL.url_home + _URL.chek_verify_code,
+						xhrFields: {
+							withCredentials: true,
+							thCredentials: true
+						},
+						type: "POST",
+						dataType: "JSON",
+						data: {
+							account: $phoneInput.val(),
+							verifyCode: $phoneCodeInput.val()
+						},
+						success: function(result) {
+							if (result.code == "000") {
+								checkStatus.phoneCode = true;
+							} else {
+								// 出现其他未知错误
+								$phoneSmall.html(result.msg);
+							}
+							updataCheck();
+						},
+						error: function() {
+							throwException("网络连接失败，请检查网络或稍后再试!");
+						}
+					});
+				}
+			});
+			// end loginPhone
+
+			// start loginEmail
+			// 当内容改变时判断内容是否符合规范(判断后标记)
+			$emailInput.bind("input propertychange", function() {
+				checkStatus.email = false;
+				checkStatus.emailCode = false;
+				// 清空验证码框
+				$emailCodeInput.val(null);
+				// 验证码框不可用
+				$UT && $UT.input.changeButton($emailCodeInput, "off");
+				// 发送邮箱验证码的按钮不可用 email
+				$UT && $UT.input.changeButton($sendEmailCode, "off");
+				// 结束倒计时
+				clearInterval(cycle2);
+				// 复原按钮文字
+				$sendEmailCode.text("发送");
+
+				// 检查邮箱号是否合法并判断是否已经被使用
+				if ($emailInput.val() == "") {
+					// 输入框可以为空
+					checkStatus.email = true;
+					checkStatus.emailCode = true;
+					$emailSmall.html(null);
+				} else if ($UT && $UT.check.checkInput($emailInput).success) {
+					// 符合要求时判断邮箱号是否存在
+					$.ajax({
+						url: _URL.url_home + _URL.check_login_account,
+						xhrFields: {
+							withCredentials: true,
+							thCredentials: true
+						},
+						type: "POST",
+						dataType: "JSON",
+						data: {
+							account: $emailInput.val(),
+							type: "loginEmail"
+						},
+						success: function(result) {
+							if (result.code == "105" || result.code == "104") {
+								checkStatus.email = true;
+								$UT && $UT.input.changeButton($sendEmailCode, "on");
+								if (result.code == "104") {
+									$emailSmall.html("该邮箱号已和其他帐号绑定，如果继续操作则自动和原帐号解除绑定");
+								}
+							} else {
+								// 出现其他未知错误
+								throwException(result.msg);
+							}
+							updataCheck();
+						},
+						error: function() {
+							throwException("网络连接失败，请检查网络或稍后再试!");
+						}
+					});
+				}
+
+				updataCheck();
+			});
+			$emailInput.bind("change", function() {
+				// 验证码框不可用
+				$UT && $UT.input.changeButton($emailCodeInput, "off");
+				// 清空验证码框
+				$emailCodeInput.val(null);
+
+				if ($emailInput.val() == "") {
+					checkStatus.email = true;
+					checkStatus.emailCode = true;
+					// 发送邮箱验证码的按钮不可用 email
+					$UT && $UT.input.changeButton($sendEmailCode, "off");
+				}
+
+				updataCheck();
+			});
+			// 验证码框事件
+			$emailCodeInput.bind("input propertychange", function() {
+				checkStatus.emailCode = false;
+
+				if ($UT && $UT.check.checkInput($emailCodeInput).success) {
+					$.ajax({
+						url: _URL.url_home + _URL.chek_verify_code,
+						xhrFields: {
+							withCredentials: true,
+							thCredentials: true
+						},
+						type: "POST",
+						dataType: "JSON",
+						data: {
+							account: $emailInput.val(),
+							verifyCode: $emailCodeInput.val()
+						},
+						success: function(result) {
+							if (result.code == "000") {
+								checkStatus.emailCode = true;
+							} else {
+								// 出现其他未知错误
+								$emailSmall.html(result.msg);
+							}
+							updataCheck();
+						},
+						error: function() {
+							throwException("网络连接失败，请检查网络或稍后再试!");
+						}
+					});
+				}
+			});
+			// end loginEmail
+
+			// start Passwd
+			function f2() {
+				if ($passwordInput.val() != "" || $passwordsInput.val() != "") {
+					// 至少有一个框不为空
+
+					checkStatus.password = false;
+
+					// 登录密码为空,确认密码一定不为空 => "请填写登录密码"
+					if ($passwordInput.val() == "") {
+						$passwordSmall.html("请填写登录密码");
+					} else {
+						// 登录密码错误 => "密码格式错误"
+						if (!($UT && $UT.check.checkInput($passwordInput).success)) {
+							$passwordSmall.html("密码格式错误");
+						}
+						// 两次密码输入不一致
+						else if ($passwordsInput.val() != $passwordInput.val()) {
+							$passwordSmall.html("两次密码输入不一致");
+						}
+						// 确认密码不为空(与登录密码相同) => "OK"
+						else {
+							checkStatus.password = true;
+							$passwordSmall.html(null);
+						}
+					}
+				} else {
+					// 密码和确认密码都为空
+					checkStatus.password = true;
+					$passwordSmall.html(null);
+				}
+				updataCheck();
+			}
+			$passwordInput.bind("input change propertychange", f2);
+			$passwordsInput.bind("input change propertychange", f2);
+			// end Passwd
+		})();
+
+		// 按钮事件
+		(function() {
+			// start 发送验证码
+			function sendCode() {
+				var $this = $(this),
+					// 输入框内容
+					$myInput = $this.closest(".tn1").find(".acc input"),
+					// 验证码框
+					$myCodeInput = $this.closest(".tn1").find(".acc_code input"),
+					// 定时器
+					cycle;
+
+				// 使按钮不可用
+				$UT && $UT.input.changeButton($this, "off");
+
+				if ($myInput.val() != "" && $UT && $UT.check.checkInput($myInput).success) {
+					$.ajax({
+						url: _URL.url_home + _URL.send_verify_code,
+						xhrFields: {
+							withCredentials: true,
+							thCredentials: true
+						},
+						type: "POST",
+						dataType: "JSON",
+						data: {
+							account: $myInput.val(),
+							verifyType: "regVerifCode"
+						},
+						success: function(result) {
+							if (result.code == "000" || result.code == "003") {
+								// 使输入框可用
+								$UT && $UT.input.changeButton($myCodeInput, "on");
+
+								// 倒计时
+								function f() {
+									if (result.data.time > 0) {
+										$this.text("发送(" + result.data.time-- + ")");
+									} else {
+										// 取消定时器
+										clearInterval(cycle);
+										$this.text("发送");
+										// 使按钮可用
+										$UT && $UT.input.changeButton($this, "on");
+									}
+									return f;
+								}
+								cycle = setInterval(f(), 1000);
+								if ($this.attr("id") == "send-phone-code") {
+									cycle1 = cycle;
+								} else if ($this.attr("id") == "send-email-code") {
+									cycle2 = cycle;
+								}
+
+							} else {
+								// 出现其他未知错误
+								throwException(result.msg);
+							}
+							updataCheck();
+						},
+						error: function() {
+							throwException("网络连接失败，请检查网络或稍后再试!");
+						}
+					});
+				}
+			}
+			$sendPhoneCode.bind("click", sendCode);
+			$sendEmailCode.bind("click", sendCode);
+			// end 发送验证码
+
+			// start 提交资料
+			$("form").submit(function(){
+				// 阻止默认事件
+				event.preventDefault();
+				$(this).ajaxSubmit({
+					url: _URL.url_home + _URL.save_or_update_user_infor,
+					xhrFields: {
+						withCredentials: true,
+						thCredentials: false,
+					},
+					type: "POST",
+					dataType: "JSON",
+					success: function (result) {
+						console.log(result)
+						if(result.code=="000"){
+							throwException("资料已经更新成功，请关闭当前页面继续之前的操作!");
+							window.close();
+						} else {
+							throwException(result.msg);
+						}
+					},
+					error: function() {
+						throwException("网络连接失败，请检查网络或稍后再试!");
+					}
+				});
+			});
+			// end 提交资料
+
+			// start 绑定已有帐号
+			$bindBeforeAccount.click(function(){
+				alert("该功能待完善")
+			});
+			// end 绑定已有帐号
+		})();
+
+		/**检测信息完善规则(只检查哪些地方应该填写,不检查填写是否合法)
+		 * 返回{success:true,msg:"OK"} {success:false,msg:"错误提示信息"}
+		 * 1.如果填写了密码,则用户名/手机号/登录邮箱必须填写一项
+		 * 2.如果填写了用户名则必须填写密码
+		 */
+		function check1() {
+			// 全部为空
+			if ($passwordInput.val() == "" && $passwordsInput.val() == "" && $loginNameInput.val() == "" && $nicknameInput.val() ==
+				"" && $phoneInput.val() == "" && $emailInput.val() == "") {
+				return {
+					success: false,
+					msg: ""
+				};
+			}
+			// 填了登录方式则必须填写登录密码
+			if (($loginNameInput.val() != "" || $phoneInput.val() != "" || $emailInput.val() != "") && ($passwordInput.val() ==
+				"" || $passwordsInput.val() == "")) {
+				return {
+					success: false,
+					msg: "如果填写了“用户名”、“手机号”和“登录邮箱”则必须填写登录密码"
+				};
+			}
+			// 不能只填登录密码
+			if (($passwordInput.val() != "" || $passwordsInput.val() != "") && $loginNameInput.val() == "" && $phoneInput.val() ==
+				"" && $emailInput.val() == "") {
+				return {
+					success: false,
+					msg: "如果填写了登录密码，则“用户名”、“手机号”和“登录邮箱”需至少填写一项"
+				};
+			}
+			return {
+				success: true,
+				msg: "OK"
+			};
+		}
+
+		// 每次填写完成都持行该函数检查是否可以提交数据
+		function updataCheck() {
+			// console.log(checkStatus.check())
+			if (checkStatus.check().success) {
+				// 如果单项填写没有错则可能可以提交
+				var c = check1(); // 检查资料填写是否符合规则
+				if (c.success) {
+					$failSmall.html(null);
+					$UT && $UT.input.changeButton($submit, "on");
+				} else {
+					$failSmall.html(c.msg);
+					$UT && $UT.input.changeButton($submit, "off");
+				}
+			} else {
+				// 如果有错则肯定不能提交
+				$failSmall.html("");
+				$UT && $UT.input.changeButton($submit, "off");
+			}
+		}
+		updataCheck();
+
+		// 出错提示信息
+		function throwException(msg) {
+			$errorModal.find(".error-body").html(msg);
+			$errorModal.modal();
+		}
+	})();
+</script>
+</html>
