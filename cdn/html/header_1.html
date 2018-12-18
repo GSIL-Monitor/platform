@@ -104,7 +104,7 @@
 	<script type="text/javascript">
 		var $UT = typeof UT == "object" ? UT : null,
 			$USER = typeof USER == "object" ? USER : null,
-			_CONF = typeof LAENI_CONFIG != "undefined" ? LAENI_CONFIG : undefined,
+			$conf = typeof CONFIG != "undefined" ? CONFIG : null,
 			/* 用户已经登录时显示的部分 */
 			$sign = $(".sign"),
 			/* 用户未登录时显示的部分 */
@@ -145,8 +145,9 @@
 		
 		/* 点击免费注册按钮事件 */
 		$showRegWindow.click(function(){
-			// 新页面地址
-			var regUrl = _CONF ? (_CONF.URL.USER + _CONF.PATH.REG_HTML) : "//user.laeni.cn/reg.html";
+			// 注册页面地址
+			var regUrl = $conf.url.user.reg_html;
+			
 			// 将当前页附加到请求地址上,方便注册成功后调整回来
 			var redirect = "?redirect_uri=" + encodeURIComponent(document.location.toString());
 			// 打开新标签

@@ -25,7 +25,7 @@
 		<!-- Bootstrap -->
 		<link href="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn.laeni.cn/public/bootstrap-4.0.0-dist/css/bootstrap.css"
 		 rel="stylesheet" type="text/css" />
-		<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+		<!-- 必须放在前边) -->
 		<script src="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn.laeni.cn/public/js/jquery-3.3.1.min.js" type="text/javascript"
 		 charset="utf-8"></script>
 		<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
@@ -56,7 +56,7 @@
 		<link rel="stylesheet" type="text/css" href="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn.laeni.cn/public/css/reset.css" />
 
 		<!-- 前端配置文件 -->
-		<script src="//cdn.laeni.cn/public/config/laeni.cn.config.js" type="text/javascript" charset="utf-8"></script>
+		<script src="//cdn.laeni.cn/config/laeni.cn.js" type="text/javascript" charset="utf-8"></script>
 
 		<!-- 如需使用登录功能,则引入该js文件即可: user.js -->
 		<script src="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn/public/js/user.js" type="text/javascript"
@@ -77,8 +77,7 @@
 		<script type="text/javascript" id="header_script">
 			$(function() {
 				$.ajax({
-					url: (typeof LAENI_CONFIG != "undefined" && LAENI_CONFIG.URL.CDN + "/html/header_0.html") ||
-						"//cdn.laeni.cn/html/header_0.html",
+					url: $conf.url.cdn.header_html,
 					xhrFields: {
 						thCredentials: true
 					},

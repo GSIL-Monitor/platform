@@ -1,4 +1,8 @@
 /**
+ * 如果为通过环境检查时,User对象为null
+ * 引入User SDK 后,
+ */
+/**
  * USER.islogin()			// 检测是否登录授权(并不是百分百正确,如果服务端检测到未授权则会拒绝访问并删除cookie"__ok")
  * USER.login()				// 加载并显示登陆窗口
  * USER.isLoginWindow()		// 登录窗口是否已经显示
@@ -13,11 +17,13 @@
 (function(global) {
 	var _user = function() {
 
+		// 环境检测
 		if (typeof UT == "undefined") {
 			console.error("需要UT工具库的支持,请先引入://cdn.laeni.cn/public/js/utlis.js");
 			return null;
 		}
 
+		// 初始化变量
 		var
 			other_login = [], // 第三方登录Util引用,引用地方发SDK时将自己添加到该数组(统一操作)
 			backFunc = [], // 回调方法

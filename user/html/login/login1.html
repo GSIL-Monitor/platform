@@ -155,6 +155,9 @@
 			$ut = typeof UT == "object" ? UT : null,
 			/* 用户操作工具函数 */
 			$user = typeof USER == "object" ? USER : null,
+			/* 配置文件信息 */
+			$conf = typeof CONFIG != "undefined" ? CONFIG : null,
+			
 			/* 登录窗口 */
 			$loginWindw = $("#login"),
 			/* 登录窗关闭按钮 */
@@ -165,6 +168,8 @@
 			$danger = $("#danger"),
 			/* 注册按钮 */
 			$showRegWindow = $(".show_reg_window");
+			
+			console.log($conf)
 
 		/* 智能输入框 */
 		$ut && $ut.check.checkInputCleanIcon();
@@ -197,7 +202,7 @@
 			var $this = $(this);
 			if ($this.find("#username").val() != "" && $this.find("#password").val() != "") {
 				$.ajax({
-					url: (typeof LAENI_CONFIG != "undefined" && LAENI_CONFIG.URL.USER + $this.attr("action")) || "//user.laeni.cn"+$this.attr("action"),
+					url: $conf.url.user.value + $this.attr("action"),
 					data: $this.serializeArray(),
 					xhrFields: {
 						withCredentials: true,
@@ -223,8 +228,8 @@
 		
 		/* 注册按钮事件 */
 		$showRegWindow.click(function(){
-			// 新页面地址
-			var regUrl = _CONF ? (_CONF.URL.USER + _CONF.PATH.REG_HTML) : "//user.laeni.cn/reg.html";
+			// 注册页面地址
+			var regUrl = $conf.url.user.reg_html;
 			// 将当前页附加到请求地址上,方便注册成功后调整回来
 			var redirect = "?redirect_uri=" + encodeURIComponent(document.location.toString());
 			// 打开新标签
