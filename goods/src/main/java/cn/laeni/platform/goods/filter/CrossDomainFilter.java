@@ -1,4 +1,4 @@
-package cn.laeni.platform.user.filter;
+package cn.laeni.platform.goods.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

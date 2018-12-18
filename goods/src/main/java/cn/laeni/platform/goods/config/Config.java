@@ -1,14 +1,10 @@
-package cn.laeni.platform.user.config;
+package cn.laeni.platform.goods.config;
 
+import cn.laeni.utils.string.CharacterUtils;
+import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-
-import cn.laeni.sms.AliSms;
-import cn.laeni.sms.SmsAbs;
-import cn.laeni.utils.string.CharacterUtils;
 
 @Configuration
 public class Config {
@@ -21,19 +17,7 @@ public class Config {
 	public CharacterUtils characterUtils() {
 		return new CharacterUtils();
 	}
-	
-	// 【阿里云】短信接口
-	@Bean("aliyun")
-	public SmsAbs aliyunSmsAbs() {
-		return new AliSms();
-	}
-	
-	// 【云之讯】短信接口
-	@Bean("ucpaas")
-	public SmsAbs ucpaasSmsAbs() {
-		return null;
-	}
-	
+
 	/**
 	 * mybatis的配置类
 	 * https://blog.csdn.net/einarzhang/article/details/53022820

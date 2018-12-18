@@ -1,4 +1,4 @@
-package cn.laeni.platform.user.config;
+package cn.laeni.platform.goods.config;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
