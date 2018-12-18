@@ -2,7 +2,7 @@
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	font-family: tahoma, "microsoft yahei", "\5FAE\8F6F\96C5\9ED1"!important;
+	font-family: tahoma, "microsoft yahei", "\5FAE\8F6F\96C5\9ED1" !important;
 }
 
 /** 清除内外边距 **/
@@ -44,9 +44,9 @@ textarea,
 
 th,
 td
-/* table elements 表格元素 */
 
-{
+/* table elements 表格元素 */
+	{
 	margin: 0;
 	padding: 0;
 }
@@ -54,22 +54,6 @@ td
 
 /** 设置默认字体 **/
 
-body,
-button,
-input,
-select,
-textarea {
-	font: 12px/1.5 tahoma, arial, 'Hiragino Sans GB', '\5b8b\4f53', sans-serif
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	font-size: 100%;
-}
 
 address,
 cite,
@@ -88,17 +72,6 @@ pre,
 samp {
 	font-family: courier new, courier, monospace;
 }
-
-
-/* 统一等宽字体 */
-
-small {
-	font-size: 12px;
-}
-
-
-/* 小于 12px 的中文很难阅读，让 small 正常化 */
-
 
 /** 重置列表元素 **/
 
@@ -133,23 +106,6 @@ img {
 	border: 0;
 }
 
-
-/* img 搭车：让链接里的 img 无边框 */
-
-button,
-input,
-select,
-textarea {
-	font-size: 100%;
-}
-
-
-/* 使得表单元素在 ie 下能继承字体大小 */
-
-
-/* 注：optgroup 无法扶正 */
-
-
 /** 重置表格元素 **/
 
 table {
@@ -159,15 +115,6 @@ table {
 
 pre {
 	background: #fff;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-	font-size: 100%
 }
 
 address,
@@ -185,25 +132,7 @@ samp {
 	font-family: courier new, courier, monospace
 }
 
-small {
-	font-size: 12px
-}
-
-ol,
-ul {
-	list-style: none
-}
-
-a {
-	text-decoration: none;
-	cursor: pointer
-}
-
-a:hover {
-	color: #F40;
-	text-decoration: none
-}
-
+area,
 a:focus {
 	outline: 0
 }
@@ -220,36 +149,32 @@ legend {
 	color: #000
 }
 
-fieldset,
-img {
-	border: 0
-}
-
-button,
-input,
-select,
-textarea {
-	font-size: 100%
-}
-
 body,
 html {
 	overflow-x: hidden
-}
-
-body {
-	color: #3C3C3C;
-	-webkit-font-smoothing: antialiased;
-	background-color: #f4f4f4
 }
 
 body.disable-hover {
 	pointer-events: none
 }
 
-area {
-	outline: 0
+/* 自定义全局样式 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+/* 超小型设备（手机，600px及以下） */
+/* 手机页面 */
+@media only screen and (max-width: 600px) {
+	html {
+		font-size: 20px;
+	}
 }
+
+/* 小型设备（平板电脑和大型手机，600px及以上） */
+@media only screen and (min-width: 600px) {
+	html {
+		font-size: 12px;
+	}
+}
+
 
 
 /* 清除浮动 */
@@ -282,31 +207,72 @@ area {
 	overflow: hidden;
 }
 
-@media screen and (max-width: 768px) {
-	/* 使宽度100% */
-	.w {
-		/* 小于768像素后就会显示不正常 */
-		width: 768px;
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+	html {
+		background: red;
 	}
 }
 
-@media screen and (min-width: 768.0001px) {
-	/* 使宽度100% */
-	.w {
-		width: 100%;
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+	html {
+		background: green;
 	}
 }
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+	html {
+		background: blue;
+	}
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+	html {
+		background: orange;
+	}
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+	html {
+		background: pink;
+	}
+}
+
+
+
+
 
 /* start 带自定义删除按钮的输入框 */
 /* 有按钮的样式 */
-.input-have-button {width: 78%;}
+.input-have-button {
+	width: 78%;
+}
+
 /* 没有按钮的样式 */
-.input-no-button {display: flex;}
+.input-no-button {
+	display: flex;
+}
 
-.input-close-icon input {padding-right: 1.5rem;}
+.input-close-icon input {
+	padding-right: 1.5rem;
+}
 
-.input-close-icon>div {width: 0;font-size: 0.8rem;/*color: blue;*/cursor: pointer;z-index: 3;}
+.input-close-icon>div {
+	width: 0;
+	font-size: 0.8rem;
+	/*color: blue;*/
+	cursor: pointer;
+	z-index: 3;
+}
 
-.input-close-icon>div>svg {margin-left: -1.3rem;height: 1rem;width: 1rem;}
+.input-close-icon>div>svg {
+	margin-left: -1.3rem;
+	height: 1rem;
+	width: 1rem;
+}
+
 /* end 带自定义删除按钮的输入框 */
-

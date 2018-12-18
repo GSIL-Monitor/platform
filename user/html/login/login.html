@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="w">
+<html lang="zh-CN">
 
 	<head>
 		<!-- 下面3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
@@ -23,10 +23,10 @@
 		<base target="_blank">
 
 		<!-- Bootstrap -->
-		<link href="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn.laeni.cn/public/bootstrap-4.0.0-dist/css/bootstrap.css"
+		<link href="//cdn.laeni.cn/bootstrap-4.0.0-dist/css/bootstrap.css"
 		 rel="stylesheet" type="text/css" />
 		<!-- 必须放在前边) -->
-		<script src="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn.laeni.cn/public/js/jquery-3.3.1.min.js" type="text/javascript"
+		<script src="//cdn.laeni.cn/js/jquery-3.3.1.min.js" type="text/javascript"
 		 charset="utf-8"></script>
 		<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 		<!-- <script src="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn.laeni.cn/public/bootstrap-4.0.0-dist/js/bootstrap.min.js"
@@ -39,9 +39,9 @@
 				<![endif]-->
 
 		<!-- start SUI -->
-		<link href="http://g.alicdn.com/sj/dpl/1.5.1/css/sui.min.css" rel="stylesheet">
+		<link href="//cdn.laeni.cn/css/sui.min.css" rel="stylesheet">
 		<!-- <script type="text/javascript" src="http://g.alicdn.com/sj/lib/jquery/dist/jquery.min.js"></script> -->
-		<script type="text/javascript" src="http://g.alicdn.com/sj/dpl/1.5.1/js/sui.min.js"></script>
+		<script type="text/javascript" src="//cdn.laeni.cn/js/sui.min.js"></script>
 		<!-- end SUI -->
 
 		<!-- IconFont -->
@@ -56,7 +56,7 @@
 		<link rel="stylesheet" type="text/css" href="//cdn.laeni.cn/css/reset.css" />
 
 		<!-- 前端配置文件 -->
-		<script src="http://cdn.laeni.cn/config/laeni.cn.js" type="text/javascript" charset="utf-8"></script>
+		<script src="//cdn.laeni.cn/config/laeni.cn.js" type="text/javascript" charset="utf-8"></script>
 
 		<!-- 如需使用登录功能,则引入该js文件即可: user.js -->
 		<script src="//cdn.laeni.cn/js/user-1.0.js" type="text/javascript"
@@ -64,14 +64,40 @@
 		<title>文件空间</title>
 
 		<!-- 复制内容到剪贴板 -->
-		<script src="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn/dist/clipboard.min.js" type="text/javascript"
+		<script src="//cdn.laeni.cn/js/clipboard.min.js" type="text/javascript"
 		 charset="utf-8"></script>
 	</head>
 
 	<body>
+		<style type="text/css">
+			html {
+				/* min-width: 600px */
+			}
+			#hea {
+				background-color: #F5F5DC;
+					height: 2.6rem;
+			}
+		</style>
+		<div id="hea">
+			
+		</div>
 
 		<!-- 导航栏: TODO 测试阶段,公用部分自动引入 -->
-		
-
+		<script type="text/javascript" id="header_script">
+			$(function() {
+				$.ajax({
+					url: CONFIG.url.user.header_html,
+					xhrFields: {
+						thCredentials: true
+					},
+					success: function(re) {
+						$("#header_script").before(re).remove();
+					}
+				});
+			});
+		</script>
+		<h1>一级标题</h1>
+		<small>small字体试试三四个</small>
+		<div>small字体试试三四个</div>
 	</body>
 </html>
