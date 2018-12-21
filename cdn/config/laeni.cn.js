@@ -1,7 +1,7 @@
 /**
  * 主要是URL的配置信息
  */
-(function() {
+(function(global) {
 	var HOME = "//laeni.cn",
 		WWW = "//www.laeni.cn",
 		/* 主页地址,一般情况访问www和root效果时一样的 */
@@ -10,45 +10,65 @@
 		HTML = CDN,
 		USER = "//user.laeni.cn";
 
-	window.CONFIG = function() {
+	_config = function(configTypeName) {
+		if (typeof configTypeName !== "string") {
+			throw new Error("参数需要接受一个String类型的值,但是接受了" + typeof configTypeName + '类型的值; 执行"Conf.help()"可查看支持的参数!!!');
+		}
 		
+		if (configTypeName == "url") {
+			var
+			home = {
+				value: HOME,
+			},
+			www = {
+				value: WWW
+			},
+			cdn = {
+				value: CDN
+			},
+			html = {
+				value: HTML
+			},
+			user = {
+				value: USER,
+				/**
+				* 独立注册页面页面
+				*/
+				// reg_html: value + "/reg.html",
+				/**
+				* 导航栏(临时) TODO
+				*/
+				header_html: cdn.value + "/html/navbar.html",
+				/**
+				* 检测是否登录
+				*/
+				checkLogin: USER.value + "/api/checkLogin"
+			};
+			
+			return {
+				home: home,
+				www: www,
+				cdn: cdn,
+				html: html,
+				user: user
+			};
+		}
+	};
+	
+	/**
+	 * 帮助函数
+	 */
+	_config.prototype.help = function(){
+		console.log([
+			{"typeName":"url", "explanation":"获取远程URL配置信息"}
+		]);
 	};
 
-	window.CONFIG.url = function() {
-		var
-		home = {
-			value: HOME,
-		},
-		www = {
-			value: WWW
-		},
-		cdn = {
-			value: CDN
-		},
-		html = {
-			value: HTML
-		},
-		user = {
-			value: USER,
-			/**
-			 * 独立注册页面页面
-			 */
-			// reg_html: value + "/reg.html",
-			/**
-			 * 导航栏(临时) TODO
-			 */
-			header_html: cdn.value + "/html/header_1.html"
-		};
-		
-		return {
-			home: home,
-			www: www,
-			cdn: cdn,
-			html: html,
-			user: user
-		};
-	}();
+	global.Conf = _config;
 
+	/**
+	 * 保留做参考
+	 */
 	PATH = {
 		/* api 接口--------------------------------------------------- */
 		/**
@@ -118,4 +138,4 @@
 		SAVE_OR_UPDATE_USER_INFO: "/api/saveOrUpdateUserInfor",
 	};
 
-})();
+})(typeof window !== "undefined" ? window : this);

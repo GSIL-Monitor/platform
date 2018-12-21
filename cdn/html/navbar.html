@@ -1,0 +1,106 @@
+<!-- 导航 -->
+<div id="navbar">
+	<!-- SUI 居中 -->
+	<div class='m-container'>
+		<!-- 导航 -->
+		<div class="row m-navbar">
+			<!-- 左边部分 -->
+			<div class="col">
+				<div class="row align-items-center">
+					<!-- LOGO -->
+					<div class="logo col">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-logo" />
+						</svg>
+						<span>Laeni</span>
+					</div>
+				</div>
+			</div>
+			<!-- 右边部分 -->
+			<div class="user_info col-auto pull-right">
+				<!-- 手机版:max-width: 600px -->
+				<div class="m-mobile row align-items-center">
+					<!-- 右边展开或关闭面板按钮 -->
+					<div class="unfold col row">
+						<div class="unfold-first col align-self-start"></div>
+						<div class="unfold-none col align-self-center"></div>
+						<div class="unfold-last col align-self-end"></div>
+					</div>
+				</div>
+
+				<!-- PC:min-width: 600px -->
+				<div class="m-pc row align-items-center">
+					<!-- 未登录 -->
+					<div class="btn-group  col">
+						<button class="show_login_window btn btn-primary shadow-none">登录</button>
+						<button class="show_reg_window btn btn-success shadow-none">免费注册</button>
+					</div>
+
+					<!-- 已登录 -->
+					<div class="col none">
+						<div class="user row" id="dropdownMenuButton" data-toggle="m-dropdown">
+							<!-- 头像 -->
+							<div class="avatar"><img width="100%" height="100%" src="av.png"></div>
+							<div class="nickname">Laeni</div>
+						</div>
+						<!-- 下拉菜单 -->
+						<div class="m-dropdown" aria-labelledby="dropdownMenuButton">
+							<a class="btn btn-outline-primary btn-ye" >注销登录</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+
+</div>
+<script type="text/javascript">
+	$(function(){
+		
+		var _ut = typeof Tools != "undefined" ? Tools : ((console.error("需要引入tools.js")) || null);
+		if (!_ut) {
+			return;
+		}
+		
+		/* PC端用户信息展开和隐藏 */
+		(function(){
+			$('[data-toggle="m-dropdown"]').each(function(){
+				var
+				$this = $(this),
+				// 本元素对应的下拉框
+				$dropdown = $('[aria-labelledby="'+$this.attr("id")+'"]');
+				
+				// 鼠标移动到对象上显示
+				function show(){
+					$dropdown.stop().fadeIn();
+				}
+				$this.bind("mouseover", show);
+				$dropdown.bind("mouseover", show);
+				
+				// 鼠标从该元素和显示元素上移开时隐藏
+				function hide(){
+					console.log(_ut.check.ifMousemove($this))
+					if (!_ut.check.ifMousemove($this) && !_ut.check.ifMousemove($dropdown)) {
+						$dropdown.stop().fadeOut(1000);
+					}
+				}
+				$this.bind("mouseout", hide);
+				$dropdown.bind("mouseout", hide);
+			});
+		})();
+		
+		/* 移动端展开和隐藏 */
+		(function(){
+			var $unfold = $(".unfold");
+			$unfold.click(function(){
+				if ($(this).hasClass("unfold-on")) {
+					$unfold.removeClass("unfold-on");
+				} else {
+					$unfold.addClass("unfold-on");
+				}
+			});
+		})();
+	});
+</script>
