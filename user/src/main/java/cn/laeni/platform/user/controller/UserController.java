@@ -1,9 +1,7 @@
 package cn.laeni.platform.user.controller;
 
-import cn.laeni.platform.user.other.SessionKeyEnum;
-import cn.laeni.platform.user.other.code.SystemCode;
-import cn.laeni.platform.user.other.code.UserCode;
-import cn.laeni.platform.user.other.entity.ApiJson;
+import cn.laeni.platform.code.SystemCode;
+import cn.laeni.platform.entity.ApiJson;
 import cn.laeni.platform.user.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

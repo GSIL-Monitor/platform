@@ -2,7 +2,7 @@ package cn.laeni.platform.user.mapper;
 
 import cn.laeni.platform.user.entity.UserIdWarehouse;
 import cn.laeni.platform.user.mapper.dynaSqlProvider.UserIdWarehouseDynamic;
-import cn.laeni.platform.user.other.entity.Count;
+import cn.laeni.platform.entity.Count;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;

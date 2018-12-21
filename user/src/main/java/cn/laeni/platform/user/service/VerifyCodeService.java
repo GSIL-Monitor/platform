@@ -1,7 +1,7 @@
 package cn.laeni.platform.user.service;
 
-import cn.laeni.platform.user.other.VerifyType;
-import cn.laeni.platform.user.other.entity.ApiJson;
+import cn.laeni.platform.user.enums.VerifyType;
+import cn.laeni.platform.entity.ApiJson;
 import com.aliyuncs.exceptions.ClientException;
 
 import javax.servlet.http.HttpServletRequest;

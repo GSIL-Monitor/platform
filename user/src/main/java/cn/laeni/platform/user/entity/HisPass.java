@@ -1,4 +1,4 @@
-package cn.laeni.platform.user.other.entity;
+package cn.laeni.platform.user.entity;
 
 /**
  * 表示历史密码对象中的子对象,每一个对象代表一次历史密码

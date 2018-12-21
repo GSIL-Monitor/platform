@@ -9,8 +9,22 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>8</java.version>
+		<java.version>1.8</java.version>
 	</properties>
+
+	<!-- 阿里云私服配置, 当部署到私服的时候使用 -->
+	<distributionManagement>
+		<repository>
+			<id>rdc-releases</id>
+			<name>29461-release-UOYUhD</name>
+			<url>https://repo.rdc.aliyun.com/repository/29461-release-UOYUhD</url>
+		</repository>
+		<snapshotRepository>
+			<id>rdc-snapshots</id>
+			<name>Internal Snapshot Repository</name>
+			<url>https://repo.rdc.aliyun.com/repository/29461-snapshot-LeRipn</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<build>
 		<!--指定java和test目录(可省略且可由<resources>标签代替) -->

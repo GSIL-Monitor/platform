@@ -1,4 +1,4 @@
-package cn.laeni.platform.user.other.entity;
+package cn.laeni.platform.entity;
 
 import java.io.Serializable;
 

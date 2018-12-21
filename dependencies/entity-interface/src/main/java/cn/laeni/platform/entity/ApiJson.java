@@ -1,7 +1,7 @@
-package cn.laeni.platform.user.other.entity;
+package cn.laeni.platform.entity;
 
-import cn.laeni.platform.user.other.code.SystemCode;
-import cn.laeni.platform.user.other.code.UserCode;
+import cn.laeni.platform.code.SystemCode;
+import cn.laeni.platform.user.code.UserCode;
 import com.alibaba.fastjson.annotation.JSONField;
 
 import java.io.Serializable;
@@ -15,9 +15,12 @@ import java.io.Serializable;
 public class ApiJson implements Serializable {
 	private static final long serialVersionUID = 7911624289323178723L;
 
-	@JSONField(serialize=false)		// 控制器输出时不显示该属性
+	/**
+	 * 控制器输出时不显示该属性
+	 */
+	@JSONField(serialize=false)
 	private Object enumCode;
-	private String code = "0";
+	private String code = "000";
 	private String msg = "OK";
 	private Object data;
 

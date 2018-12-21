@@ -1,4 +1,4 @@
-package cn.laeni.platform.user.other;
+package cn.laeni.platform.user.enums;
 
 /**
  * 用于设置验证码的类型

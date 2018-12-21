@@ -1,6 +1,6 @@
-package cn.laeni.platform.user.other.entity;
+package cn.laeni.platform.user.entity;
 
-import cn.laeni.platform.user.other.AccountTypeEnum;
+import cn.laeni.platform.user.enums.AccountTypeEnum;
 import cn.laeni.platform.user.utils.AccountTool;
 
 /**

@@ -1,7 +1,7 @@
 package cn.laeni.platform.user.controller;
 
 import cn.laeni.platform.user.other.VerifyType;
-import cn.laeni.platform.user.other.code.SystemCode;
+import cn.laeni.platform.code.SystemCode;
 import cn.laeni.platform.user.other.entity.ApiJson;
 import cn.laeni.platform.user.service.VerifyCodeService;
 import org.springframework.beans.factory.annotation.Autowired;

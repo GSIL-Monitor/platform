@@ -1,8 +1,8 @@
 package cn.laeni.platform.user.controller;
 
-import cn.laeni.platform.user.other.code.SystemCode;
-import cn.laeni.platform.user.other.entity.Account;
-import cn.laeni.platform.user.other.entity.ApiJson;
+import cn.laeni.platform.code.SystemCode;
+import cn.laeni.platform.user.entity.Account;
+import cn.laeni.platform.entity.ApiJson;
 import cn.laeni.platform.user.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

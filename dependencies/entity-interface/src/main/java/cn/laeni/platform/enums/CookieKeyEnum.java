@@ -1,4 +1,4 @@
-package cn.laeni.platform.user.other;
+package cn.laeni.platform.enums;
 
 /**
  * 该异常为

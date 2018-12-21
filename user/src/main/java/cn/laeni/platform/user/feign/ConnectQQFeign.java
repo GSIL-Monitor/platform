@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import cn.laeni.platform.user.other.entity.UserQQInfo;
+import cn.laeni.platform.user.entity.UserQQInfo;
 
 /**
  * QQ互联信http请求

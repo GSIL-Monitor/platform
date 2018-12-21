@@ -1,13 +1,13 @@
 package cn.laeni.platform.user.service.impl;
 
-import cn.laeni.platform.user.other.AccountTypeEnum;
-import cn.laeni.platform.user.other.VerifyType;
-import cn.laeni.platform.user.other.code.SystemCode;
-import cn.laeni.platform.user.other.code.UserCode;
-import cn.laeni.platform.user.other.entity.Account;
-import cn.laeni.platform.user.other.entity.ApiJson;
-import cn.laeni.platform.user.other.entity.RegVerifCode;
-import cn.laeni.platform.user.other.entity.VerifCode;
+import cn.laeni.platform.user.enums.AccountTypeEnum;
+import cn.laeni.platform.user.enums.VerifyType;
+import cn.laeni.platform.code.SystemCode;
+import cn.laeni.platform.user.code.UserCode;
+import cn.laeni.platform.user.entity.Account;
+import cn.laeni.platform.entity.ApiJson;
+import cn.laeni.platform.user.entity.RegVerifCode;
+import cn.laeni.platform.user.entity.VerifCode;
 import cn.laeni.sms.SmsAbs;
 import cn.laeni.platform.user.service.VerifyCodeService;
 import cn.laeni.utils.string.CharacterUtils;

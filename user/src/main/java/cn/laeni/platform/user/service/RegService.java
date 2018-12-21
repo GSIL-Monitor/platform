@@ -1,6 +1,6 @@
 package cn.laeni.platform.user.service;
 
-import cn.laeni.platform.user.other.entity.ApiJson;
+import cn.laeni.platform.entity.ApiJson;
 import cn.laeni.platform.user.entity.ConnectQQ;
 import cn.laeni.platform.user.entity.User;
 
