@@ -5,6 +5,7 @@ import cn.laeni.platform.user.mapper.*;
 import cn.laeni.platform.user.other.AccountTypeEnum;
 import cn.laeni.platform.user.other.CookieKeyEnum;
 import cn.laeni.platform.user.other.RedisPathEnum;
+import cn.laeni.platform.user.other.SessionKeyEnum;
 import cn.laeni.platform.user.other.code.SystemCode;
 import cn.laeni.platform.user.other.code.UserCode;
 import cn.laeni.platform.user.other.entity.Account;
@@ -409,6 +410,14 @@ public class UserImpl implements UserService {
 
         // 返回反序列化后的User对象
         return JSON.parseObject(userStr, User.class);
+    }
+
+    @Override
+    public ApiJson isLogin(HttpSession session) {
+        if (session.getAttribute(SessionKeyEnum.USER.getKey()) == null) {
+            return new ApiJson(UserCode.LOGIN_INVALID);
+        }
+        return new ApiJson(SystemCode.SUCCESS);
     }
 
 }

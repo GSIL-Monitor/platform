@@ -10,9 +10,16 @@ import java.io.Serializable;
 public class AppDomain  implements Serializable {
 
 	private static final long serialVersionUID = -3852153214650051038L;
-	
-	private String domain;	// 对应的域名 varchar(32)
-	private String appId;	// 应用ID varchar(16)
+
+	/**
+	 * 对应的域名 varchar(32)
+	 */
+	private String domain;
+	/**
+	 * 应用ID varchar(16)
+	 */
+	private String appId;
+
 	public String getDomain() {
 		return domain;
 	}

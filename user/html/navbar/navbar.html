@@ -23,14 +23,12 @@
 		<base target="_blank">
 
 		<!-- Bootstrap -->
-		<link href="//cdn.laeni.cn/bootstrap-4.0.0-dist/css/bootstrap.css"
+		<link href="//cdn.laeni.cn/bootstrap/dist/css/bootstrap.css"
 		 rel="stylesheet" type="text/css" />
 		<!-- 必须放在前边) -->
-		<script src="//cdn.laeni.cn/js/jquery-3.3.1.min.js" type="text/javascript"
-		 charset="utf-8"></script>
+		<script src="//cdn.laeni.cn/js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
 		<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-		<!-- <script src="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn.laeni.cn/public/bootstrap-4.0.0-dist/js/bootstrap.min.js"
-	 type="text/javascript" charset="utf-8"></script> -->
+		<script src="//cdn.laeni.cn/bootstrap/dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 		<!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
 		<!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
 		<!--[if lt IE 9]>
@@ -39,9 +37,9 @@
 				<![endif]-->
 
 		<!-- start SUI -->
-		<link href="//cdn.laeni.cn/css/sui.min.css" rel="stylesheet">
+		<!-- <link href="//cdn.laeni.cn/css/sui.min.css" rel="stylesheet"> -->
 		<!-- <script type="text/javascript" src="http://g.alicdn.com/sj/lib/jquery/dist/jquery.min.js"></script> -->
-		<script type="text/javascript" src="//cdn.laeni.cn/js/sui.min.js"></script>
+		<!-- <script type="text/javascript" src="//cdn.laeni.cn/js/sui.min.js"></script> -->
 		<!-- end SUI -->
 
 		<!-- IconFont -->
@@ -49,44 +47,31 @@
 		<link rel="stylesheet" type="text/css" href="//cdn.laeni.cn/iconfont/iconfont.css" />
 
 		<!-- 自定义JavaScript工具: utlis.js -->
-		<script src="//cdn.laeni.cn/js/utlis.js" type="text/javascript"
-		 charset="utf-8"></script>
-
-		<!-- 重置一些浏览器默认样式: reset.css -->
-		<link rel="stylesheet" type="text/css" href="//cdn.laeni.cn/css/reset.css" />
+		<script src="//cdn.laeni.cn/js/tools.js" type="text/javascript" charset="utf-8"></script>
 
 		<!-- 前端配置文件 -->
 		<script src="//cdn.laeni.cn/config/laeni.cn.js" type="text/javascript" charset="utf-8"></script>
 
 		<!-- 如需使用登录功能,则引入该js文件即可: user.js -->
-		<script src="//cdn.laeni.cn/js/user-1.0.js" type="text/javascript"
-		 charset="utf-8"></script>
-		<title>文件空间</title>
+		<script src="//cdn.laeni.cn/js/user-1.0.js" type="text/javascript" charset="utf-8"></script>
+		<title>导航</title>
 
 		<!-- 复制内容到剪贴板 -->
-		<script src="//cdn.laeni.cn/js/clipboard.min.js" type="text/javascript"
-		 charset="utf-8"></script>
+		<script src="//cdn.laeni.cn/js/clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+
+		<!-- 重置一些浏览器默认样式: reset.css -->
+		<link rel="stylesheet/less" type="text/css" href="//cdn.laeni.cn/css/reset.less" />
+		<link rel="stylesheet/less" type="text/css" href="./main.less" />
+		
+		<script src="//cdn.laeni.cn/js/less.min.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 
 	<body>
-		<style type="text/css">
-			html {
-				/* min-width: 600px */
-			}
-			#hea {
-				background-color: #F5F5DC;
-					height: 2.6rem;
-			}
-		</style>
-		<div id="hea">
-			
-		</div>
-
 		<!-- 导航栏: TODO 测试阶段,公用部分自动引入 -->
 		<script type="text/javascript" id="header_script">
 			$(function() {
 				$.ajax({
-					url: CONFIG.url.user.header_html,
+					url: Conf("url").user.header_html,
 					xhrFields: {
 						thCredentials: true
 					},
@@ -96,8 +81,5 @@
 				});
 			});
 		</script>
-		<h1>一级标题</h1>
-		<small>small字体试试三四个</small>
-		<div>small字体试试三四个</div>
 	</body>
 </html>

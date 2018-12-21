@@ -1,4 +1,4 @@
-package cn.laeni.platform.goods.config;
+package cn.laeni.platform.user.config;
 
 import cn.laeni.utils.string.CharacterUtils;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;

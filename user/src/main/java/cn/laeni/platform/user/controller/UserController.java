@@ -1,6 +1,8 @@
 package cn.laeni.platform.user.controller;
 
+import cn.laeni.platform.user.other.SessionKeyEnum;
 import cn.laeni.platform.user.other.code.SystemCode;
+import cn.laeni.platform.user.other.code.UserCode;
 import cn.laeni.platform.user.other.entity.ApiJson;
 import cn.laeni.platform.user.service.UserService;
 import org.slf4j.Logger;
@@ -13,12 +15,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author laeni.cn
  */
 @Controller
 @CrossOrigin
+@RequestMapping("/api")
 public class UserController {
     protected static Logger logger = LoggerFactory.getLogger(UserController.class);
     /**
@@ -35,9 +39,9 @@ public class UserController {
      * @param request 请求对象
      * @return 包含状态码的详细信息
      */
-    @RequestMapping("/api/loginNameIsExist")
+    @RequestMapping("/loginNameIsExist")
     @ResponseBody
-    @Deprecated        // 弃用该方法
+    @Deprecated
     public ApiJson loginNameIsExist(HttpServletRequest request, HttpServletResponse response) {
         return checkLoginAccount(request, response, request.getParameter("loginName"), "loginName");
     }
@@ -52,7 +56,7 @@ public class UserController {
      * @param type     帐号类型[loginName/loginPhone/loginEmail]
      * @return code=104表示不存在, code=105表示存在, 为其他是表示异常错误
      */
-    @RequestMapping("/api/checkLoginAccount")
+    @RequestMapping("/checkLoginAccount")
     @ResponseBody
     public ApiJson checkLoginAccount(HttpServletRequest request, HttpServletResponse response, String account, String type) {
         // 检查请求是否合法
@@ -81,7 +85,7 @@ public class UserController {
      * @param response 响应对象
      * @return 包含状态码的详细信息
      */
-    @RequestMapping("/api/saveOrUpdateUserInfor")
+    @RequestMapping("/saveOrUpdateUserInfor")
     @ResponseBody
     public ApiJson saveOrUpdateUserInfor(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -93,13 +97,31 @@ public class UserController {
         }
     }
 
+
+    /**
+     * 检查用户是否登录
+     *
+     * @return
+     */
+    @RequestMapping("/checkLogin")
+    @ResponseBody
+    public ApiJson login(HttpSession session) {
+        try {
+            return userService.isLogin(session);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ApiJson(SystemCode.OTHER);
+        }
+    }
+
+
     /**
      * 使用户注销登录
      *
      * @param request 请求对象,用于获取Session对象
      * @return 包含返回码的相信信息
      */
-    @RequestMapping("/api/logout")
+    @RequestMapping("/logout")
     @ResponseBody
     public ApiJson logout(HttpServletRequest request) {
         userService.logOut(request);

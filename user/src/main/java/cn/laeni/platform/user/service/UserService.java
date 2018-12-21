@@ -141,4 +141,6 @@ public interface UserService {
      */
     User getUserBySessionId(String sessionId);
 
+    ApiJson isLogin(HttpSession session);
+
 }
