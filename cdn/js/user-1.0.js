@@ -16,7 +16,7 @@
  * USER.addOtherLogin()		// 用于给第三方登录SDK将其自己注册过来(以便在某个操作后统一执行相关操作)
  */
 
-
+// 用户模块基本(SDK)
 (function(global) {
 	
 	/**
@@ -51,8 +51,12 @@
 	 * @obj: JSON对象,包含进行url请求的必要信息
 	 * @autoLogin: 未登录时是否自动登录,默认"是"
 	 */
-	UserImpl.prototype.ajax= function(obj,autoLogin = true) {
+	UserImpl.prototype.ajax= function(obj,autoLogin) {
 		var _this = this;
+		
+		if(arguments.length < 2) {
+			autoLogin = true;
+		}
 		
 		if (typeof obj !== "object" || typeof obj.url !== "string") {
 			throw new Error("必须传入一个JSON对象,并且对象中应该包含用于进行ajax请求的必要信息,比如url");
@@ -122,213 +126,78 @@
 	};
 	
 	/**
-	 * 退出登录
+	 * 注销登录
+	 * @method: 退出登录成功后执行的方法
 	 */
 	UserImpl.prototype.signOut = function(method) {
+		var _this = this,
+			_urlConf = _this.urlConf;
+		
 		// 清除本地Cookie
-		// 调用远程注销地址
+		_this.tools.cookie.del("__ok"),
+		_this.tools.cookie.del("user_id"),
+		_this.tools.cookie.del("nickname"),
+		_this.tools.cookie.del("avatar"),
+		_this.tools.cookie.del("grade");
+		
+		// 调用远程注销地址(仅本系统会调用)
+		if(_this.tools.url.parseDomain(document.location.host) == _this.tools.url.parseDomain(_urlConf.home.value)) {
+			_this.ajax({
+				url: _urlConf.user.logout,
+				success: function(result){
+					if (typeof method == "function") {
+						method(result);
+					}
+				}
+			});
+		} else {
+			if (typeof method == "function") {
+				method(result);
+			}
+		}
+		
 	};
 	
+	/**
+	 * 登录方法
+	 * $('#myModal').modal('show') 显示登陆框
+	 * $('#myModal').modal('hide') 隐藏登陆框
+	 * $('#myModal').modal('handleUpdate') 重新调整高度
+	 */
 	UserImpl.prototype.login = function() {
+		var _this = this,
+			_urlConf = _this.urlConf;
 		
+		// 本系统如果是本地系统则直接打开登录界面
+		if(_this.tools.url.parseDomain(document.location.host) == _this.tools.url.parseDomain(_urlConf.home.value)) {
+			// 打开登录界面
+			$('#loginModal').modal('show');
+		}
+		
+		// 如果不是本地系统则在新窗口中打开登录页面
+		else {
+			// TODO 跳转到登陆界面并设置监听事件
+		}
+	};
+	
+	/**
+	 * 注册方法
+	 */
+	UserImpl.prototype.reg = function(){
+		window.open(this.urlConf.user.reg, "_blank");
 	};
 	
 	/**
 	 * 从本地Cookie获取用户的基本信息
 	 * @return JSON对象格式
 	 */
-	UserImpl.prototype.getUserinfo = function() {
+	UserImpl.prototype.getUserInfo = function() {
 		return this.tools.cookie.getAll();
 	};
-	
-	// 测试方法
-	UserImpl.prototype.test = function(){
-		this.ajax({
-			url: "http://cdn.laeni.cn",
-			success: function(result){
-				console.log(result)
-			}
-		});
-	};
-	
 	
 	/* 冻结对象并向外暴露唯一变量 */
 	if (typeof Object.freeze == "function") {
 		Object.freeze(UserImpl);
 	}
 	global.User = UserImpl;
-})(typeof window !== "undefined" ? window : this);
-
-
-$(function(){
-	new User().test();
-});
-
-(function(global) {
-	return;
-	var _user = function() {
-		// 初始化变量
-		var
-			other_login = [], // 第三方登录Util引用,引用地方发SDK时将自己添加到该数组(统一操作)
-			backFunc = [], // 回调方法
-			$ut = UT, // 工具库
-			_CONF = typeof LAENI_CONFIG != "undefined" ? LAENI_CONFIG : undefined,
-			url = _CONF ? _CONF.URL.USER : "//127.0.0.1:7000",
-			// 存储已经加载的登录页(防止加载后取消登录,且再次登录重复加载)
-			loginHtml, // 存储登录页
-			// 登录页静态资源地址
-			loginHtmlUrl = _CONF ? (_CONF.URL.CDN + _CONF.PATH.LOGIN_HTML) : "//cdn.laeni.cn/html/login.html",
-			// 注销登录地址
-			logout_url = url + (_CONF ? _CONF.PATH.LOGOUT_URL : "/api/logout"),
-			user_info = url + (_CONF ? _CONF.PATH.GET_USER_INFO : "/api/logout"),
-
-			$loginWindw; //登录窗口
-
-		
-
-		/**
-		 * 调用该函数就会打开登录窗口
-		 */
-		var _login = function() {
-			// 加载登录页面并显示
-			if ($loginWindw) {
-				// 开启蒙版
-				$ut.mb.on();
-				$loginWindw.removeClass("d-none");
-
-			} else {
-				$.ajax({
-					url: loginHtmlUrl,
-					xhrFields: {
-						thCredentials: true
-					},
-					success: function(re) {
-						// 开启蒙版
-						$ut.mb.on();
-						$("body").append(re);
-						$loginWindw = $("#login");
-					},
-					error: function() {
-						console.log("出错了!!!请检查网络后刷新重试...")
-					}
-				});
-			}
-		}
-
-		/* 登录窗口是否已经显示 */
-		var _isLoginWindow = function() {
-			return !$loginWindw.hasClass("d-none");
-		}
-
-		/**
-		 * 关闭登录窗口
-		 */
-		var _windowOut = function() {
-			// 关闭蒙版
-			$ut.mb.off();
-			// 隐藏登录窗口
-			$loginWindw.addClass("d-none");
-
-			_callback();
-		}
-
-		/**
-		 * 注销登录
-		 */
-		var _signOut = function() {
-			// 从Cookie中删除用户信息
-			$ut.cookie.del("__ok");
-			$ut.cookie.del("user_id");
-			$ut.cookie.del("nickname");
-			$ut.cookie.del("grade");
-
-			// 调用第三方登录SDK注销第三方登录
-			for (var i = 0, l = other_login.length; i < l; i++) {
-				other_login[i].signOut();
-			}
-
-			// 调用云端注销地址
-			$.get(logout_url);
-		}
-
-		/**
-		 * 获取用户基本信息(从云端获取,获取的内容通过传入的回调函数传回)
-		 */
-		var _getUserinfo_f = function(callback) {
-			if (_islogin() && typeof callback == "function") {
-				$.ajax({
-					url: user_info,
-					type: "POST",
-					xhrFields: {
-						thCredentials: true
-					},
-					success: function(re) {
-						callback(re);
-					},
-					error: function(re) {
-						callback(re);
-					},
-				});
-			}
-		}
-
-		/**
-		 * 登录完成回调函数(登录窗口关闭后执行)
-		 * 执行成功返回true
-		 */
-		var _callback = function() {
-			// 执行用户定义的回调函数
-			if (typeof backFunc == "function") {
-				backFunc();
-			} else if (typeof backFunc == "object" && backFunc instanceof Array) {
-				for (var i = 0, l = backFunc.length; i < l; i++) {
-					backFunc[i]();
-				}
-			}
-			return true;
-		}
-
-		/**
-		 * 添加登录完成回调函数(再次返回函数本身)
-		 */
-		var _addCallback = function(func) {
-			if (typeof func != "undefined" && func instanceof Function) {
-				func();
-				backFunc[backFunc.length] = func;
-			}
-
-			return this;
-		}
-
-		/**
-		 * 用于给第三方登录SDK将其自己注册过来
-		 */
-		var _other_login = function(othre) {
-			if (typeof other_login != "object") {
-				other_login = [];
-			}
-			other_login[other_login.length] = othre;
-		}
-
-
-		// 需要公开的方法写在这里
-		return {
-			islogin: _islogin, // 检测是否登录授权(并不是百分百正确,因为这里只是检测Cookie中是否有__ok,如果服务端检测到未授权则会拒绝访问并删除cookie"__ok")
-			login: _login, // 登录(加载并显示登陆窗口)
-			isLoginWindow: _isLoginWindow, // 登录窗口是否已经显示
-			loginWindowOut: _windowOut, // 关闭登录窗口
-			signOut: _signOut, // 注销登录(删除相关Cookie并调用云端注销链接)
-			getUserinfo: _getUserinfo, // 获取用户基本信息(本地Cookie中的数据)
-			getUserinfo_f: _getUserinfo_f, // 获取用户基本信息(登录的情况下,如果未登录则获取失败,并且需要自定义回调函数来获取)
-			callback: _callback, // 登录完成回调函数(登录窗口关闭后执行)
-			addCallback: _addCallback, // 添加登录完成回调函数
-			addOtherLogin: _other_login, // 用于给第三方登录SDK将其自己注册过来(以便在某个操作后统一执行相关操作)
-		};
-	}();
-
-	/* 冻结对象并向外暴露唯一变量 */
-	if (typeof Object.freeze == "function") {
-		Object.freeze(_user);
-	}
-	global.USER = _user;
 })(typeof window !== "undefined" ? window : this);

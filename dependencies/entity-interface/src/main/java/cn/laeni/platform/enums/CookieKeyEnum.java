@@ -13,6 +13,7 @@ public enum CookieKeyEnum {
     USER_ID("user_id"),
     NICNAME("nickname"),
     AVATAR("avatar"),
+    GRADE("grade"),
     LOGIN_OK("__ok");
 
     private String key;

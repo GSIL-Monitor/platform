@@ -1,3 +1,4 @@
+<!-- 导航栏: TODO 测试阶段,公用部分自动引入 -->
 <!-- 导航 -->
 <div id="navbar">
 	<!-- SUI 居中 -->
@@ -31,7 +32,7 @@
 				<!-- PC:min-width: 600px -->
 				<div class="m-pc row align-items-center">
 					<!-- 未登录 -->
-					<div class="btn-group  col">
+					<div class="btn-group col">
 						<button class="show_login_window btn btn-primary shadow-none">登录</button>
 						<button class="show_reg_window btn btn-success shadow-none">免费注册</button>
 					</div>
@@ -45,7 +46,7 @@
 						</div>
 						<!-- 下拉菜单 -->
 						<div class="m-dropdown" aria-labelledby="dropdownMenuButton">
-							<a class="btn btn-outline-primary btn-ye" >注销登录</a>
+							<a class="btn btn-outline-primary btn-ye">注销登录</a>
 						</div>
 					</div>
 				</div>
@@ -57,30 +58,31 @@
 
 </div>
 <script type="text/javascript">
-	$(function(){
-		
+	$(function() {
+		var _user = new User();
+
 		var _ut = typeof Tools != "undefined" ? Tools : ((console.error("需要引入tools.js")) || null);
 		if (!_ut) {
 			return;
 		}
-		
+
 		/* PC端用户信息展开和隐藏 */
-		(function(){
-			$('[data-toggle="m-dropdown"]').each(function(){
+		(function() {
+			$('[data-toggle="m-dropdown"]').each(function() {
 				var
-				$this = $(this),
-				// 本元素对应的下拉框
-				$dropdown = $('[aria-labelledby="'+$this.attr("id")+'"]');
-				
+					$this = $(this),
+					// 本元素对应的下拉框
+					$dropdown = $('[aria-labelledby="' + $this.attr("id") + '"]');
+
 				// 鼠标移动到对象上显示
-				function show(){
+				function show() {
 					$dropdown.stop().fadeIn();
 				}
 				$this.bind("mouseover", show);
 				$dropdown.bind("mouseover", show);
-				
+
 				// 鼠标从该元素和显示元素上移开时隐藏
-				function hide(){
+				function hide() {
 					console.log(_ut.check.ifMousemove($this))
 					if (!_ut.check.ifMousemove($this) && !_ut.check.ifMousemove($dropdown)) {
 						$dropdown.stop().fadeOut(1000);
@@ -90,17 +92,134 @@
 				$dropdown.bind("mouseout", hide);
 			});
 		})();
-		
+
 		/* 移动端展开和隐藏 */
-		(function(){
+		(function() {
 			var $unfold = $(".unfold");
-			$unfold.click(function(){
+			$unfold.click(function() {
 				if ($(this).hasClass("unfold-on")) {
 					$unfold.removeClass("unfold-on");
 				} else {
 					$unfold.addClass("unfold-on");
 				}
 			});
+		})();
+
+		/* 登录和注册按钮 */
+		(function() {
+			// 点击登录按钮后调用User的login()方法
+			$(".show_login_window").click(function() {
+				_user.login();
+			});
+			// 点击登录按钮后调用User的login()方法
+			$(".show_reg_window").click(function() {
+				_user.reg();
+			});
+		})();
+		
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+</script>
+
+
+<!-- Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="登陆框" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<div class="m_header row justify-content-end" style="width: 100%;">
+					<div data-dismiss="modal" class="col-auto">
+						<svg class="icon pointer" aria-hidden="true">
+							<use xlink:href="#icon-buoumaotubiao20"></use>
+						</svg>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+				<form method="post">
+					<!-- 用户名框 -->
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="inputGroup-sizing-default">
+								<svg class="icon" aria-hidden="true">
+									<use xlink:href="#icon-zhanghao"></use>
+								</svg>
+							</span>
+						</div>
+						<input type="text" class="form-control shadow-none" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+					</div>
+					<!-- 密码框 -->
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="inputGroup-sizing-default">
+								<svg class="icon" aria-hidden="true">
+									<use xlink:href="#icon-mima"></use>
+								</svg>
+							</span>
+						</div>
+						<input type="text" class="form-control shadow-none" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+					</div>
+					
+					<!-- 记住登录状态(7天) & 忘记密码 -->
+					<div class="row justify-content-between pl-3 pr-3">
+						<!-- 是否添加记住我的功能 -->
+						<div class="col-auto">
+							<input id="freeLogin" name="freeLogin" type="checkbox" checked>
+							<label for="freeLogin">7天免登陆</label>
+							<svg class="icon doubt pointer" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="当无任何操作时,登录状态可保留7天">
+								<use xlink:href="#icon-yiwen"></use>
+							</svg>
+						</div>
+						<!-- 忘记密码 -->
+						<a class="retrieve-password col-auto pointer">忘记密码?</a>
+					</div>
+					<!-- 登录按钮 -->
+					<div class="m-info">
+						<div class="info-top"></div>
+						<input type="button" class="btn btn-primary btn-block shadow-none" value="登录"/>
+					</div>
+					
+				</form>
+				<!-- 立即注册 -->
+				<div class="row justify-content-center m-3">
+					还未注册?&nbsp;<a href="" class="reg_link">立即注册</a>
+				</div>
+				<hr>
+				<!-- 第三方登录方式 -->
+				<div class="row other-login p-2 pl-4" >
+					<div>使用其他帐号登录:</div>
+					<!-- QQ -->
+					<div class="pointer">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-social-qq"></use>
+						</svg>
+					</div>
+					
+					<!-- 微信 -->
+					<div class="pointer" onclick="javascript: alert('微信登录功能暂未支持!!!')">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-weixin"></use>
+						</svg>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	// 页面支持
+	$(function(){
+		var _user = new User(),
+		_urlConf = _user.urlConf;
+		
+		
+		// 替换链接
+		(function(){
+			// 替换"忘记密码页面"的链接
+			$(".retrieve-password").attr("href", _urlConf.user.find_password);
+			// 替换"注册页面"链接
+			$(".reg_link").attr("href", _urlConf.user.reg);
 		})();
 	});
 </script>

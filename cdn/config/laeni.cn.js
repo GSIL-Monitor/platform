@@ -6,8 +6,6 @@
 		WWW = "//www.laeni.cn",
 		/* 主页地址,一般情况访问www和root效果时一样的 */
 		CDN = "//cdn.laeni.cn",
-		/* 需要动态加载的HTML页面地址 */
-		HTML = CDN,
 		USER = "//user.laeni.cn";
 
 	_config = function(configTypeName) {
@@ -23,33 +21,54 @@
 			www = {
 				value: WWW
 			},
-			cdn = {
-				value: CDN
-			},
-			html = {
-				value: HTML
-			},
-			user = {
-				value: USER,
-				/**
-				* 独立注册页面页面
-				*/
-				// reg_html: value + "/reg.html",
+			cdn = function(){
+				var
+				value = CDN,
 				/**
 				* 导航栏(临时) TODO
 				*/
-				header_html: cdn.value + "/html/navbar.html",
+				headerHtml = value + "/html/navbar.html",
+				/**
+				 * html页面(非全页面的需要嵌入指定页面才能使用)
+				 * 登录页静态资源地址(非全页面)
+				 */
+				loginHtml = value + "/html/login.html"
+				
+				return {
+					value:value, headerHtml:headerHtml, loginHtml: loginHtml
+				};
+			}(),
+			
+			user = function(){
+				var
+				value = USER,
+				/**
+				* 独立注册页面页面
+				*/
+				reg = value + "/reg.html",
+				/**
+				 * 找回密码页面
+				 */
+				find_password = value + "/password_find.html",
 				/**
 				* 检测是否登录
 				*/
-				checkLogin: USER.value + "/api/checkLogin"
-			};
+				checkLogin = value + "/api/checkLogin",
+				/**
+				* 注销登录地址
+				*/
+				logout = value + "/api/logout"
+		
+				return {
+					reg:reg,find_password:find_password,
+					value:value, checkLogin:checkLogin, logout:logout
+				};
+			}();
 			
 			return {
 				home: home,
 				www: www,
 				cdn: cdn,
-				html: html,
 				user: user
 			};
 		}
@@ -70,24 +89,6 @@
 	 * 保留做参考
 	 */
 	PATH = {
-		/* api 接口--------------------------------------------------- */
-		/**
-		 * 注销登录地址
-		 */
-		LOGOUT_URL: "/api/logout",
-		/**
-		 * TODO 获取用户资料
-		 */
-		GET_USER_INFO: "",
-
-
-
-		/* html页面(非全页面的需要嵌入指定页面才能使用)-------------------- */
-		/**
-		 * 登录页静态资源地址(非全页面)
-		 */
-		LOGIN_HTML: "/html/login.html",
-
 		/**
 		 * TODO 独立登录页面
 		 */

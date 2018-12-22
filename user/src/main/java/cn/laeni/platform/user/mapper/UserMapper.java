@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Select;
 
+/**
+ * @author Laeni
+ */
 public interface UserMapper {
 
     /**

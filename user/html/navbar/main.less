@@ -1,49 +1,62 @@
-// [超大型设备:(min-width: 1440px)]宽度
-@big-width: 1382px;
-// [大型设备-笔记本电脑:(min-width: 1280px)]宽度
-@pc-width: 1190px;
-// [中型设备-笔记本电脑低分屏:(min-width: 1120px)]宽度
-@small-width: 1120px;
-// [小型设备-平板电脑:(min-width: 600px)]宽度
-@tiny-width: 806px;
-// [超小型设备-移动端:(max-width: 600px)]宽度
-@m-width: 100%;
-
-// 导航高度
-@navbar-height: 3.8rem;
-
+@import '../common.less';
 
 // @import "navbar.less";
+
+/* 全局样式 */
+// 错误提示框
+.info-bottom {
+	padding: 1rem;
+	padding-top: 0.2rem;
+	color: @infoColor;
+}
+.info-top {
+	padding: 1rem;
+	padding-bottom: 0.2rem;
+	color: @infoColor;
+}
+// 鼠标为小手
+.pointer {
+	cursor: pointer;
+}
+// 带错误提示的按钮组
+.m-info {
+	min-height: 4em;
+}
 
 /* 智能宽度居中 */
 .m-container {
     margin: 0 auto;
 }
+
 /* 超小型设备（手机，600px及以下） */
 @media only screen and (max-width: 600px) {
     @import 'm.less';
-	/* 自动宽度居中容器 */
-	.m-container {
-	    width: @m-width;
-		min-width: 15rem;
-	}
-	
-	.m-pc {
-		display: none;
-	}
+    /* 自动宽度居中容器 */
+    .m-container {
+        width: @m-width;
+        min-width: 15rem;
+    }
+
+    .m-pc {
+        display: none;
+    }
 }
 
 /* 小型设备（平板电脑，600px及以下） */
 @media only screen and (min-width: 600px) {
     @import 'tiny.less';
-	/* 自动宽度居中容器 */
-	.m-container {
-		width: @tiny-width;
-	}
-	
-	.m-mobile {
-		display: none;
-	}
+    /* 自动宽度居中容器 */
+    .m-container {
+        width: @tiny-width;
+    }
+
+    .m-mobile {
+        display: none;
+    }
+
+    .user_info {
+        min-width: 12rem;
+    }
 }
 
 /* 中型设备（笔记本电脑低分屏，1120px及以上） */
@@ -61,11 +74,9 @@
     @import 'big.less';
 }
 
-
-
-@back-color: #f5f5dc;
-
+// 用户信息模块
 .user {
+	// 头像
     .avatar {
         border-radius: 50%;
         overflow: auto;
@@ -78,77 +89,101 @@
 
 /* 移动端右上角菜单展开效果 */
 .unfold {
-	height: 1.8rem;
+    height: 1.8rem;
     width: 6rem;
-	div {
-		transition: width 1s, height 1s, transform 1s;
-		transform-origin: 0 50%;
-	}
+    div {
+        transition: width 1s, height 1s, transform 1s;
+        transform-origin: 0 50%;
+    }
 }
 .unfold-on {
-	/* 旋转第一根 */
-	.unfold-first {
-		transform: rotate(45deg);
-	}
-	/* 隐藏第二根 */
-	.unfold-none {
-		display: none;
-	}
-	/* 旋转最后一根 */
-	.unfold-last {
-		transform: rotate(-45deg);
-	}
+    /* 旋转第一根 */
+    .unfold-first {
+        transform: rotate(45deg);
+    }
+    /* 隐藏第二根 */
+    .unfold-none {
+        display: none;
+    }
+    /* 旋转最后一根 */
+    .unfold-last {
+        transform: rotate(-45deg);
+    }
 }
 
 #navbar {
-	/* 导航背景色 */
+    /* 导航背景色 */
     background-color: @back-color;
-	
-	/* 自定义导航通用部分 */
-	.m-navbar {
-		/* 使子元素垂直居中时要设置一个高度 */
-		.align-items-center {
-			height: @navbar-height;
-		}
-	}
-	
-	/* 左边logo部分 */
-    .logo {
-		margin-left: 1rem;
-		.icon {
-			font-size: 3rem;
-		}
-		span {
-			font-size: 2rem;
-		}
+
+    /* 自定义导航通用部分 */
+    .m-navbar {
+        /* 使子元素垂直居中时要设置一个高度 */
+        .align-items-center {
+            height: @navbar-height;
+        }
     }
-    
-	/* 右边电脑版部分 */
-	.m-pc {
-		.user {
-			.avatar {
-				width: 3rem;
-				height: 3rem;
-			}
-			.nickname {
-				width: 6rem;
-				font-size: 2rem;
-				line-height: 1.5em;
-			}
-		}
-		/* 下拉菜单部分 */
-		.m-dropdown {
-			position: fixed;
-			display: none;
-		}
+
+    /* 左边logo部分 */
+    .logo {
+        margin-left: 1rem;
+        .icon {
+            font-size: 3rem;
+        }
+        span {
+            font-size: 2rem;
+        }
+    }
+
+    /* 右边电脑版部分 */
+    .m-pc {
+        .user {
+            .avatar {
+                width: 3rem;
+                height: 3rem;
+            }
+            .nickname {
+                width: 6rem;
+                font-size: 2rem;
+                line-height: 1.5em;
+            }
+        }
+        /* 下拉菜单部分 */
+        .m-dropdown {
+            position: fixed;
+            display: none;
+        }
+    }
+
+    /* 右边手机版部分 */
+    .m-mobile {
+        .col div {
+            height: 0.2rem;
+            background-color: #4a4a4a;
+        }
+    }
+}
+
+#loginModal {
+	/* 头:关闭按钮 */
+    .modal-header {
+        background-color: @back-color;
+        padding: 0.5rem 0;
+    }
+	/* 主体 */
+	.modal-body {
+		margin: 1rem 2rem;
 	}
-    
-	
-	/* 右边手机版部分 */
-	.m-mobile {
-		.col div {
-			height: 0.2rem;
-			background-color: #4a4a4a;
-		}
+	.m_header {
+		margin: 0;
+	}
+	.icon {
+		font-size: 1.5rem;
+	}
+	/* 7天免登陆疑问图标 */
+	#freeLogin~.icon {
+		font-size: 1rem;
+	}
+	.other-login div {
+		margin: 0.2rem;
 	}
 }

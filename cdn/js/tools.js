@@ -1,39 +1,84 @@
 (function (global) {
 	var _ut = function () {
-		// Cookie工具
+		/**
+		 * Cookie工具
+		 * set(name, value[, domain(默认为顶级域名)[, path(默认为"/")[, hour(单位:小时,默认为浏览器时关闭失效)]]])
+		 * del(name[, domain(默认为顶级域名和当前域名)[, path(默认为"/"和当前路径)]])
+		 * 	del().........删除
+		 */
 		var $Cookie = function () {
-			var domainPrefix = document.domain || "";
-			return {
-				// hour: 过期时间(小时)
-				set: function (name, value, domain, path, hour) {
-					if (hour) {
-						var expire = new Date();
-						expire.setTime(expire.getTime() + 3600000 * hour);
-					}
-					document.cookie = name + "=" + encodeURIComponent(value) + "; " +
-							(hour ? ("expires=" + expire.toGMTString() + "; ") : "") +
-							(path ? ("path=" + path + "; ") : "path=/; ") +
-							(domain ? ("domain=." + $Url.parseDomain(domain) + ";") : ("domain=." + $Url.parseDomain(domainPrefix) + ";"));
-					return true;
-				},
-				del: function (name, domain, path) {
-					document.cookie = name + "=; expires=Mon, 26 Jul 1997 05:00:00 GMT; " + (path ? ("path=" + path + "; ") :
-						"path=/; ") + (domain ? ("domain=" + domain + ";") : ("domain=" + domainPrefix + ";"));
-					return true;
-				},
-				get: function (name) {
-					var r = new RegExp("(?:^|;+|\\s+)" + name + "=([^;]*)"),
-						m = document.cookie.match(r);
-					return decodeURIComponent(!m ? "" : m[1]);
-				},
-				getAll: function () {
-					var cookies={},cookieArray = document.cookie.split(/; /);
-					for(var i=0,l=cookieArray.length;i<l;i++){
-						var cookie=cookieArray[i].split("=");
-						cookies[cookie[0]]=decodeURIComponent(cookie[1]);
-					}
-					return cookies;
+			/**
+			 * @hour: 过期时间(小时)
+			 */
+			function set(name, value, domain, path, hour) {
+				if (hour) {
+					var expire = new Date();
+					expire.setTime(expire.getTime() + 3600000 * hour);
 				}
+				document.cookie = name + "=" + encodeURIComponent(value) + "; " +
+						(hour ? ("expires=" + expire.toGMTString() + "; ") : "") +
+						(path ? ("path=" + path + "; ") : "path=/; ") +
+						(domain ? ("domain=." + $Url.parseDomain(domain) + ";") : ("domain=." + $Url.parseDomain(document.location.host) + ";"));
+				return true;
+			}
+			function del(name, domain, path) {
+				function deleteCookie (name, domain, path) {
+					document.cookie = name + "=; expires=Mon, 26 Jul 1997 05:00:00 GMT; " + (path ? ("path=" + path + "; ") :
+						"path=/; ") + (domain ? ("domain=" + domain + ";") : ("domain=" + document.location.host + ";"));
+				}
+				
+				// 精确删除
+				if (name && domain && path) {
+					deleteCookie(name, domain, path);
+				}
+				
+				// 删除全部path
+				else if (name && domain) {
+					// 获取当前页面的路径
+					var path = $Url.getUrlPath();
+					// 删除根路径
+					deleteCookie(name, domain);
+					// 删除当前路径
+					deleteCookie(name, domain, path);
+				}
+				
+				// 删除全部domain及全部path
+				else if (name){
+					// 获取当前页面的路径
+					var host = $Url.parseDomain();
+					
+					del(name, host);
+					del(name, "." + host);
+					del(name, document.location.host);
+				}
+				
+				// 删除全部Cookie
+				else {
+					for (var key in $Cookie.getAll()) {
+						del(key);
+					}
+				}
+				return true;
+			}
+			function get(name) {
+				var r = new RegExp("(?:^|;+|\\s+)" + name + "=([^;]*)"),
+					m = document.cookie.match(r);
+				return decodeURIComponent(!m ? "" : m[1]);
+			}
+			function getAll() {
+				var cookies={},cookieArray = document.cookie.split(/; /);
+				for(var i=0,l=cookieArray.length;i<l;i++){
+					var cookie=cookieArray[i].split("=");
+					cookies[cookie[0]]=decodeURIComponent(cookie[1]);
+				}
+				return cookies;
+			}
+			
+			return {
+				set: set,
+				del: del,
+				get:  get,
+				getAll: getAll 
 			}
 		}();
 
@@ -66,7 +111,6 @@
 				}
 			}
 		};
-
 
 		/**移动组件函数
 		 * 鼠标"拖动"$mouse,移动$mobile
@@ -431,26 +475,38 @@
 
 		/**
 		 * URL的相关方法
-		 * URL.getHost()..............获取域名
-		 * URL.getUrlAll()............获取全地址
-		 * URL.getUrlPath()...........获取当前相对路径
-		 * URL.getParaNames().........获取所有参数列表
-		 * URL.getUrlParam(paraName)..获取指定URL的参数
+		 * .getHost(url)...........获取指定URL的主机名(默认获取当前页面的主机名)
+		 * .parseDomain(url).......获取url的顶级域名(默认获取当前页面的顶级域名)
+		 * .getUrlPath(urlStr).....获取当前相对路径(默认获取当前页面的相对路径)
+		 * .getParaNames(urlStr)...获取所有参数列表(默认获取当前页面的参数列表)
+		 * .getUrlParam(paraName)..获取指定URL的参数
+		 * .getUrlAll()............获取当前页面的全地址
 		 */
 		var $Url = function () {
-			var
-				urllAll = document.location, // 地址栏全地址
-				paraName = null; // 全部参数列表
-
 			// 获取域名
-			getHost = function () {
-				return window.location.host.toString();
+			getHost = function (url) {
+				if (!url) {
+					return document.location.host;
+				} else {
+					// 可能的地址形式
+					// 10.0.0.5
+					// 10.0.0.5/index
+					// http://10.0.0.5/index
+					
+					var a = url.split("//");
+					if (a.length >= 2) {
+						return a[1].split("/")[0];
+					} else {
+						return a[0].split("/")[0];
+					}
+				}
+				
 			};
 
 			// 获取顶级域名
-			parseDomain = function(str) {
-				if (!str) return '';
-				if (str.indexOf('://') != -1) str = str.substr(str.indexOf('://') + 3);
+			parseDomain = function(urlStr) {
+				var str = urlStr ? getHost(urlStr) : document.location.host;
+				
 				var topLevel = ['com', 'net', 'org', 'gov', 'edu', 'mil', 'biz', 'name', 'info', 'mobi', 'pro', 'travel', 'museum',
 					'int', 'areo', 'post', 'rec'
 				];
@@ -470,34 +526,36 @@
 			
 			// 获取全地址
 			getUrlAll = function () {
-				return urllAll.toString();
+				return document.location.href;
 			};
 
-			// 获取当前相对路径
-			getUrlPath = function () {
+			// 获取相对路径
+			getUrlPath = function (urlStr) {
 				// 首先获取 Url，然后把 Url 通过 "//" 截成两部分，再从后一部分中截取相对路径。
 				// 如果截取到的相对路径中有参数，则把参数去掉。
-				var url = urllAll.toString();　　
+				var url = urlStr || document.location.href;　　
+				
+				// 去掉协议部分
 				var arrUrl = url.split("//");
+				arrUrl = arrUrl[arrUrl.length-1];
 
-				var start = arrUrl[1].indexOf("/");
-				var relUrl = arrUrl[1].substring(start); //stop省略，截取从start开始到结尾的所有字符
+				// 去掉HOST部分
+				var arrUrl = arrUrl.replace(getHost(arrUrl),"");
 
-				if (relUrl.indexOf("?") != -1) {
-					relUrl = relUrl.split("?")[0];
-				};
-				return relUrl;
+				// 去掉参数
+				var arrUrl = arrUrl.split("?")[0];
+				
+				// 去掉请求部分
+				var arrUrl = arrUrl.replace(/\/[^(\/)]+$/,"");
+				return arrUrl || "/";
 			};
 
 			// 获取所有参数列表(以数组方式返回)
-			getParaNames = function () {
-				if (paraName != null) {
-					return paraName;
-				}
-				// 用于
-				paraName = [];
+			getParaNames = function (urlStr) {
+				// 用于存放参数列表
+				var paraName = [];
 
-				var url = urllAll.toString();　　　　
+				var url = urlStr || document.location.href;　　　　
 				var arrObj = url.split("?");
 
 				if (arrObj.length > 1) {　　　　　　
@@ -518,7 +576,7 @@
 
 			// 获取指定URL的参数
 			getUrlParam = function (paraName) {
-				var url = urllAll.toString();　　　　
+				var url = document.location.href;　　　　
 				var arrObj = url.split("?");
 
 				if (arrObj.length > 1) {　　　　　　
@@ -700,8 +758,6 @@
 			
 			// 可变参数支持
 			for (var i = 1; i < arguments.length; i++) {
-				console.log(typeof arguments[i] == "string")
-				
 				// 判断第二个参数
 				if (i == 1){
 					if(typeof arguments[i] == "number") {

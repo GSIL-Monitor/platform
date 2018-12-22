@@ -23,12 +23,12 @@
 		<base target="_blank">
 
 		<!-- Bootstrap -->
-		<link href="//cdn.laeni.cn/bootstrap/dist/css/bootstrap.css"
-		 rel="stylesheet" type="text/css" />
+		<link href="//cdn.laeni.cn/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
 		<!-- 必须放在前边) -->
 		<script src="//cdn.laeni.cn/js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
 		<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 		<script src="//cdn.laeni.cn/bootstrap/dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="//cdn.laeni.cn/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript" charset="utf-8"></script>
 		<!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
 		<!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
 		<!--[if lt IE 9]>
@@ -62,7 +62,7 @@
 		<!-- 重置一些浏览器默认样式: reset.css -->
 		<link rel="stylesheet/less" type="text/css" href="//cdn.laeni.cn/css/reset.less" />
 		<link rel="stylesheet/less" type="text/css" href="./main.less" />
-		
+
 		<script src="//cdn.laeni.cn/js/less.min.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 
@@ -71,7 +71,7 @@
 		<script type="text/javascript" id="header_script">
 			$(function() {
 				$.ajax({
-					url: Conf("url").user.header_html,
+					url: Conf("url").cdn.headerHtml,
 					xhrFields: {
 						thCredentials: true
 					},
@@ -81,5 +81,7 @@
 				});
 			});
 		</script>
+
+		
 	</body>
 </html>
