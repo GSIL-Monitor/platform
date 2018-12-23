@@ -1,6 +1,56 @@
-@import '../common.less';
+@import './common.less';
 
-// @import "navbar.less";
+/* 超小型设备（手机，600px及以下） */
+@media only screen and (max-width: 600px) {
+    /* 自动宽度居中容器 */
+    .m-container {
+        width: @m-width;
+        min-width: 15rem;
+    }
+
+    .m-pc {
+        display: none;
+    }
+}
+
+/* 小型设备（平板电脑，600px及以下） */
+@media only screen and (min-width: 600px) {
+    /* 自动宽度居中容器 */
+    .m-container {
+        width: @tiny-width;
+    }
+
+    .m-mobile {
+        display: none;
+    }
+
+    .user_info {
+        min-width: 12rem;
+    }
+}
+
+/* 中型设备（笔记本电脑低分屏，1120px及以上） */
+@media only screen and (min-width: 1120px) {
+    .m-container {
+    	width: @small-width;
+    }
+}
+
+/* 大型设备（笔记本电脑/台式机，992px及以上） */
+@media only screen and (min-width: 1280px) {
+    .m-container {
+    	width: @pc-width;
+    }
+}
+
+/* 超大型设备（大型笔记本电脑和台式机，1200px及以上） */
+@media only screen and (min-width: 1440px) {
+    .m-container {
+    	width: @big-width;
+    }
+    
+}
+
 
 /* 全局样式 */
 // 错误提示框
@@ -23,58 +73,14 @@
 	min-height: 4em;
 }
 
+
 /* 智能宽度居中 */
 .m-container {
     margin: 0 auto;
 }
 
-/* 超小型设备（手机，600px及以下） */
-@media only screen and (max-width: 600px) {
-    @import 'm.less';
-    /* 自动宽度居中容器 */
-    .m-container {
-        width: @m-width;
-        min-width: 15rem;
-    }
 
-    .m-pc {
-        display: none;
-    }
-}
-
-/* 小型设备（平板电脑，600px及以下） */
-@media only screen and (min-width: 600px) {
-    @import 'tiny.less';
-    /* 自动宽度居中容器 */
-    .m-container {
-        width: @tiny-width;
-    }
-
-    .m-mobile {
-        display: none;
-    }
-
-    .user_info {
-        min-width: 12rem;
-    }
-}
-
-/* 中型设备（笔记本电脑低分屏，1120px及以上） */
-@media only screen and (min-width: 1120px) {
-    @import 'small.less';
-}
-
-/* 大型设备（笔记本电脑/台式机，992px及以上） */
-@media only screen and (min-width: 1280px) {
-    @import 'pc.less';
-}
-
-/* 超大型设备（大型笔记本电脑和台式机，1200px及以上） */
-@media only screen and (min-width: 1440px) {
-    @import 'big.less';
-}
-
-// 用户信息模块
+/* 用户信息模块 */
 .user {
 	// 头像
     .avatar {
@@ -87,31 +93,34 @@
     }
 }
 
-/* 移动端右上角菜单展开效果 */
-.unfold {
-    height: 1.8rem;
-    width: 6rem;
-    div {
-        transition: width 1s, height 1s, transform 1s;
-        transform-origin: 0 50%;
-    }
-}
-.unfold-on {
-    /* 旋转第一根 */
-    .unfold-first {
-        transform: rotate(45deg);
-    }
-    /* 隐藏第二根 */
-    .unfold-none {
-        display: none;
-    }
-    /* 旋转最后一根 */
-    .unfold-last {
-        transform: rotate(-45deg);
-    }
-}
 
+/* 导航 */
 #navbar {
+	z-index: @navbar_z-index;
+	/* 移动端右上角菜单展开效果 */
+	.unfold {
+		height: 1.8rem;
+		width: 6rem;
+		div {
+			transition: width 1s, height 1s, transform 1s;
+			transform-origin: 0 50%;
+		}
+	}
+	.unfold-on {
+		/* 旋转第一根 */
+		.unfold-first {
+			transform: rotate(45deg);
+		}
+		/* 隐藏第二根 */
+		.unfold-none {
+			display: none;
+		}
+		/* 旋转最后一根 */
+		.unfold-last {
+			transform: rotate(-45deg);
+		}
+	}
+
     /* 导航背景色 */
     background-color: @back-color;
 
@@ -151,6 +160,7 @@
         .m-dropdown {
             position: fixed;
             display: none;
+			z-index: @navbar_z-index;
         }
     }
 
@@ -163,6 +173,8 @@
     }
 }
 
+
+/* 内嵌登录Modal窗口 */
 #loginModal {
 	/* 头:关闭按钮 */
     .modal-header {

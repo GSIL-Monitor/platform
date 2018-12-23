@@ -7,12 +7,30 @@
 		/* 主页地址,一般情况访问www和root效果时一样的 */
 		CDN = "//cdn.laeni.cn",
 		USER = "//user.laeni.cn";
+		
+	// 支持的配置类型
+	var types = ["url","lc"];
 
 	_config = function(configTypeName) {
+		// 判断参数类型是否合法
 		if (typeof configTypeName !== "string") {
 			throw new Error("参数需要接受一个String类型的值,但是接受了" + typeof configTypeName + '类型的值; 执行"Conf.help()"可查看支持的参数!!!');
+		} else {
+			var i=0
+			while (i < types.length){
+				if (types[i] == configTypeName) {
+					break;
+				}
+				i++;
+			}
+			
+			if (i == types.length) {
+				throw new Error('没有名为"' + configTypeName + '"的参数, 支持的参数列表为:' + types.toString());
+			}
 		}
 		
+		
+		// 地址
 		if (configTypeName == "url") {
 			var
 			home = {
@@ -72,15 +90,30 @@
 				user: user
 			};
 		}
+	
+		// 第三方登录
+		else if(configTypeName == "lc") {
+			// QQ登录了配置
+			var qq = function(){
+				return {type:"QQ",
+					appid:"101481333",
+					redirecturi:"https://laeni.cn/callback/qq",
+				};
+			}();
+			
+			return {
+				qq:qq
+			}
+		}
 	};
 	
 	/**
 	 * 帮助函数
 	 */
 	_config.prototype.help = function(){
-		console.log([
-			{"typeName":"url", "explanation":"获取远程URL配置信息"}
-		]);
+		console.log('[配置 ::\n]' +
+				'使用方法: Conf("配置类型").xxx.xxx'+
+				'支持的配置类型名:' + types.toString());
 	};
 
 	global.Conf = _config;

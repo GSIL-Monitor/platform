@@ -1,87 +1,147 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<!-- 导航栏: TODO 测试阶段,公用部分自动引入 -->
+<!-- 导航 -->
+<div id="navbar" class="clean">
+	<!-- SUI 居中 -->
+	<div class='m-container'>
+		<!-- 导航 -->
+		<div class="row m-navbar">
+			<!-- 左边部分 -->
+			<div class="col">
+				<div class="row align-items-center">
+					<!-- LOGO -->
+					<div class="logo col">
+						<svg class="icon" aria-hidden="true">
+							<use xlink:href="#icon-logo" />
+						</svg>
+						<span>Laeni</span>
+					</div>
+				</div>
+			</div>
+			<!-- 右边部分 -->
+			<div class="user_info col-auto pull-right">
+				<!-- 手机版:max-width: 600px -->
+				<div class="m-mobile row align-items-center">
+					<!-- 右边展开或关闭面板按钮 -->
+					<div class="unfold col row">
+						<div class="unfold-first col align-self-start"></div>
+						<div class="unfold-none col align-self-center"></div>
+						<div class="unfold-last col align-self-end"></div>
+					</div>
+				</div>
 
-	<head>
-		<!-- 下面3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="renderer" content="webkit">
-		<meta name="spm-id" content="a21bo">
-		<meta name="aplus-xplug" content="NONE">
-		<!-- width=device-width: 宽度默认等于屏幕宽度, initial-scale=1: 原始缩放比例, user-scalable=yes设置网页可以自由缩放(推荐,默认为yes) -->
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
-		<!-- 是否显示默认的苹果工具栏和菜单栏(默认是yes) -->
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<!-- 控制状态栏显示样式 -->
-		<meta name="apple-mobile-web-app-status-bar-style" content="black">
-		<!-- 关闭自动将连串数字识别为电话号码 -->
-		<meta name="format-detection" content="telephone=no">
-		<!-- 声明此网页同时适用于PC和移动端(一般使用了CSS3的媒体查询,能根据各种屏幕尺寸自适应的网站) -->
-		<meta name="applicable-device" content="pc,mobile">
-		<!-- <meta name="keywords" content="以逗号分隔的关键字"> -->
-		<!-- <meta name="description" content="这里是页面描述"> -->
-		<base target="_blank">
+				<!-- PC:min-width: 600px -->
+				<div class="m-pc row align-items-center">
+					<!-- 未登录 -->
+					<div class="ui-1-0 btn-group col">
+						<button class="show_login_window btn btn-primary shadow-none">登录</button>
+						<button class="show_reg_window btn btn-success shadow-none">免费注册</button>
+					</div>
 
-		<!-- Bootstrap -->
-		<link href="//cdn.laeni.cn/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
-		<!-- 必须放在前边) -->
-		<script src="//cdn.laeni.cn/js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
-		<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-		<script src="//cdn.laeni.cn/bootstrap/dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="//cdn.laeni.cn/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript" charset="utf-8"></script>
-		<!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
-		<!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
-		<!--[if lt IE 9]>
-					<script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-					<script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-				<![endif]-->
+					<!-- 已登录 -->
+					<div class="ui-1-1 col none">
+						<div class="user row" id="dropdownMenuButton" data-toggle="m-dropdown">
+							<!-- 头像 -->
+							<div class="avatar"><img width="100%" height="100%"></div>
+							<div class="nickname">Laeni</div>
+						</div>
+						<!-- 下拉菜单 -->
+						<div class="m-dropdown" aria-labelledby="dropdownMenuButton">
+							<button class="signOut-btn btn btn-outline-primary shadow-none">注销登录</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-		<!-- start SUI -->
-		<!-- <link href="//cdn.laeni.cn/css/sui.min.css" rel="stylesheet"> -->
-		<!-- <script type="text/javascript" src="http://g.alicdn.com/sj/lib/jquery/dist/jquery.min.js"></script> -->
-		<!-- <script type="text/javascript" src="//cdn.laeni.cn/js/sui.min.js"></script> -->
-		<!-- end SUI -->
+<script type="text/javascript">
+	$(function() {
+		var
+		// User对象
+		_user = new User(),
+		// 自定义工具包
+		_ut = _user.tools;
 
-		<!-- IconFont -->
-		<script src="//cdn.laeni.cn/iconfont/iconfont.js"></script>
-		<link rel="stylesheet" type="text/css" href="//cdn.laeni.cn/iconfont/iconfont.css" />
+		/* PC端用户信息展开和隐藏 */
+		(function() {
+			$('[data-toggle="m-dropdown"]').each(function() {
+				var
+					$this = $(this),
+					// 本元素对应的下拉框
+					$dropdown = $('[aria-labelledby="' + $this.attr("id") + '"]');
 
-		<!-- 自定义JavaScript工具: utlis.js -->
-		<script src="//cdn.laeni.cn/js/tools.js" type="text/javascript" charset="utf-8"></script>
+				// 鼠标移动到对象上显示
+				function show() {
+					$dropdown.stop().fadeIn();
+				}
+				$this.bind("mouseover", show);
+				$dropdown.bind("mouseover", show);
 
-		<!-- 前端配置文件 -->
-		<script src="//cdn.laeni.cn/config/laeni.cn.js" type="text/javascript" charset="utf-8"></script>
-
-		<!-- 如需使用登录功能,则引入该js文件即可: user.js -->
-		<script src="//cdn.laeni.cn/js/user-1.0.js" type="text/javascript" charset="utf-8"></script>
-		<title>导航</title>
-
-		<!-- 复制内容到剪贴板 -->
-		<script src="//cdn.laeni.cn/js/clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-
-		<!-- 重置一些浏览器默认样式: reset.css -->
-		<link rel="stylesheet/less" type="text/css" href="//cdn.laeni.cn/css/reset.less" />
-		<link rel="stylesheet/less" type="text/css" href="./main.less" />
-
-		<script src="//cdn.laeni.cn/js/less.min.js" type="text/javascript" charset="utf-8"></script>
-	</head>
-
-	<body>
-		<!-- 导航栏: TODO 测试阶段,公用部分自动引入 -->
-		<script type="text/javascript" id="header_script">
-			$(function() {
-				$.ajax({
-					url: Conf("url").cdn.headerHtml,
-					xhrFields: {
-						thCredentials: true
-					},
-					success: function(re) {
-						$("#header_script").before(re).remove();
+				// 鼠标从该元素和显示元素上移开时隐藏
+				function hide() {
+					console.log(_ut.check.ifMousemove($this))
+					if (!_ut.check.ifMousemove($this) && !_ut.check.ifMousemove($dropdown)) {
+						$dropdown.stop().fadeOut(1000);
 					}
-				});
+				}
+				$this.bind("mouseout", hide);
+				$dropdown.bind("mouseout", hide);
 			});
-		</script>
+		})();
 
+		/* 移动端展开和隐藏 */
+		(function() {
+			var $unfold = $(".unfold");
+			$unfold.click(function() {
+				if ($(this).hasClass("unfold-on")) {
+					$unfold.removeClass("unfold-on");
+				} else {
+					$unfold.addClass("unfold-on");
+				}
+			});
+		})();
+
+		/* 登录/注册/注销 按钮功能实现 */
+		(function() {
+			// 点击登录按钮后调用User的login()方法
+			$(".show_login_window").click(function() {
+				_user.login();
+			});
+			// 点击登录按钮后调用User的reg()方法
+			$(".show_reg_window").click(function() {
+				_user.reg();
+			});
+			// 点击注销按钮后调用User的signOut()方法
+			$(".signOut-btn").click(function() {
+				_user.signOut();
+			});
+		})();
 		
-	</body>
-</html>
+		/* 添加导航栏的登录成功和注销成功的方法实现 */
+		(function(){
+			var
+			// 代表导航本身
+			$navbar = $("#navbar"),
+			// 未登录显示部分
+			$noLoginShow = $navbar.find(".ui-1-0"),
+			// 已登录显示部分
+			$loginShow = $navbar.find(".ui-1-1");
+			
+			// 添加登录成功实现
+			_user.addRedirect({type:"login",value:function(){
+				// 隐藏登录按钮等未登录显示部分
+				$noLoginShow.addClass("none");
+				// 显示登录成功显示部分
+				$loginShow.removeClass("none");
+			}});
+			// 添加注销成功实现
+			_user.addRedirect({type:"logout",value:function(){
+				// 隐藏登录成功显示部分
+				$loginShow.addClass("none");
+				// 显示登录按钮等未登录显示部分
+				$noLoginShow.removeClass("none");
+			}});
+		})();
+	});
+</script>

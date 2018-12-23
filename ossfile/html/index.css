@@ -7,10 +7,6 @@
     box-shadow: none;
     border: none;
 }
-.modal-dialog {
-	margin: 0;
-}
-
 
 /* 重写Bootstrap样式 */
 .dropdown {

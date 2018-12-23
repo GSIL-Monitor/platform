@@ -1,9 +1,9 @@
 $(function() {
 	var
 	// 用户对象
-	_user = typeof USER != "undefined" ? USER : null,
+	_user = new User(),
 	// 自定义工具包
-	_ut = typeof UT != "undefined" ? UT : null;
+	_ut = _user.tools;
 	
 	/* 使主要内容区高度充满整个容器 */
 	(function() {
@@ -221,7 +221,7 @@ $(function() {
 						
 						// 未登录
 						if (result.code == "141") {
-							USER.login();
+							_user.login();
 						}
 						// 未开通网盘功能
 						else if (result.code == "400") {

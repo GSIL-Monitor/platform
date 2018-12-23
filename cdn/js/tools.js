@@ -748,14 +748,14 @@
 			t2 = 2000,
 			
 			// 创建一个div用于显示信息
-			div1 = '<div class="row justify-content-center">'+
+			div1 = '<div class="row justify-content-center" style="float: left;position: fixed;width: 100%;z-index: 99999999;top: 5rem;">'+
 						'<div class="alert %alert-type% col-auto" role="alert">'+
 							arguments[0]+
 						'</div>'+
 					'</div>',
 			// 默认样式
 			alertType = "alert-success";
-			
+
 			// 可变参数支持
 			for (var i = 1; i < arguments.length; i++) {
 				// 判断第二个参数
@@ -792,7 +792,7 @@
 			
 			var $div = $(div1.replace(/%alert-type%/g, alertType));
 			$div.appendTo("body");
-			
+
 			setTimeout(function(){
 				// 渐变隐藏该元素
 				$div.fadeOut(t2);
