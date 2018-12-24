@@ -1,6 +1,9 @@
 /**
- * 如果为通过环境检查时,User对象为null
- * 引入User SDK 后,
+ * 如果未通过环境检查时,直接停止执行
+ * 第三方应用使用本SDK调用本平台进行登录时,需要在<script/>标签中加上"login_app_id"属性(login_app_id为自己创建的应用ID)
+ * 如果该名字在系统中有冲突,则可在下方初始变量中修改
+ * TODO 创建应用的页面出来或这里说明中要加上该地址
+ *     示例: <script login_app_id="100000000" src="//cdn.laeni.cn/js/user-1.0.js" type="text/javascript" charset="utf-8"></script>
  */
 
 /**
@@ -19,11 +22,13 @@
 
 // 用户模块基本(SDK)
 (function(global) {
-	
+	var
 	// 登录成功回调函数
-	var redirectLogin = [];
+	redirectLogin = [],
 	// 注销成功回调函数
-	var redirectLogout = [];
+	redirectLogout = [],
+	// 在标签<script>中配置appId时使用的名字
+	appIdName = "login_app_id";
 	
 	/**
 	* 相当于构造方法
@@ -50,6 +55,15 @@
 			this.urlConf = this.conf("url");
 		} else {
 			// throw new Error("需要Tools工具库的支持,请先引入: //cdn.laeni.cn/config/laeni.cn.js");
+		}
+		
+		// 检测使用环境(如果不是本系统则获取使用者的app_id)
+		if(this.tools.url.parseDomain(document.location.host) != this.tools.url.parseDomain(this.urlConf.home.value)) {
+			var $appId = $('script[' + appIdName +']');
+			if (!$appId) {
+				throw new Error("尚未在<script>标签中检测到应用ID:" + appIdName + ", 该" + appIdName + "可在创建的应用列表中获取到.");
+			}
+			this.appId = $appId && $appId.attr(appIdName);
 		}
 	};
 	
@@ -131,7 +145,7 @@
 	* __ok表示是否通过云端验证,如果通过则可以请求云端操作(云端会再次验证,如果非法则自动清空该值)
 	*/
 	UserImpl.prototype.islogin = function() {
-		return this.tools.cookie.get("user_id") && $ut.cookie.get("__ok") ? true : false;
+		return this.tools.cookie.get("user_id") && this.tools.cookie.get("__ok") ? true : false;
 	};
 	
 	/**
@@ -207,30 +221,32 @@
 	 * $('#loginModal').modal('show') 显示登陆框
 	 * $('#loginModal').modal('hide') 隐藏登陆框
 	 * $('#loginModal').modal('handleUpdate') 重新调整高度
+	 * 	如果是本系统则弹窗形式打开登录窗口
+	 *  如果是第三方应用则带上"当前页面地址"和"appid"重定向到登录页
 	 */
 	UserImpl.prototype.login = function(method) {
+		var _this = this,
+			_urlConf = _this.urlConf;
+		
 		if (!$("#loginModal")[0]) {
 			$('<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="登陆框" aria-hidden="true"><div class="modal-dialog modal-dialog-centered" role="document"><div class="modal-content"><div class="modal-header"><div class="m_header row justify-content-end" style="width: 100%;"><div data-dismiss="modal" class="col-auto"><svg class="icon pointer" aria-hidden="true"><use xlink:href="#icon-buoumaotubiao20"></use></svg></div></div></div><div class="modal-body"><form method="post"><!-- 用户名框 --><div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text" id="inputGroup-sizing-default"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-zhanghao"></use></svg></span></div><input type="text" class="form-control shadow-none" name="username" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"></div><!-- 密码框 --><div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text" id="inputGroup-sizing-default"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-mima"></use></svg></span></div><input type="text" class="form-control shadow-none" name="password" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"></div><!-- 记住登录状态(7天) & 忘记密码 --><div class="row justify-content-between pl-3 pr-3"><!-- 是否添加记住我的功能 --><div class="col-auto"><input id="freeLogin" name="freeLogin" type="checkbox"><label for="freeLogin">7天免登陆</label><svg class="icon doubt pointer" aria-hidden="true" data-toggle="tooltip" data-placement="right" title="在与后端无任何交互的情况下,登录状态最大维持7天"><use xlink:href="#icon-yiwen"></use></svg></div><!-- 忘记密码 --><a class="retrieve-password col-auto pointer">忘记密码?</a></div><!-- 登录按钮 --><div class="m-info"><div class="info-top"></div><input type="button" class="m-submit btn btn-primary btn-block shadow-none" value="登录"/></div></form><!-- 立即注册 --><div class="row justify-content-center m-3">还未注册?&nbsp;<a href="" class="reg_link">立即注册</a></div><hr><!-- 第三方登录方式 --><div class="row other-login p-2 pl-4" ><div>使用其他帐号登录:</div><!-- QQ --><div class="QQ-login pointer"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-social-qq"></use></svg></div><!-- 微信 --><div class="pointer" onclick="javascript: alert(\'微信登录功能暂未支持!!!\')"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-weixin"></use></svg></div></div></div></div></div></div>'+
 			'<script type="text/javascript">$(function(){var _user = new User(),_urlConf = _user.urlConf;(function(){$(".retrieve-password").attr("href", _urlConf.user.find_password);$(".reg_link").attr("href", _urlConf.user.reg);})();(function(){/* QQ */$(".QQ-login").bind("click", function(){_user.lc(_user.conf("lc").qq).login();});$(\'[data-toggle="tooltip"]\').tooltip();})();(function(){$("#loginModal .m-submit").click(function(){var data = $(this).closest("form").serializeArray();console.log(data)});})();});</script>'+
 			'').appendTo("body");
 		}
 		
-		var _this = this,
-			_urlConf = _this.urlConf;
-			
 		if(method) {
 			_this.loginSuccessMethod = method;
 		}
 		
-		// 本系统如果是本地系统则直接打开登录界面
-		if(_this.tools.url.parseDomain(document.location.host) == _this.tools.url.parseDomain(_urlConf.home.value)) {
+		// 如果没有"this.appId"则说明是本平台(因为在本系统中就算设置了也不会获取),直接以嵌入式窗口打开登录
+		if(!this.appId) {
 			// 打开登录界面
 			$('#loginModal').modal('show');
 		}
 		
-		// 如果不是本地系统则在新窗口中打开登录页面
+		// 如果不是本地系统则带上本页面地址(地址需要编码)以及应用ID(app_id)重定向到登录页
 		else {
-			// TODO 跳转到登陆界面并设置监听事件
+			document.location.href = _urlConf.user.login + "?redirect_uri=" + encodeURIComponent(document.location.href) + "&app_id=" + this.appId;
 		}
 	};
 	
@@ -269,6 +285,15 @@
 	 */
 	UserImpl.prototype.lc = function(obj){
 		var _this = this;
+		
+		/* 如果当前环境是一个独立的登录页面,则可能是从其他地址跳转过来的,所以需要获取跳转前的源地址以及调用者的应用ID */
+		var myUrlParaNames = _this.tools.url.getParaNames(document.location.href);
+		// 从地址栏获取调用者的appId
+		var otherAppId = myUrlParaNames["app_id"];
+		// 从地址栏获取跳转前的页面
+		var otherRedirecturi = encodeURIComponent(myUrlParaNames["redirect_uri"]);
+		// 对你参数进行拼接
+		var myRedirecturi = (otherAppId && otherRedirecturi) && (otherAppId + "&" + otherRedirecturi);
 		
 		// 目前支持的登录方式
 		var type = ["QQ",];
@@ -319,6 +344,7 @@
 		
 		/**
 		 * QQ登录SDK
+		 * TODO 在登录页需要对第三方登录做单独的逻辑处理
 		 */
 		if (obj.type.match(/^qq$/ig)) {
 			lc = {
@@ -344,8 +370,9 @@
 						obj.redirecturi =  decodeURIComponent(obj.redirecturi);
 					}
 					
-					// 将本页面的地址附加到回调地址上发送给后端(该地址需要编码)
-					var redirecturi = encodeURIComponent(obj.redirecturi + "?redirect_uri="+document.location.href);
+					// QQ回调地址+自定义回调地址(一般只有在在第三方调用时才有,该地址有本页面地址栏中源地址"redirect_uri"和应用Id"app_id"组成)
+					// 并进行编码
+					var redirecturi = encodeURIComponent(obj.redirecturi + myRedirecturi ? ("?"+myRedirecturi) : "");
 					
 					// 生成state值,防止攻击,并写入Cookie(每次刷新,一小时有效)
 					state = _this.tools.number.randomNum(10000000,99999999).toString();

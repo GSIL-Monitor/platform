@@ -27,26 +27,20 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @CrossOrigin
 public class ConnectController {
-    protected static Logger logger = LoggerFactory.getLogger(ConnectController.class);
+    private static Logger logger = LoggerFactory.getLogger(ConnectController.class);
 
     /**
      * QQ登录信息表
      */
-    @Autowired
-    private ConnectQQMapper connectQQMapper;
+    private final ConnectQQMapper connectQQMapper;
     /**
      * 用户信息表
      */
-    @Autowired
-    private UserMapper userMapper;
+    private final UserMapper userMapper;
 
-
-    @Autowired
-    private ConnectService connectService;
-    @Autowired
-    private RegService regService;
-    @Autowired
-    private UserService userService;
+    private final ConnectService connectService;
+    private final RegService regService;
+    private final UserService userService;
 
     /**
      * 首页URL
@@ -54,10 +48,24 @@ public class ConnectController {
     @Value("${system.url_home:http://laeni.cn}")
     private String urlHome;
 
+    @Autowired
+    public ConnectController(ConnectQQMapper connectQQMapper, UserMapper userMapper, ConnectService connectService, RegService regService, UserService userService) {
+        this.connectQQMapper = connectQQMapper;
+        this.userMapper = userMapper;
+        this.connectService = connectService;
+        this.regService = regService;
+        this.userService = userService;
+    }
+
     /**
      * QQ互联回调地址
-     * 认证成功后判断,如果是新用户则登录成功后提示是否完善用户信息
-     * 如果是老用户则直接跳转到原始页面
+     * 1.如果QQ的"code"过期则重定向到QQ登录页
+     * 2.0.认证成功后判断用户是否是新用户
+     *   2.1.如果是新用户则登录成功后提示是否完善用户信息
+     *   2.2.如果是老用户则直接跳转到原始页面
+     * 3.0.最终登录成功后,判断是否有回调地址
+     *   3.1.如果有回调地址则带上code(授权用,有效期1分钟)重定向到回调地址
+     *   3.2.如果没有回调地址则关闭当前窗口(渲染"/login/login_success_and_close_window"页面,由该页面的js关闭窗口)
      *
      * @param request  请求对象
      * @param response 响应对象
@@ -67,9 +75,14 @@ public class ConnectController {
      * @return null或者要渲染的模板
      */
     @RequestMapping("/callback/qq")
-    public String qqLogin(HttpServletRequest request, HttpServletResponse response, String code, String state, String usercancel) {
+    public String qqLogin(HttpServletRequest request, HttpServletResponse response,
+                          String code, String state, String usercancel, String redirect_uri) {
         try {
-            /* 验证state是否正确,不通过则抛出异常跳转回首页或原地址 */
+            /* 验证state是否正确以及QQ穿过来的code是否在有效期内,不满足则关闭QQ登录窗口，回到原始登录界面
+             * 并提示重新登录等信息：
+             *     对于弹窗登录的，调用本系统的url检测是否登录
+             *     对于第三方调用者，带上错误信息重定向到调用者提供的回调地址
+             */
             // 查询AccessToken/openId/续期Token/过期时间
             connectService.checkState(request, response, state,usercancel);
 
@@ -112,7 +125,7 @@ public class ConnectController {
 //			return backToThePast(request);
 
             // 登录成功后跳转到该页面,使用该页面的js关闭临时登录窗口
-            return "/login/other_login_success_and_close_window";
+            return "/login/login_success_and_close_window";
         }
         // 其他错误则跳转到错误页面
         catch (Exception e) {
@@ -122,22 +135,4 @@ public class ConnectController {
         }
 
     }
-
-    /**
-     * 跳转到原来的页面或者首页
-     *
-     * @param request 请求头
-     * @return 待跳转的页面
-     */
-    private String backToThePast(HttpServletRequest request) {
-        // 获取原地址(跳转到登陆页面前的地址)
-        String redirectUri = request.getParameter("redirect_uri");
-
-        if (redirectUri != null) {
-            return "redirect:" + redirectUri;
-        } else {
-            return "redirect:" + urlHome;
-        }
-    }
-
 }

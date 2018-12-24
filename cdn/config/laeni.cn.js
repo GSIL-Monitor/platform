@@ -30,7 +30,13 @@
 		}
 		
 		
-		// 地址
+		/**
+		 * URl地址配置
+		 * 使用示例:
+		 *     var urlConf = Conf("url");
+		 *     // 获取嵌入式html页面地址
+		 *     var loginHtml = urlConf.cdn.loginHtml;
+		 */
 		if (configTypeName == "url") {
 			var
 			home = {
@@ -61,9 +67,13 @@
 				var
 				value = USER,
 				/**
-				* 独立注册页面页面
-				*/
+				 * 独立注册页面
+				 */
 				reg = value + "/reg.html",
+				/**
+				 * 独立登录页面
+				 */
+				login = value + "/login.html",
 				/**
 				 * 找回密码页面
 				 */
@@ -91,12 +101,14 @@
 			};
 		}
 	
-		// 第三方登录
+		// 第三方登录配置
 		else if(configTypeName == "lc") {
 			// QQ登录了配置
 			var qq = function(){
 				return {type:"QQ",
+					// 应用ID
 					appid:"101481333",
+					// 回调地址
 					redirecturi:"https://laeni.cn/callback/qq",
 				};
 			}();
