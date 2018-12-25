@@ -56,10 +56,10 @@
 				 * html页面(非全页面的需要嵌入指定页面才能使用)
 				 * 登录页静态资源地址(非全页面)
 				 */
-				loginHtml = value + "/html/login.html"
+				loginModal = value + "/html/loginModal.html"
 				
 				return {
-					value:value, headerHtml:headerHtml, loginHtml: loginHtml
+					value:value, headerHtml:headerHtml, loginModal: loginModal
 				};
 			}(),
 			

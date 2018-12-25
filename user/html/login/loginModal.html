@@ -23,7 +23,7 @@
 								</svg>
 							</span>
 						</div>
-						<input type="text" class="form-control shadow-none" name="username" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+						<input type="text" class="form-control shadow-none" name="username" aria-describedby="login_name_small" placeholder="登录名/邮箱/电话号码">
 					</div>
 					<!-- 密码框 -->
 					<div class="input-group mb-3">
@@ -34,7 +34,7 @@
 								</svg>
 							</span>
 						</div>
-						<input type="text" class="form-control shadow-none" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+						<input type="text" class="form-control shadow-none" name="password" aria-describedby="login_password_small" placeholder="登录密码">
 					</div>
 					
 					<!-- 记住登录状态(7天) & 忘记密码 -->
@@ -118,6 +118,11 @@
 				console.log(data)
 			});
 		})();
+		
+		
+		// 使所有输入框自动检查该输入框的内容是否符合要求
+		_user.tools.check.checkInputCleanIcon();
+		
 		// TODO 自动去Cookie判断是否选择7"7天免登陆",当选中或取消"7天免登陆"时,要操作相应的Cookie
 		
 	});

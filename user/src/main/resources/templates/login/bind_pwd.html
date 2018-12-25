@@ -107,10 +107,6 @@
 			width: 12rem;
 		}
 
-		.passwords {
-			width: 12rem;
-		}
-
 		.modal-body {
 			font-size: 16px;
 			margin-top: 22px;
@@ -450,7 +446,7 @@
 				}
 
 				$.ajax({
-					url: _url.url_home + _url.check_login_account,
+					url: _url.check_login_account,
 					xhrFields: {
 						withCredentials: true,
 						thCredentials: true
@@ -509,7 +505,7 @@
 				} else if (_ut && _ut.check.checkInput($phoneInput).success) {
 					// 符合要求时判断手机号是否存在
 					$.ajax({
-						url: _url.url_home + _url.check_login_account,
+						url: _url.check_login_account,
 						xhrFields: {
 							withCredentials: true,
 							thCredentials: true
@@ -562,7 +558,7 @@
 
 				if (_ut && _ut.check.checkInput($phoneCodeInput).success) {
 					$.ajax({
-						url: _url.url_home + _url.chek_verify_code,
+						url: _url.chek_verify_code,
 						xhrFields: {
 							withCredentials: true,
 							thCredentials: true
@@ -615,7 +611,7 @@
 				} else if (_ut && _ut.check.checkInput($emailInput).success) {
 					// 符合要求时判断邮箱号是否存在
 					$.ajax({
-						url: _url.url_home + _url.check_login_account,
+						url: _url.check_login_account,
 						xhrFields: {
 							withCredentials: true,
 							thCredentials: true
@@ -668,7 +664,7 @@
 
 				if (_ut && _ut.check.checkInput($emailCodeInput).success) {
 					$.ajax({
-						url: _url.url_home + _url.chek_verify_code,
+						url: _url.chek_verify_code,
 						xhrFields: {
 							withCredentials: true,
 							thCredentials: true
@@ -750,7 +746,7 @@
 
 				if ($myInput.val() != "" && _ut && _ut.check.checkInput($myInput).success) {
 					$.ajax({
-						url: _url.url_home + _url.send_verify_code,
+						url: _url.send_verify_code,
 						xhrFields: {
 							withCredentials: true,
 							thCredentials: true
@@ -807,7 +803,7 @@
 				// 阻止默认事件
 				event.preventDefault();
 				$(this).ajaxSubmit({
-					url: _url.url_home + _url.save_or_update_user_infor,
+					url: _url.save_or_update_user_infor,
 					xhrFields: {
 						withCredentials: true,
 						thCredentials: false,

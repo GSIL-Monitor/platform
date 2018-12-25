@@ -52,7 +52,7 @@
 
 		<!-- 如需使用登录功能,则引入该js文件即可: user.js -->
 		<script login_app_id="111111222" src="//cdn.laeni.cn/js/user-1.0.js" type="text/javascript" charset="utf-8"></script>
-		<title>导航</title>
+		<title>文件空间</title>
 
 		<!-- 复制内容到剪贴板 -->
 		<script src="//cdn.laeni.cn/js/clipboard.min.js" type="text/javascript" charset="utf-8"></script>
@@ -82,7 +82,21 @@
 				});
 			});
 		</script>
-
+		
+		<!-- 登录Modal: TODO 测试阶段,公用部分自动引入 -->
+		<script type="text/javascript" id="header_script">
+			
+			$.ajax({
+				url: Conf("url").cdn.loginModal,
+				xhrFields: {
+					thCredentials: true
+				},
+				success: function(re) {
+					$(re).appendTo("body");
+				}
+			});
+		</script>
+			
 		<div id="mybody" class="sui-layout">
 			<!-- 侧边栏 -->
 			<div id="sidebar_left" class="sidebar">
