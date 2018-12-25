@@ -71,28 +71,6 @@ public class ConnectImpl implements ConnectService {
     }
 
     /**
-     * QQ登录成功后统一处理方法
-     * @param request   请求头
-     * @param response  响应头
-     * @param connectQQ 与用户id一一对应的QQ信息 如果用户与相应QQ绑定,则有一条对应记录
-     */
-    @Override
-    public void loginSuccess(HttpServletRequest request, HttpServletResponse response, ConnectQQ connectQQ) {
-        try {
-
-            // 将user的常用信息写入Cookie中
-            CookieAndSessionUtli cookieAndSessionUtli = new CookieAndSessionUtli(request, response);
-            cookieAndSessionUtli.setCookie("appid", appid);
-            cookieAndSessionUtli.setCookie("openid", connectQQ.getOpenid());
-            cookieAndSessionUtli.setCookie("access_token", connectQQ.getAccessToken());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    /**
      * 验证state是否正确
      * @param request    请求头
      * @param response   响应头

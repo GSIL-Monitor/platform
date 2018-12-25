@@ -85,11 +85,38 @@
 				/**
 				* 注销登录地址
 				*/
-				logout = value + "/api/logout"
+				logout = value + "/api/logout",
+				
+				/* 检测指定类型的帐号是否存在
+				 * ?account&type */
+				check_account = value + "/api/checkLoginAccount",
+				
+				/* 发送验证码
+				 * ?name=laeni@qq.com
+				 */
+				get_verify_code = value + "/api/sendVerifyCode",
+		
+				/* 验证验证码
+				 * ?verifyCode=123456
+				 */
+				check_verify_code = value + "/api/chekVerifyCode",
+		
+				/* 新用户注册地址: 提交手机或邮箱和相应的验证码进行注册
+				 * 如果该帐号已经被注册则返回提交的帐号是否已经被注册,否则为该帐号注册后并登录(和强制注册一样)
+				 * ?name=laeni@qq.com&verifyCode=123456
+				 * force=force (即表示强制注册,无需返回帐号是否存在,如果存在则与原来的解绑) */
+				reg_account = value + "/api/regAccount",
+		
+				/* 动态更新用户信息
+				 * ?nickname&password&... */
+				save_or_update_user_info = value + "/api/saveOrUpdateUserInfor"
 		
 				return {
-					reg:reg,find_password:find_password,
-					value:value, checkLogin:checkLogin, logout:logout
+					reg:reg,login:login,find_password:find_password,
+					value:value, checkLogin:checkLogin, logout:logout,
+					check_account:check_account,get_verify_code:get_verify_code,
+					check_verify_code:check_verify_code,reg_account:reg_account,
+					save_or_update_user_info:save_or_update_user_info
 				};
 			}();
 			
@@ -159,29 +186,6 @@
 		 * TODO 个人中心页面
 		 */
 
-		/* 发送验证码
-		 * ?name=laeni@qq.com
-		 */
-		GET_VERIFY_CODE: "/api/sendVerifyCode",
-
-		/* 验证验证码
-		 * ?verifyCode=123456
-		 */
-		CHECK_VERIFY_CODE: "/api/chekVerifyCode",
-
-		/* 新用户注册地址: 提交手机或邮箱和相应的验证码进行注册
-		 * 如果该帐号已经被注册则返回提交的帐号是否已经被注册,否则为该帐号注册后并登录(和强制注册一样)
-		 * ?name=laeni@qq.com&verifyCode=123456
-		 * force=force (即表示强制注册,无需返回帐号是否存在,如果存在则与原来的解绑) */
-		REG_ACCOUNT: "/api/regAccount",
-
-		/* 检测指定类型的帐号是否存在
-		 * ?account&type */
-		CHECK_LOGIN_ACCOUNT: "/api/checkLoginAccount",
-
-		/* 动态更新用户信息
-		 * ?nickname&password&... */
-		SAVE_OR_UPDATE_USER_INFO: "/api/saveOrUpdateUserInfor",
 	};
 
 })(typeof window !== "undefined" ? window : this);

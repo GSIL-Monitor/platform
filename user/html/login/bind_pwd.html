@@ -22,34 +22,31 @@
 		<base target="_blank">
 
 		<!-- Bootstrap -->
-		<link href="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn.laeni.cn/public/bootstrap-4.0.0-dist/css/bootstrap.css"
-		 rel="stylesheet" type="text/css" />
+		<link href="//cdn.laeni.cn/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
 		<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
-		<script src="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn.laeni.cn/public/js/jquery-3.3.1.min.js" type="text/javascript"
-		 charset="utf-8"></script>
+		<script src="//cdn.laeni.cn/js/jquery-3.3.1.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="//cdn.laeni.cn/js/jquery.form.min.js" type="text/javascript" charset="utf-8"></script>
 		<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
-		<script src="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn.laeni.cn/public/bootstrap-4.0.0-dist/js/bootstrap.min.js"
-		 type="text/javascript" charset="utf-8"></script>
+		<script src="//cdn.laeni.cn/bootstrap/dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 		<!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
 		<!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
 		<!--[if lt IE 9]>
-			<script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-			<script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+		<script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		<script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
-		
+
 		<!-- IconFont -->
-		<script src="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn.laeni.cn/public/iconfont/iconfont.js"></script>
-		<link rel="stylesheet" type="text/css" href="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn.laeni.cn/public/iconfont/iconfont.css" />
+		<script src="//cdn.laeni.cn/iconfont/iconfont.js"></script>
+		<link rel="stylesheet" type="text/css" href="//cdn.laeni.cn/iconfont/iconfont.css" />
 
 		<!-- 自定义JavaScript工具: utlis.js -->
-		<script src="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn.laeni.cn/public/js/utlis.js" type="text/javascript"
-		 charset="utf-8"></script>
+		<script src="//cdn.laeni.cn/js/tools.js" type="text/javascript" charset="utf-8"></script>
 
 		<!-- 重置一些浏览器默认样式: reset.css -->
-		<link rel="stylesheet" type="text/css" href="https://chengdu-1252266447.cos.ap-chengdu.myqcloud.com/cdn.laeni.cn/public/css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="//cdn.laeni.cn/css/reset.css" />
 
 		<!-- 前端配置文件 -->
-		<script src="//cdn.laeni.cn/public/config/laeni.cn.config.js" type="text/javascript" charset="utf-8"></script>
+		<script src="//cdn.laeni.cn/config/laeni.cn.js" type="text/javascript" charset="utf-8"></script>
 
 		<title>绑定用户帐号模块</title>
 		
@@ -341,14 +338,18 @@
 	<script type="text/javascript">
 		(function() {
 			// $("body").addClass("modal-open");
-			var $UT = typeof UT != "undefined" ? UT : null, // 自定义工具库
-				_CONF = typeof LAENI_CONFIG != "undefined" ? LAENI_CONFIG : undefined,
-				_URL = {
-					url_home: _CONF ? _CONF.URL.USER : "//laeni.cn",
-					check_login_account: _CONF && _CONF.PATH.CHECK_LOGIN_ACCOUNT, // 检测用户名是否存在(?account&type)
-					send_verify_code: _CONF && _CONF.PATH.GET_VERIFY_CODE, // 发送验证码(?account&verifyType)
-					chek_verify_code: _CONF && _CONF.PATH.CHECK_VERIFY_CODE, // 判断验证码是否正确(?account&verifyCode)
-					save_or_update_user_infor: _CONF && _CONF.PATH.SAVE_OR_UPDATE_USER_INFO, // 更新已经登录的用户信息(?nickname&password&...)
+			var _ut = typeof Tools != "undefined" ? Tools : null, // 自定义工具库
+				_conf = typeof Conf != "undefined" ? Conf("url") : undefined,
+				_url = {
+					url_home: _conf.home.value,
+					// 检测用户名是否存在(?account&type)
+					check_login_account: _conf.user.check_account,
+					// 发送验证码(?account&verifyType)
+					send_verify_code: _conf.user.get_verify_code, 
+					// 判断验证码是否正确(?account&verifyCode)
+					chek_verify_code: _conf.user.check_verify_code,
+					// 更新已经登录的用户信息(?nickname&password&...)
+					save_or_update_user_infor: _conf.user.save_or_update_user_info,
 				},
 				// 用户名
 				$loginNameInput = $(".login_name input"),
@@ -422,7 +423,7 @@
 				};
 
 			// 使所有输入框自动检查该输入框的内容是否符合要求
-			$UT && $UT.check.checkInputCleanIcon();
+			_ut && _ut.check.checkInputCleanIcon();
 
 			// 对单独的输入框进行检查
 			(function() {
@@ -449,7 +450,7 @@
 					}
 
 					$.ajax({
-						url: _URL.url_home + _URL.check_login_account,
+						url: _url.check_login_account,
 						xhrFields: {
 							withCredentials: true,
 							thCredentials: true
@@ -491,9 +492,9 @@
 					// 清空验证码框
 					$phoneCodeInput.val(null);
 					// 验证码框不可用
-					$UT && $UT.input.changeButton($phoneCodeInput, "off");
+					_ut && _ut.input.changeButton($phoneCodeInput, "off");
 					// 发送手机验证码的按钮不可用 phone
-					$UT && $UT.input.changeButton($sendPhoneCode, "off");
+					_ut && _ut.input.changeButton($sendPhoneCode, "off");
 					// 结束倒计时
 					clearInterval(cycle1);
 					// 复原按钮文字
@@ -505,10 +506,10 @@
 						checkStatus.phone = true;
 						checkStatus.phoneCode = true;
 						$phoneSmall.html(null);
-					} else if ($UT && $UT.check.checkInput($phoneInput).success) {
+					} else if (_ut && _ut.check.checkInput($phoneInput).success) {
 						// 符合要求时判断手机号是否存在
 						$.ajax({
-							url: _URL.url_home + _URL.check_login_account,
+							url: _url.check_login_account,
 							xhrFields: {
 								withCredentials: true,
 								thCredentials: true
@@ -522,7 +523,7 @@
 							success: function(result) {
 								if (result.code == "105" || result.code == "104") {
 									checkStatus.phone = true;
-									$UT && $UT.input.changeButton($sendPhoneCode, "on");
+									_ut && _ut.input.changeButton($sendPhoneCode, "on");
 									if (result.code == "104") {
 										$phoneSmall.html("该手机号已和其他帐号绑定，如果继续操作则自动和原帐号解除绑定");
 									}
@@ -542,7 +543,7 @@
 				});
 				$phoneInput.bind("change", function() {
 					// 验证码框不可用
-					$UT && $UT.input.changeButton($phoneCodeInput, "off");
+					_ut && _ut.input.changeButton($phoneCodeInput, "off");
 					// 清空验证码框
 					$phoneCodeInput.val(null);
 
@@ -550,7 +551,7 @@
 						checkStatus.phone = true;
 						checkStatus.phoneCode = true;
 						// 发送手机验证码的按钮不可用 phone
-						$UT && $UT.input.changeButton($sendPhoneCode, "off");
+						_ut && _ut.input.changeButton($sendPhoneCode, "off");
 					}
 
 					updataCheck();
@@ -559,9 +560,9 @@
 				$phoneCodeInput.bind("input propertychange", function() {
 					checkStatus.phoneCode = false;
 
-					if ($UT && $UT.check.checkInput($phoneCodeInput).success) {
+					if (_ut && _ut.check.checkInput($phoneCodeInput).success) {
 						$.ajax({
-							url: _URL.url_home + _URL.chek_verify_code,
+							url: _url.chek_verify_code,
 							xhrFields: {
 								withCredentials: true,
 								thCredentials: true
@@ -597,9 +598,9 @@
 					// 清空验证码框
 					$emailCodeInput.val(null);
 					// 验证码框不可用
-					$UT && $UT.input.changeButton($emailCodeInput, "off");
+					_ut && _ut.input.changeButton($emailCodeInput, "off");
 					// 发送邮箱验证码的按钮不可用 email
-					$UT && $UT.input.changeButton($sendEmailCode, "off");
+					_ut && _ut.input.changeButton($sendEmailCode, "off");
 					// 结束倒计时
 					clearInterval(cycle2);
 					// 复原按钮文字
@@ -611,10 +612,10 @@
 						checkStatus.email = true;
 						checkStatus.emailCode = true;
 						$emailSmall.html(null);
-					} else if ($UT && $UT.check.checkInput($emailInput).success) {
+					} else if (_ut && _ut.check.checkInput($emailInput).success) {
 						// 符合要求时判断邮箱号是否存在
 						$.ajax({
-							url: _URL.url_home + _URL.check_login_account,
+							url: _url.check_login_account,
 							xhrFields: {
 								withCredentials: true,
 								thCredentials: true
@@ -628,7 +629,7 @@
 							success: function(result) {
 								if (result.code == "105" || result.code == "104") {
 									checkStatus.email = true;
-									$UT && $UT.input.changeButton($sendEmailCode, "on");
+									_ut && _ut.input.changeButton($sendEmailCode, "on");
 									if (result.code == "104") {
 										$emailSmall.html("该邮箱号已和其他帐号绑定，如果继续操作则自动和原帐号解除绑定");
 									}
@@ -648,7 +649,7 @@
 				});
 				$emailInput.bind("change", function() {
 					// 验证码框不可用
-					$UT && $UT.input.changeButton($emailCodeInput, "off");
+					_ut && _ut.input.changeButton($emailCodeInput, "off");
 					// 清空验证码框
 					$emailCodeInput.val(null);
 
@@ -656,7 +657,7 @@
 						checkStatus.email = true;
 						checkStatus.emailCode = true;
 						// 发送邮箱验证码的按钮不可用 email
-						$UT && $UT.input.changeButton($sendEmailCode, "off");
+						_ut && _ut.input.changeButton($sendEmailCode, "off");
 					}
 
 					updataCheck();
@@ -665,9 +666,9 @@
 				$emailCodeInput.bind("input propertychange", function() {
 					checkStatus.emailCode = false;
 
-					if ($UT && $UT.check.checkInput($emailCodeInput).success) {
+					if (_ut && _ut.check.checkInput($emailCodeInput).success) {
 						$.ajax({
-							url: _URL.url_home + _URL.chek_verify_code,
+							url: _url.chek_verify_code,
 							xhrFields: {
 								withCredentials: true,
 								thCredentials: true
@@ -707,7 +708,7 @@
 							$passwordSmall.html("请填写登录密码");
 						} else {
 							// 登录密码错误 => "密码格式错误"
-							if (!($UT && $UT.check.checkInput($passwordInput).success)) {
+							if (!(_ut && _ut.check.checkInput($passwordInput).success)) {
 								$passwordSmall.html("密码格式错误");
 							}
 							// 两次密码输入不一致
@@ -745,11 +746,11 @@
 						cycle;
 
 					// 使按钮不可用
-					$UT && $UT.input.changeButton($this, "off");
+					_ut && _ut.input.changeButton($this, "off");
 
-					if ($myInput.val() != "" && $UT && $UT.check.checkInput($myInput).success) {
+					if ($myInput.val() != "" && _ut && _ut.check.checkInput($myInput).success) {
 						$.ajax({
-							url: _URL.url_home + _URL.send_verify_code,
+							url: _url.send_verify_code,
 							xhrFields: {
 								withCredentials: true,
 								thCredentials: true
@@ -763,7 +764,7 @@
 							success: function(result) {
 								if (result.code == "000" || result.code == "003") {
 									// 使输入框可用
-									$UT && $UT.input.changeButton($myCodeInput, "on");
+									_ut && _ut.input.changeButton($myCodeInput, "on");
 
 									// 倒计时
 									function f() {
@@ -774,7 +775,7 @@
 											clearInterval(cycle);
 											$this.text("发送");
 											// 使按钮可用
-											$UT && $UT.input.changeButton($this, "on");
+											_ut && _ut.input.changeButton($this, "on");
 										}
 										return f;
 									}
@@ -806,7 +807,7 @@
 					// 阻止默认事件
 					event.preventDefault();
 					$(this).ajaxSubmit({
-						url: _URL.url_home + _URL.save_or_update_user_infor,
+						url: _url.save_or_update_user_infor,
 						xhrFields: {
 							withCredentials: true,
 							thCredentials: false,
@@ -880,15 +881,15 @@
 					var c = check1(); // 检查资料填写是否符合规则
 					if (c.success) {
 						$failSmall.html(null);
-						$UT && $UT.input.changeButton($submit, "on");
+						_ut && _ut.input.changeButton($submit, "on");
 					} else {
 						$failSmall.html(c.msg);
-						$UT && $UT.input.changeButton($submit, "off");
+						_ut && _ut.input.changeButton($submit, "off");
 					}
 				} else {
 					// 如果有错则肯定不能提交
 					$failSmall.html("");
-					$UT && $UT.input.changeButton($submit, "off");
+					_ut && _ut.input.changeButton($submit, "off");
 				}
 			}
 

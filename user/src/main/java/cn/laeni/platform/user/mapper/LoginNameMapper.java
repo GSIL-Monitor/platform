@@ -18,8 +18,9 @@ public interface LoginNameMapper {
 	 */
 	@Results({
 			// 结果映射(持久化类命名和数据库一致的可省略,数据库命令经过驼峰转换后和持久化类一致的也不需要声明,但前提是要开启MyBatis的自动驼峰命名转换)
-			@Result(column = "user_id", property = "user", one = @One(select = "UserMapper.findUserByUserId")),
+			@Result(property = "user", column = "user_id", one = @One(select = "cn.laeni.platform.user.mapper.UserMapper.selectByPrimaryKey")),
 			@Result(property = "userId", column = "user_id"),
+			@Result(property = "loginName", column = "login_name"),
 	})
 	@Select("SELECT login_name,user_id FROM `login_name` WHERE `login_name`=#{loginName}")
 	LoginName findLoginNameByLoginName(String loginName);
@@ -32,7 +33,7 @@ public interface LoginNameMapper {
 	 */
 	@Results({
 			// 结果映射(持久化类命名和数据库一致的可省略,数据库命令经过驼峰转换后和持久化类一致的也不需要声明,但前提是要开启MyBatis的自动驼峰命名转换)
-			@Result(column = "user_id", property = "user", one = @One(select = "UserMapper.findUserByUserId")),
+			@Result(column = "user_id", property = "user", one = @One(select = "cn.laeni.platform.user.mapper.UserMapper.selectByPrimaryKey")),
 			@Result(property = "userId", column = "user_id"),
 	})
 	@Select("SELECT * FROM `login_name` WHERE `user_id`=#{userId}")

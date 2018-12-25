@@ -1,8 +1,7 @@
 package cn.laeni.platform.user.controller;
 
-import cn.laeni.platform.user.service.ConnectService;
-import cn.laeni.platform.user.service.RegService;
-import cn.laeni.platform.user.service.UserService;
+import cn.laeni.platform.user.entity.Application;
+import cn.laeni.platform.user.service.*;
 import cn.laeni.platform.user.entity.ConnectQQ;
 import cn.laeni.platform.user.entity.User;
 import cn.laeni.platform.user.mapper.ConnectQQMapper;
@@ -41,6 +40,8 @@ public class ConnectController {
     private final ConnectService connectService;
     private final RegService regService;
     private final UserService userService;
+    private final ApplicationService applicationService;
+    private final VerifyCodeService verifyCodeService;
 
     /**
      * 首页URL
@@ -49,12 +50,16 @@ public class ConnectController {
     private String urlHome;
 
     @Autowired
-    public ConnectController(ConnectQQMapper connectQQMapper, UserMapper userMapper, ConnectService connectService, RegService regService, UserService userService) {
+    public ConnectController(ConnectQQMapper connectQQMapper, UserMapper userMapper, ConnectService connectService,
+                             RegService regService, UserService userService,ApplicationService applicationService,
+                             VerifyCodeService verifyCodeService) {
         this.connectQQMapper = connectQQMapper;
         this.userMapper = userMapper;
         this.connectService = connectService;
         this.regService = regService;
         this.userService = userService;
+        this.applicationService = applicationService;
+        this.verifyCodeService = verifyCodeService;
     }
 
     /**
@@ -72,11 +77,20 @@ public class ConnectController {
      * @param code     Authorization Code, 由QQ互联自动加上, 用于获取Access Token, 使用一次会失效
      * @param state      原样返回的state值
      * @param usercancel 移动端用户取消登录授权标识(否则该值为空)
-     * @return null或者要渲染的模板
+     * @param redirectUri 调用方的源地址(登录成功后需要跳回去的地址),非回调地址(回调地址需要自己在数据库中去查询)
+     * @param appId 调用方的应用ID
+     * @return 渲染模板
      */
     @RequestMapping("/callback/qq")
     public String qqLogin(HttpServletRequest request, HttpServletResponse response,
-                          String code, String state, String usercancel, String redirect_uri) {
+                          String code, String state, String usercancel, String redirectUri, String appId) {
+        // 转发地址
+        String forward;
+        // 用户
+        User user;
+        // 调用者(本系统无调用者)
+        Application application;
+
         try {
             /* 验证state是否正确以及QQ穿过来的code是否在有效期内,不满足则关闭QQ登录窗口，回到原始登录界面
              * 并提示重新登录等信息：
@@ -87,44 +101,80 @@ public class ConnectController {
             connectService.checkState(request, response, state,usercancel);
 
             // 从QQ互联查询QQ用户信息
-            ConnectQQ connectQQ = connectService.getQQAccessToken(code);
-
-            if (connectQQ == null) {
+            ConnectQQ newConnectQQ = connectService.getQQAccessToken(code);
+            if (newConnectQQ == null) {
                 throw new LoginQQException("AccessToken过期，跳转回原来的页面！");
             }
 
             // 在本地查询原来的QQ用户信息
-            ConnectQQ connectQQ2 = connectQQMapper.findConnectQQByOpenIdOrUserId(connectQQ.getOpenid());
-            // 判断该用户是否为新用户
-            if (connectQQ2 == null) {
-                // 将QQ用户信息插入到新用户的用户信息中,并返回新用户的信息
-                User user = regService.regQQAccount(connectQQ);
+            ConnectQQ connectQQ = connectQQMapper.findConnectQQByOpenIdOrUserId(newConnectQQ.getOpenid());
 
-                // QQ登录成功,将相关信息保存到Cookie中
-                connectService.loginSuccess(request, response, connectQQ);
-                userService.loginSuccess(request, response, user);
+            // 判断该用户是否为新用户
+            if (connectQQ == null) {
+                connectQQ = newConnectQQ;
+
+                // 将QQ用户信息插入到新用户的用户信息中,并返回新用户的信息
+                user = regService.regQQAccount(connectQQ);
 
                 // 跳转到中间页面,再从中间页面回到原页面
                 logger.info("新用户登录成功:/login/bind_pwd");
                 request.setAttribute("user", user);
-                return "/login/bind_pwd";
+                forward = "/login/bind_pwd";
             } else {
-                // QQ登录成功,将相关信息保存到Cookie中
-                connectService.loginSuccess(request, response, connectQQ2);
-                String userId = connectQQ2.getUserId();
-                User user = userMapper.findUserByUserId(userId);
-                userService.loginSuccess(request, response, user);
+                user = userMapper.selectByPrimaryKey(connectQQ.getUserId());
+
                 // 回到原页面
-                throw new LoginQQException("老用户登录成功！");
+                // 使用该页面的js关闭临时登录窗口
+                forward = "/login/login_success_and_close_window";
             }
+
+            // 判断是否为本系统用户登录(如果是则将信息存入Cookie,否则生成身份认证code重定向到调用者的回调地址)
+            if (redirectUri != null && appId != null) {
+                // 获取一个短时间的一次性令牌
+
+                // 拼接指定地址
+                String redirect = "redirect:" +
+                        // 查询调用者设置的回调地址
+                        applicationService.getApplicationByAppId(appId).getRedirectUri() +
+                        "?redirect_uri=" + redirectUri +
+                        "&app_id=" + appId +
+                        "&code=" + verifyCodeService.getCode(user);
+
+                // 将该信息发送到"新用户信息完善界面",只有完善相关信息后才访问回调接口
+                request.setAttribute("redirect", redirect);
+            }
+            // 本系统用户登录成功
+            else {
+                // QQ登录成功,将相关信息保存到Cookie中
+                userService.loginSuccess(request, response, user);
+            }
+            return forward;
         }
-        // 捕捉到该异常后将跳转到登陆前页面或者将登录创建关闭
+
+        /*
+         捕捉到该异常说明参数值不合法或者相关值已经过期等
+         对于弹窗登录的，先关闭本页面（此页面是QQ登录页面新开的），调用本系统的url检测是否登录
+         对于第三方调用者，带上错误信息重定向到调用者提供的回调地址
+         */
         catch (LoginQQException e) {
             logger.info(e.getMessage());
-            // 跳转到原来的页面或者首页(新窗口登录的将窗口关闭)
-//			return backToThePast(request);
 
-            // 登录成功后跳转到该页面,使用该页面的js关闭临时登录窗口
+            // 如果下列两个参数不为空表示是第三方调用者所调用的,需要重定向到调用方提供的回调地址去
+            if (redirectUri != null && appId != null) {
+                application = applicationService.getApplicationByAppId(appId);
+                if (application == null) {
+                    logger.error("检测到redirectUri和appId,应用推断应属于第三方应用,但是数据库中无法查询到相关信息!");
+                    return null;
+                }
+
+                // 重定向到指定地址
+                return "redirect:" +
+                        application.getRedirectUri() +
+                        "?redirect_uri=" + redirectUri +
+                        "&app_id=" + appId +
+                        "&err_smg=未知错误,请重试!";
+            }
+            // 使用该页面的js关闭临时登录窗口
             return "/login/login_success_and_close_window";
         }
         // 其他错误则跳转到错误页面
@@ -133,6 +183,5 @@ public class ConnectController {
             // 跳转到错误页面
             return "redirect:error";
         }
-
     }
 }

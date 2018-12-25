@@ -483,6 +483,7 @@
 		 * .getUrlAll()............获取当前页面的全地址
 		 */
 		var $Url = function () {
+			var
 			// 获取域名
 			getHost = function (url) {
 				if (!url) {
@@ -501,7 +502,7 @@
 					}
 				}
 				
-			};
+			},
 
 			// 获取顶级域名
 			parseDomain = function(urlStr) {
@@ -522,12 +523,12 @@
 					if (i == topLevel.length) return domains[domains.length - 2] + '.' + domains[domains.length - 1];
 					else return domains[domains.length - 3] + '.' + domains[domains.length - 2] + '.' + domains[domains.length - 1];
 				}
-			};
+			},
 			
 			// 获取全地址
 			getUrlAll = function () {
 				return document.location.href;
-			};
+			},
 
 			// 获取相对路径
 			getUrlPath = function (urlStr) {
@@ -548,53 +549,51 @@
 				// 去掉请求部分
 				var arrUrl = arrUrl.replace(/\/[^(\/)]+$/,"");
 				return arrUrl || "/";
-			};
+			},
 
-			// 获取所有参数列表(以数组方式返回)
+			// 获取指定URL所有参数组成的对象(默认获取当前URL)
+			getParas = function(urlStr){
+				// 同于存储键值对
+				var paras = {};
+				
+				var url = urlStr || document.location.href;
+				var arrObj = url.split("?");
+				
+				if (arrObj.length > 1) {
+					var arrPara = arrObj[1].split("&");
+					var arr;
+					for (var i = 0; i < arrPara.length; i++) {
+						arr = arrPara[i].split("=");
+
+						if (arr != null) {
+							paras[arr[0]] = arr[1];
+						};
+					};
+				};
+				return paras;
+			},
+			
+			// 获取所有参数名(以数组方式返回)
 			getParaNames = function (urlStr) {
 				// 用于存放参数列表
 				var paraName = [];
 
-				var url = urlStr || document.location.href;　　　　
-				var arrObj = url.split("?");
+				var arrObj = getParas(urlStr || document.location.href);
 
-				if (arrObj.length > 1) {　　　　　　
-					var arrPara = arrObj[1].split("&");　　　　　　
-					var arr;
-					for (var i = 0; i < arrPara.length; i++) {　　　　　　　　
-						arr = arrPara[i].split("=");
-
-						if (arr != null) {　　　　　　　　　　
-							paraName.push(arr[0]);
-						};　　　　　　
-					};　　　
-				} else {　　　　　　
-					return "";
-				};
+				for (var i in arrObj) {
+					paraName[paraName.length] = i;
+				}
+				
 				return paraName;
-			};
-
-			// 获取指定URL的参数
+			},
+			
+			// 获取当前URL的参数值
 			getUrlParam = function (paraName) {
-				var url = document.location.href;　　　　
-				var arrObj = url.split("?");
-
-				if (arrObj.length > 1) {　　　　　　
-					var arrPara = arrObj[1].split("&");　　　　　　
-					var arr;
-					for (var i = 0; i < arrPara.length; i++) {　　　　　　　　
-						arr = arrPara[i].split("=");
-
-						　　　　　　　　
-						if (arr != null && arr[0] == paraName) {　　　　　　　　　　
-							return decodeURIComponent(arr[1]);　　　　　　　　
-						};　　　　　　
-					};
-					return "";　　　　
-				} else {　　　　　　
-					return "";
-				};
-
+				var paraName = [];
+				
+				var arrObj = getParas(document.location.href);
+				
+				return arrObj[paraName];
 			};
 
 			return {
@@ -602,6 +601,7 @@
 				parseDomain: parseDomain,
 				getUrlAll: getUrlAll,
 				getUrlPath: getUrlPath,
+				getParas:getParas,
 				getParaNames: getParaNames,
 				getUrlParam: getUrlParam,
 			};

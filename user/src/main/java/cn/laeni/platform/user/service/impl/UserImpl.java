@@ -4,7 +4,7 @@ import cn.laeni.platform.user.entity.*;
 import cn.laeni.platform.user.mapper.*;
 import cn.laeni.platform.user.enums.AccountTypeEnum;
 import cn.laeni.platform.enums.CookieKeyEnum;
-import cn.laeni.platform.enums.RedisPathEnum;
+import cn.laeni.platform.enums.RedisKeyEnum;
 import cn.laeni.platform.user.enums.SessionKeyEnum;
 import cn.laeni.platform.code.SystemCode;
 import cn.laeni.platform.user.code.UserCode;
@@ -368,7 +368,7 @@ public class UserImpl implements UserService {
             // 将user对象序列化后的字符串存入redis缓存表示登录成功
             String sessionId = session.getId();
             cookieAndSessionUtli.setCookie(CookieKeyEnum.SESSION.getKey() , sessionId);
-            redisTemplate.opsForValue().set(RedisPathEnum.USER.getRedisPath() + sessionId, JSON.toJSONString(user));
+            redisTemplate.opsForValue().set(RedisKeyEnum.USER.getKey() + sessionId, JSON.toJSONString(user));
 
             // 将user的常用信息写入Cookie中
             cookieAndSessionUtli.setCookie(CookieKeyEnum.USER_ID.getKey(), user.getUserId());
@@ -388,7 +388,7 @@ public class UserImpl implements UserService {
     public void logOut(HttpServletRequest request) {
         HttpSession session = request.getSession();
         // 删除Session中存储的User序列化字符串
-        redisTemplate.delete(RedisPathEnum.USER.getRedisPath() + session.getId());
+        redisTemplate.delete(RedisKeyEnum.USER.getKey() + session.getId());
         // 过期Session
         this.deleteSessAll(request);
     }
@@ -401,7 +401,7 @@ public class UserImpl implements UserService {
     @Override
     public User getUserBySessionId(String sessionId) {
         // 从Redis缓存中去查询User序列化后的字符串
-        String userStr = redisTemplate.opsForValue().get(RedisPathEnum.USER.getRedisPath() + sessionId);
+        String userStr = redisTemplate.opsForValue().get(RedisKeyEnum.USER.getKey() + sessionId);
 
         // 如果没找到就说明该用户没登录或登录已经过期
         if (userStr == null) {

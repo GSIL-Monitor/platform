@@ -2,9 +2,7 @@ package cn.laeni.platform.user.mapper;
 
 import cn.laeni.platform.user.entity.User;
 import cn.laeni.platform.user.mapper.dynaSqlProvider.UserDynamic;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.InsertProvider;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 /**
  * @author Laeni
@@ -17,8 +15,11 @@ public interface UserMapper {
      * @param userId
      * @return
      */
+    @Results({
+            @Result(property = "userId", column = "user_id"),
+    })
     @Select("SELECT * FROM `user` WHERE `user_id`=#{userId}")
-    User findUserByUserId(String userId);
+    User selectByPrimaryKey(String userId);
 
     /**
      * 插入一个用户数据

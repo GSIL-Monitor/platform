@@ -19,7 +19,7 @@ public interface LoginPhoneMapper {
 		@Result(column="user_id",		// 这里的"user_id"表示LoginPhone对象的"Password"属性对应"_login_name"表的字段"user_id",即为"_login_name"表的外键参照列
 		property="user",				// 表示查询的结果对应LoginPhone对象的那个属性
 		one=@One(	// 一对一关系
-				select="UserMapper.findUserByUserId")
+				select="cn.laeni.platform.user.mapper.UserMapper.selectByPrimaryKey")
 		),
 		@Result(property="userId",column="user_id"),
 	})
@@ -36,7 +36,7 @@ public interface LoginPhoneMapper {
 			@Result(column="user_id",		// 这里的"user_id"表示LoginPhone对象的"Password"属性对应"_login_name"表的字段"user_id",即为"_login_name"表的外键参照列
 					property="user",				// 表示查询的结果对应LoginPhone对象的那个属性
 					one=@One(	// 一对一关系
-							select="UserMapper.findUserByUserId")
+							select="cn.laeni.platform.user.mapper.UserMapper.selectByPrimaryKey")
 			),
 			@Result(property="userId",column="user_id"),
 	})

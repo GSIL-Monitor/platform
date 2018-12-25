@@ -18,12 +18,5 @@ public interface LoginService {
 	 * @return 执行结果
 	 */
 	ApiJson loginLocal(HttpServletRequest request, HttpServletResponse response, Account account, String password);
-	
-	/**
-	 * 通过请求者域名判断请求这属于哪个应用
-	 * @param serverName 请求者域名
-	 * @return	应用ID
-	 */
-	String getAppId(String serverName);
 
 }

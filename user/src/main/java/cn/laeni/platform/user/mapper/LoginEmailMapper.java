@@ -18,7 +18,7 @@ public interface LoginEmailMapper {
 	@Results({
 			// 结果映射(持久化类命名和数据库一致的可省略,数据库命令经过驼峰转换后和持久化类一致的也不需要声明,但前提是要开启MyBatis的自动驼峰命名转换)
 			@Result(property = "user", column = "user_id",
-					one = @One(select = "UserMapper.findUserByUserId")),
+					one = @One(select = "cn.laeni.platform.user.mapper.UserMapper.selectByPrimaryKey")),
 			@Result(property = "userId", column = "user_id"),
 			@Result(property = "loginEmail", column = "login_email"),
 	})
@@ -35,7 +35,7 @@ public interface LoginEmailMapper {
 			@Result(property = "userId", column = "user_id"),
 			@Result(property = "loginEmail", column = "login_email"),
 			@Result(property = "user", column = "user_id",
-					one = @One(select = "UserMapper.findUserByUserId")),
+					one = @One(select = "cn.laeni.platform.user.mapper.UserMapper.selectByPrimaryKey")),
 	})
 	@Select("SELECT * FROM `login_email` WHERE `user_id`=#{userId}")
 	LoginEmail findLoginEmailByUserId(String userId);

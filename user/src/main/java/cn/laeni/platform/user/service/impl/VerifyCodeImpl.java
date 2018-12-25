@@ -1,29 +1,33 @@
 package cn.laeni.platform.user.service.impl;
 
+import cn.laeni.platform.enums.RedisKeyEnum;
+import cn.laeni.platform.user.entity.*;
 import cn.laeni.platform.user.enums.AccountTypeEnum;
 import cn.laeni.platform.user.enums.VerifyType;
 import cn.laeni.platform.code.SystemCode;
 import cn.laeni.platform.user.code.UserCode;
-import cn.laeni.platform.user.entity.Account;
 import cn.laeni.platform.entity.ApiJson;
-import cn.laeni.platform.user.entity.RegVerifCode;
-import cn.laeni.platform.user.entity.VerifCode;
 import cn.laeni.sms.SmsAbs;
 import cn.laeni.platform.user.service.VerifyCodeService;
 import cn.laeni.utils.string.CharacterUtils;
+import com.alibaba.fastjson.JSON;
 import com.aliyuncs.exceptions.ClientException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import org.omg.CORBA.DynAnyPackage.Invalid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import sun.security.provider.MD5;
 
 import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
@@ -33,38 +37,77 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-
-//@EnableAsync@Async
 @Service
 public class VerifyCodeImpl implements VerifyCodeService {
     protected static Logger logger = LoggerFactory.getLogger(VerifyCodeImpl.class);
 
     // 验证码配置
+    /**
+     * 验证码有效期(单位:秒)
+     */
     @Value("${verificationCode.validityPeriod:300}")
-    private int validityPeriod;        // 验证码有效期(单位:秒)
+    private int validityPeriod;
+    /**
+     * 每个帐号下最多保留几个有效验证码
+     */
     @Value("${verificationCode.maxCode:3}")
-    private int maxCode;                // 每个帐号下最多保留几个有效验证码
+    private int maxCode;
+    /**
+     * 输错几次后验证码失效
+     */
     @Value("${verificationCode.maxFailures:5}")
-    private int maxFailures;            // 输错几次后验证码失效
+    private int maxFailures;
+    /**
+     * 两个验证码发送最小间隔时间(单位:秒)
+     */
     @Value("${verificationCode.intervals:60}")
-    private int intervals;            // 两个验证码发送最小间隔时间(单位:秒)
+    private int intervals;
     // end 验证码
 
     // 邮件
+    /**
+     * 默认发件人地址
+     */
     @Value("${spring.mail.from:m@laeni.cn}")
     private String from;
     // end 邮件
 
+    /**
+     * code过期时间,单位:秒
+     */
+    @Value("${oauth.code-invalid-time}")
+    int codeInvalidTime;
+
+    /**
+     * 邮件支持
+     */
     @Autowired
-    JavaMailSender mailSender;                // 邮件支持
+    JavaMailSender mailSender;
+    /**
+     * 模板引擎
+     */
     @Autowired
-    FreeMarkerConfigurer freeMarkerConfigurer;    // 模板引擎
+    FreeMarkerConfigurer freeMarkerConfigurer;
+    /**
+     * 短信支持(阿里云)
+     */
     @Resource(name = "aliyun")
-    SmsAbs sms;                                // 短信支持(阿里云)
+    SmsAbs sms;
+    /**
+     * 随机字符串生成工具
+     */
     @Autowired
-    CharacterUtils characterUtils;        // 随机字符串生成工具
+    CharacterUtils characterUtils;
+    /**
+     * Redis
+     */
     @Autowired
-    StringRedisTemplate redisTemplate;    // Redis
+    StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    RedisTemplate redisTemplate;
+
+
+
 
     /**
      * 发送验证码(手机或邮箱验证码)
@@ -84,7 +127,7 @@ public class VerifyCodeImpl implements VerifyCodeService {
         // 检查发送验证码的时间是否在规定得时间之内,如果可以再次发送则返回null,否则返回ApiJson对象
         ApiJson apiJson = this.checkSendTime(getOverTime(account, verifyType));
         if (apiJson != null) {
-             return apiJson;
+            return apiJson;
         }
 
         // 生成随机验证码
@@ -125,7 +168,14 @@ public class VerifyCodeImpl implements VerifyCodeService {
         return apiJson;
     }
 
-    // 发送短信验证码
+    /**
+     * 发送短信验证码
+     *
+     * @param account      手机号
+     * @param randomString 6为数字验证码
+     * @return
+     * @throws ClientException
+     */
     @Override
     public ApiJson sendSmsVerifCode(String account, String randomString) throws ClientException {
         // 使用云平台发送验证信息
@@ -146,7 +196,14 @@ public class VerifyCodeImpl implements VerifyCodeService {
         }
     }
 
-    // 发送邮箱验证码
+    /**
+     * 发送邮箱验证码
+     *
+     * @param account      邮箱号
+     * @param randomString 6为数字验证码
+     * @return
+     * @throws Exception
+     */
     @Override
     public ApiJson sendEmailVerifCode(String account, String randomString) throws Exception {
 
@@ -178,7 +235,15 @@ public class VerifyCodeImpl implements VerifyCodeService {
         return new ApiJson(SystemCode.SUCCESS);
     }
 
-    // 核对验证码 * 连续输错 maxFailures 次后失效
+    /**
+     * 核对验证码 * 连续输错 maxFailures 次后失效
+     *
+     * @param request
+     * @param verifyType
+     * @param account
+     * @param verifyCode
+     * @return
+     */
     @Override
     public ApiJson chekVerifyCode(HttpServletRequest request, VerifyType verifyType,
                                   String account, String verifyCode) {
@@ -231,11 +296,47 @@ public class VerifyCodeImpl implements VerifyCodeService {
         }
     }
 
-    // 删除指定类型的验证码
+    /**
+     * 删除指定类型的验证码
+     *
+     * @param request
+     * @param verifyType
+     * @return
+     */
     @Override
     public boolean deleteVerifCode(HttpServletRequest request, VerifyType verifyType) {
         request.getSession().removeAttribute(verifyType.getKey());
         return false;
+    }
+
+    @Override
+    public String getCode(Object obj) {
+        // 去掉"-",并转为小写
+        String nodeKey =  UUID.randomUUID().toString().replace("-", "").toLowerCase();
+
+        redisTemplate.opsForValue().set(RedisKeyEnum.AUTH_CODE_APP.getKey() + nodeKey, obj,
+                // 设置过期时间
+                codeInvalidTime, TimeUnit.MINUTES);
+
+        return nodeKey;
+    }
+
+    @Override
+    public ApiJson checkCode(String nodeKey, Object obj) {
+        Object o = redisTemplate.opsForValue().get(RedisKeyEnum.AUTH_CODE_APP.getKey() + nodeKey);
+
+        try {
+            if (obj instanceof User) {
+                User user = (User)o;
+
+            } else if (obj instanceof Application) {
+                Application application = (Application)o;
+            }
+        } catch (Exception e) {
+
+        }
+
+        return null;
     }
 
     // 将验证码存入SESSION
@@ -322,7 +423,7 @@ Map<String, List<VerifCode>> [
 
         // 记录获取时间
         // 记录帐号获取验证码的时间,值记录成功的
-        redisTemplate.opsForValue().set(
+        stringRedisTemplate.opsForValue().set(
                 "user:" + verifyType.getKey() + ":" + account,    // 键
                 String.valueOf(System.currentTimeMillis()),            // 值为当前时间戳
                 1,                //过期时间
@@ -330,7 +431,11 @@ Map<String, List<VerifCode>> [
         );
     }
 
-    // 清除过期以及超过数量的验证码
+    /**
+     * 清除过期以及超过数量的验证码
+     *
+     * @param regVerifCode
+     */
     private void removeExcess(RegVerifCode regVerifCode) {
         try {
             Map<String, List<VerifCode>> beingRegValue = regVerifCode.getBeingRegValue();
@@ -358,9 +463,15 @@ Map<String, List<VerifCode>> [
         }
     }
 
-    // 验证该帐号可再次获取验证码的时间
+    /**
+     * 验证该帐号可再次获取验证码的时间
+     *
+     * @param account
+     * @param verifyType
+     * @return
+     */
     private long getOverTime(String account, VerifyType verifyType) {
-        String overTime = redisTemplate.opsForValue().get("user:" + verifyType.getKey() + ":" + account);
+        String overTime = stringRedisTemplate.opsForValue().get("user:" + verifyType.getKey() + ":" + account);
         Long time;
         if (overTime == null) {
             return 0;

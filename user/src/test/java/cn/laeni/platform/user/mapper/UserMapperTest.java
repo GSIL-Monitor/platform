@@ -38,7 +38,7 @@ public class UserMapperTest {
 		System.out.println("初始化后的user对象:"+user);
 
 		System.out.println("\n通过userId查询的User对象");
-		System.out.println(userMapper.findUserByUserId(user.getUserId()));
+		System.out.println(userMapper.selectByPrimaryKey(user.getUserId()));
 
 		// 登录密码
 		System.out.println("\n通过userId查询的Password对象");

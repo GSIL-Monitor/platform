@@ -246,6 +246,7 @@
 		
 		// 如果不是本地系统则带上本页面地址(地址需要编码)以及应用ID(app_id)重定向到登录页
 		else {
+			// 示例: http://user.laeni.cn/login.html?redirect_uri=http%3A%2F%2Flocalhost%2F&app_id=111111222
 			document.location.href = _urlConf.user.login + "?redirect_uri=" + encodeURIComponent(document.location.href) + "&app_id=" + this.appId;
 		}
 	};
@@ -287,14 +288,14 @@
 		var _this = this;
 		
 		/* 如果当前环境是一个独立的登录页面,则可能是从其他地址跳转过来的,所以需要获取跳转前的源地址以及调用者的应用ID */
-		var myUrlParaNames = _this.tools.url.getParaNames(document.location.href);
+		var myUrlParaNames = _this.tools.url.getParas(document.location.href);
 		// 从地址栏获取调用者的appId
 		var otherAppId = myUrlParaNames["app_id"];
 		// 从地址栏获取跳转前的页面
-		var otherRedirecturi = encodeURIComponent(myUrlParaNames["redirect_uri"]);
+		var otherRedirecturi = myUrlParaNames["redirect_uri"];
 		// 对你参数进行拼接
-		var myRedirecturi = (otherAppId && otherRedirecturi) && (otherAppId + "&" + otherRedirecturi);
-		
+		var myRedirecturi = (otherAppId && otherRedirecturi) && ("appId=" + otherAppId + "&redirectUri=" + otherRedirecturi);
+
 		// 目前支持的登录方式
 		var type = ["QQ",];
 		
@@ -372,8 +373,8 @@
 					
 					// QQ回调地址+自定义回调地址(一般只有在在第三方调用时才有,该地址有本页面地址栏中源地址"redirect_uri"和应用Id"app_id"组成)
 					// 并进行编码
-					var redirecturi = encodeURIComponent(obj.redirecturi + myRedirecturi ? ("?"+myRedirecturi) : "");
-					
+					var redirecturi = encodeURIComponent(obj.redirecturi + (myRedirecturi ? ("?"+myRedirecturi) : ""));
+
 					// 生成state值,防止攻击,并写入Cookie(每次刷新,一小时有效)
 					state = _this.tools.number.randomNum(10000000,99999999).toString();
 					_this.tools.cookie.set("state",state,null,null,1);
@@ -388,7 +389,7 @@
 					
 					// 执行publMethod()方法,对登录行为进行监听
 					publMethod();
-					
+
 					// 开启登录窗口
 					return window.open(url, "_blank");
 				}
@@ -416,8 +417,6 @@
 				}
 			};
 		}
-		
-		
 		
 		// 在对象中加入帮助函数
 		lc.help = function(){

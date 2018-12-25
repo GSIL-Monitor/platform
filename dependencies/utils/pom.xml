@@ -12,6 +12,14 @@
 		<java.version>1.8</java.version>
 	</properties>
 
+	<dependencies>
+		<dependency>
+			<groupId>com.github.kstyrc</groupId>
+			<artifactId>embedded-redis</artifactId>
+            <version>0.6</version>
+        </dependency>
+	</dependencies>
+
 	<!-- 阿里云私服配置, 当部署到私服的时候使用 -->
 	<distributionManagement>
 		<repository>

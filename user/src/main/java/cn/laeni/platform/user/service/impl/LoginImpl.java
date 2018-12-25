@@ -6,10 +6,8 @@ import cn.laeni.platform.user.entity.Account;
 import cn.laeni.platform.entity.ApiJson;
 import cn.laeni.platform.user.service.LoginService;
 import cn.laeni.platform.user.service.UserService;
-import cn.laeni.platform.user.entity.AppDomain;
 import cn.laeni.platform.user.entity.Password;
 import cn.laeni.platform.user.entity.User;
-import cn.laeni.platform.user.mapper.AppDomainMapper;
 import cn.laeni.platform.user.mapper.PasswordMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,11 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginImpl implements LoginService {
     protected static Logger logger = LoggerFactory.getLogger(LoginService.class);
 
-    /**
-     * appMapper
-     */
-    @Autowired
-    private AppDomainMapper appDomainMapper;
     /**
      * passwordMapper
      */
@@ -82,23 +75,6 @@ public class LoginImpl implements LoginService {
         userService.loginSuccess(request, response, userBean);
 
         return new ApiJson(SystemCode.SUCCESS);
-    }
-
-    /**
-     *  通过请求者域名判断请求这属于哪个应用
-     * @param serverName 请求者域名
-     * @return 请求者对应的应用ID
-     */
-    @Override
-    public String getAppId(String serverName) {
-        AppDomain appDomain = appDomainMapper.findByDomain(serverName);
-        if (appDomain == null) {
-            appDomain = appDomainMapper.findByDomain("*." + serverName);
-        }
-        if (appDomain != null) {
-            return appDomain.getAppId();
-        }
-        return null;
     }
 
 }

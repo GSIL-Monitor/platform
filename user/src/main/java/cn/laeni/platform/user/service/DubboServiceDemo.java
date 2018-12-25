@@ -16,6 +16,6 @@ public class DubboServiceDemo implements DubboServiceInterface {
 
     @Override
     public String getUser() {
-        return userMapper.findUserByUserId("107262398").toString();
+        return userMapper.selectByPrimaryKey("107262398").toString();
     }
 }

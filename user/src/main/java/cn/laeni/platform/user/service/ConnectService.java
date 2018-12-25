@@ -17,15 +17,6 @@ public interface ConnectService {
     ConnectQQ getQQAccessToken(String code);
 
     /**
-     * QQ登录成功后统一处理方法
-     *
-     * @param request   请求头
-     * @param response  响应头
-     * @param connectQQ 与用户id一一对应的QQ信息 如果用户与相应QQ绑定,则有一条对应记录
-     */
-    void loginSuccess(HttpServletRequest request, HttpServletResponse response, ConnectQQ connectQQ);
-
-    /**
      * 验证state是否正确
      *
      * @param request    请求头

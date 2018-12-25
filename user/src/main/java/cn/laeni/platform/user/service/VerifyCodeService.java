@@ -20,7 +20,7 @@ public interface VerifyCodeService {
 	 * @param verifyType 验证码类型(注册,登录...)
 	 * @return ApiJson
 	 */
-	public ApiJson sendVerifCode(HttpServletRequest request, String account, VerifyType verifyType);
+	ApiJson sendVerifCode(HttpServletRequest request, String account, VerifyType verifyType);
 
 	/**
 	 * 发送短信验证码
@@ -29,7 +29,7 @@ public interface VerifyCodeService {
 	 * @return ApiJson
 	 * @throws ClientException
 	 */
-	public ApiJson sendSmsVerifCode(String account, String randomString) throws ClientException;
+	ApiJson sendSmsVerifCode(String account, String randomString) throws ClientException;
 
 	/**
 	 * 发送邮件验证码
@@ -38,7 +38,7 @@ public interface VerifyCodeService {
 	 * @return ApiJson
 	 * @throws ClientException
 	 */
-	public ApiJson sendEmailVerifCode(String account, String randomString) throws Exception;
+	ApiJson sendEmailVerifCode(String account, String randomString) throws Exception;
 
 	/**
 	 * 核对验证码<br/>
@@ -46,7 +46,7 @@ public interface VerifyCodeService {
 	 * @param request
 	 * @return
 	 */
-	public ApiJson chekVerifyCode(HttpServletRequest request, VerifyType verifyType, String account, String verifyCode);
+	ApiJson chekVerifyCode(HttpServletRequest request, VerifyType verifyType, String account, String verifyCode);
 	
 	/**
 	 * 删除指定类型的所有验证码,此操作一般在登录成功或尝试验证次数超限时使用
@@ -54,5 +54,20 @@ public interface VerifyCodeService {
 	 * @param verifyType
 	 * @return
 	 */
-	public boolean deleteVerifCode(HttpServletRequest request, VerifyType verifyType);
+	boolean deleteVerifCode(HttpServletRequest request, VerifyType verifyType);
+
+	/**
+	 * 生成一个临时验证code
+	 * 有效期为10分钟
+	 * 使用一次后失效
+	 * @return
+	 */
+	String getCode(Object obj);
+
+	/**
+	 * 验证code是否正确
+	 * @param nodeKey 待验证的code
+	 * @return
+	 */
+	ApiJson checkCode(String nodeKey, Object obj);
 }

@@ -2,4 +2,4 @@
 #其他高级用法可参考:https://www.cnblogs.com/wangmo/p/7737109.html
 
 # maven ignore
-logs/*
+logs/
