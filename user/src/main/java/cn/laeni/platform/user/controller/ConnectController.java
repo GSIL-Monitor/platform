@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,16 +76,20 @@ public class ConnectController {
      *
      * @param request  请求对象
      * @param response 响应对象
+     * @param model     Authorization Code, 由QQ互联自动加上, 用于获取Access Token, 使用一次会失效
      * @param code     Authorization Code, 由QQ互联自动加上, 用于获取Access Token, 使用一次会失效
      * @param state      原样返回的state值
      * @param usercancel 移动端用户取消登录授权标识(否则该值为空)
      * @param redirectUri 调用方的源地址(登录成功后需要跳回去的地址),非回调地址(回调地址需要自己在数据库中去查询)
      * @param appId 调用方的应用ID
+     * @param transfer 间接通过QQ回调传递过来的参数
      * @return 渲染模板
      */
     @RequestMapping("/callback/qq")
-    public String qqLogin(HttpServletRequest request, HttpServletResponse response,
-                          String code, String state, String usercancel, String redirectUri, String appId) {
+    public String qqLogin(HttpServletRequest request, HttpServletResponse response, Model model,
+                          String code, String state, String usercancel, String redirectUri, String appId,
+                          String transfer) {
+        System.out.println("transfer:" + transfer);
         // 转发地址
         String forward;
         // 用户
@@ -117,15 +123,15 @@ public class ConnectController {
                 user = regService.regQQAccount(connectQQ);
 
                 // 跳转到中间页面,再从中间页面回到原页面
-                logger.info("新用户登录成功:/login/bind_pwd");
-                request.setAttribute("user", user);
-                forward = "/login/bind_pwd";
+                logger.info("新用户登录成功:login/bind_pwd");
+                model.addAttribute("user", user);
+                forward = "login/bind_pwd";
             } else {
                 user = userMapper.selectByPrimaryKey(connectQQ.getUserId());
 
                 // 回到原页面
                 // 使用该页面的js关闭临时登录窗口
-                forward = "/login/login_success_and_close_window";
+                forward = "login/login_success_and_close_window";
             }
 
             // 判断是否为本系统用户登录(如果是则将信息存入Cookie,否则生成身份认证code重定向到调用者的回调地址)
@@ -141,7 +147,8 @@ public class ConnectController {
                         "&code=" + verifyCodeService.getCode(user);
 
                 // 将该信息发送到"新用户信息完善界面",只有完善相关信息后才访问回调接口
-                request.setAttribute("redirect", redirect);
+                model.addAttribute("redirect", redirect);
+                logger.info("回调地址:{}",redirect);
             }
             // 本系统用户登录成功
             else {

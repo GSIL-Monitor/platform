@@ -1,0 +1,159 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: tahoma, "microsoft yahei", "\5FAE\8F6F\96C5\9ED1" !important;
+}
+/** 清除内外边距 **/
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+fieldset,
+legend,
+button,
+input,
+textarea,
+th,
+td {
+  margin: 0;
+  padding: 0;
+}
+/** 设置默认字体 **/
+address,
+cite,
+dfn,
+em,
+var {
+  font-style: normal;
+}
+/* 将斜体扶正 */
+code,
+kbd,
+pre,
+samp {
+  font-family: courier new, courier, monospace;
+}
+/** 重置列表元素 **/
+ul,
+ol {
+  list-style: none;
+}
+/** 重置文本格式元素 **/
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+/** 重置表单元素 **/
+legend {
+  color: #000;
+}
+/* for ie6 */
+fieldset,
+img {
+  border: 0;
+}
+/** 重置表格元素 **/
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+address,
+cite,
+dfn,
+em,
+var {
+  font-style: normal;
+}
+code,
+kbd,
+pre,
+samp {
+  font-family: courier new, courier, monospace;
+}
+area,
+a:focus {
+  outline: 0;
+}
+sup {
+  vertical-align: text-top;
+}
+sub {
+  vertical-align: text-bottom;
+}
+body,
+html {
+  overflow-x: hidden;
+}
+body.disable-hover {
+  pointer-events: none;
+}
+/* 自定义全局样式 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+html {
+  color: #333;
+}
+/* 清除浮动 */
+.clear:after {
+  content: '\20';
+  display: block;
+  height: 0;
+  clear: both;
+  *zoom: 1;
+}
+/* 按钮不可用样式 */
+.disabled {
+  cursor: no-drop;
+}
+/*隐藏的元素*/
+.none {
+  display: none;
+}
+/*图标字体样式*/
+.icon {
+  height: 1em;
+  width: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+/* start 带自定义删除按钮的输入框 */
+/* 有按钮的样式 */
+.input-have-button {
+  width: 78%;
+}
+/* 没有按钮的样式 */
+.input-no-button {
+  display: flex;
+}
+.input-close-icon input {
+  padding-right: 1.5rem;
+}
+.input-close-icon > div {
+  width: 0;
+  font-size: 0.8rem;
+  /*color: blue;*/
+  cursor: pointer;
+  z-index: 3;
+}
+.input-close-icon > div > svg {
+  margin-left: -1.3rem;
+  height: 1rem;
+  width: 1rem;
+}
+/* end 带自定义删除按钮的输入框 */

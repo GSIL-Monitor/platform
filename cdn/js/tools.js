@@ -374,6 +374,33 @@
 						break;
 				}
 			},
+			/* 将10进制转为62进制 */
+			string10to62: function (number) {
+				var chars = '0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ'.split(''),
+					radix = chars.length,
+					qutient = +number,
+					arr = [];
+				do {
+					mod = qutient % radix;
+					qutient = (qutient - mod) / radix;
+					arr.unshift(chars[mod]);
+				} while (qutient);
+				return arr.join('');
+			},
+			/* 将10进制转为62进制 */
+			string62to10: function (number_code) {
+				var chars = '0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ',
+					radix = chars.length,
+					number_code = String(number_code),
+					len = number_code.length,
+					i = 0,
+					origin_number = 0;
+					
+				while (i < len) {
+					origin_number += Math.pow(radix, i++) * chars.indexOf(number_code.charAt(len - i) || 0);
+				}
+				return origin_number;
+			},
 		};
 
 		/**
@@ -479,8 +506,9 @@
 		 * .parseDomain(url).......获取url的顶级域名(默认获取当前页面的顶级域名)
 		 * .getUrlPath(urlStr).....获取当前相对路径(默认获取当前页面的相对路径)
 		 * .getParaNames(urlStr)...获取所有参数列表(默认获取当前页面的参数列表)
-		 * .getUrlParam(paraName)..获取指定URL的参数
+		 * .getUrlParam(paraName)..获取当前URL的参数
 		 * .getUrlAll()............获取当前页面的全地址
+		 * .getParas(urlStr).......获取指定URL所有参数组成的对象(默认获取当前URL)
 		 */
 		var $Url = function () {
 			var

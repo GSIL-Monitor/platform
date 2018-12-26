@@ -25,6 +25,10 @@ public class Application {
      * 过期时间(2年,可续期)
      */
     private Long expiredTime;
+    /**
+     * 应用说明
+     */
+    private String explanation;
 
     public String getAppId() {
         return appId;
@@ -72,5 +76,13 @@ public class Application {
 
     public void setExpiredTime(Long expiredTime) {
         this.expiredTime = expiredTime;
+    }
+
+    public String getExplanation() {
+        return explanation;
+    }
+
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
     }
 }

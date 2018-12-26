@@ -45,6 +45,8 @@ end!
         url: jdbc:mysql://sql.laeni.cn/test?useSSL=false&useUnicode=true&characterEncoding=UTF-8
         username: root
         password: pianai0_0
+      end datasource!
+      
       ########################################################
       ### Redis配置
       ### Redis必须有,默认会连接127.0.0.1:6379,如果设置了其他则覆盖默认
@@ -67,6 +69,19 @@ end!
         #  sentinel:
         #    master:             # （哨兵模式，不使用则不用开启）Redis服务器的名称。
         #    nodes:              # （哨兵模式，不使用则不用开启）主机：端口对的逗号分隔列表。
+      end redis!
+      
+      ###########################################################################################
+      ## FREEMARKER (FreeMarkerAutoConfiguration) 模板引擎配置
+      ###########################################################################################
+      freemarker:
+        cache: false    #测试期间关闭缓存
+        allow-request-override: false
+        check-template-location: true
+        charset: UTF-8
+        content-type: text/html; charset=utf-8
+        #prefix: templates      #前缀(classpath:/templates)
+        #suffix: #.html  #后缀(ftl)  为空不要后缀
     end spring!
     
     ## dubbo配置,id一般可缺省,用于多配置区分

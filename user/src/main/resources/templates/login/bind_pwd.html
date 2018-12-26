@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="w">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<!-- 下面3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
@@ -160,6 +160,7 @@
 
 </head>
 <body>
+<input id="redirect" type="hidden" value="" th:value="${redirect}">
 
 <div class="mx-auto" style="width: 750px;">
 
@@ -187,7 +188,7 @@
 				</div>
 
 				<div class="nickname float-right input-close-icon input-no-button">
-					<input type="text" name="nickname" class="form-control" placeholder="昵称" maxlength="16">
+					<input type="text" name="nickname" class="form-control" placeholder="昵称" maxlength="16" th:value="${user.nickname}">
 					<div class="clean-icon align-self-center d-none">
 						<svg class="icon" aria-hidden="true">
 							<use xlink:href="#icon-buoumaotubiao20"></use>

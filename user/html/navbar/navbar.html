@@ -102,8 +102,16 @@
 			});
 		})();
 
-		/* 登录/注册/注销 按钮功能实现 */
+		/* 登录/注册/注销 功能实现 */
 		(function() {
+			var
+			// 代表导航本身
+			$navbar = $("#navbar"),
+			// 未登录显示部分
+			$noLoginShow = $navbar.find(".ui-1-0"),
+			// 已登录显示部分
+			$loginShow = $navbar.find(".ui-1-1");
+			
 			// 点击登录按钮后调用User的login()方法
 			$(".show_login_window").click(function() {
 				_user.login();
@@ -116,32 +124,35 @@
 			$(".signOut-btn").click(function() {
 				_user.signOut();
 			});
-		})();
 		
-		/* 添加导航栏的登录成功和注销成功的方法实现 */
-		(function(){
-			var
-			// 代表导航本身
-			$navbar = $("#navbar"),
-			// 未登录显示部分
-			$noLoginShow = $navbar.find(".ui-1-0"),
-			// 已登录显示部分
-			$loginShow = $navbar.find(".ui-1-1");
-			
-			// 添加登录成功实现
-			_user.addRedirect({type:"login",value:function(){
+			/* 添加导航栏的登录成功和注销成功的方法实现 */
+			function login_success(){
+				var user_info = _user.getUserInfo();
+				
+				// 显示头像
+				$(".user .avatar img").attr("src",user_info.avatar || "TODO 默认头像");
+				// 显示用户昵称
+				$(".user .nickname").html(user_info.nickname || "");
+				
 				// 隐藏登录按钮等未登录显示部分
 				$noLoginShow.addClass("none");
 				// 显示登录成功显示部分
 				$loginShow.removeClass("none");
-			}});
-			// 添加注销成功实现
-			_user.addRedirect({type:"logout",value:function(){
+			}
+			function signout_success(){
 				// 隐藏登录成功显示部分
 				$loginShow.addClass("none");
 				// 显示登录按钮等未登录显示部分
 				$noLoginShow.removeClass("none");
-			}});
+			}
+			// 添加登录成功实现
+			_user.addRedirect({type:"login",value:login_success});
+			// 添加注销成功实现
+			_user.addRedirect({type:"signout",value:signout_success});
+			// 每次加载本页面时去检测是否登录
+			if (_user.islogin()) {
+				login_success();
+			}
 		})();
 	});
 </script>
