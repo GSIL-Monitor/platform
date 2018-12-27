@@ -4,8 +4,8 @@
 	#将http自动重定向到https
 #	error_page 497  https://$host$uri;
 
-ssl_certificate "D:/workspace/space-java/platform/.bin/nginx-1.15.6/ssl/laeni.cn/[-.laeni.cn-laeni.cn].20190107/fullchain.crt";
-ssl_certificate_key "D:/workspace/space-java/platform/.bin/nginx-1.15.6/ssl/laeni.cn/[-.laeni.cn-laeni.cn].20190107/private.pem";
+ssl_certificate "D:/workspace/space-java/platform/.bin/nginx-1.15.6/ssl/laeni.cn/6pnrvg.20190327/fullchain.crt";
+ssl_certificate_key "D:/workspace/space-java/platform/.bin/nginx-1.15.6/ssl/laeni.cn/6pnrvg.20190327/private.pem";
 ssl_protocols TLSv1.1 TLSv1.2;
 ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;
 ssl_prefer_server_ciphers on;

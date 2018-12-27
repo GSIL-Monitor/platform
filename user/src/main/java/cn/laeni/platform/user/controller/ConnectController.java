@@ -89,7 +89,7 @@ public class ConnectController {
     public String qqLogin(HttpServletRequest request, HttpServletResponse response, Model model,
                           String code, String state, String usercancel, String redirectUri, String appId,
                           String transfer) {
-        System.out.println("transfer:" + transfer);
+
         // 转发地址
         String forward;
         // 用户
